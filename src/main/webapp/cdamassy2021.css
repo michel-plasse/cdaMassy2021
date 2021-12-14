@@ -1,0 +1,159 @@
+/* Variables css définies pour toutes les règles.
+ * Toutes sont préfixées de 2 tirets pour éviter un conflit avec un mot-clé css
+ */
+:root {
+  --bgHover: lightblue;
+  --bgLight: lavender;
+  --borderBgLight: #bfbffd;
+  --navHeight: calc(1.2em + 2ex);
+  --cardBg: lavender;
+}
+
+/* Zone de navigation (liens) */
+nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+nav > a {
+  padding: 1ex;
+  text-decoration: none;
+  line-height: 1.2em;
+}
+nav > a:hover {
+  background-color: var(--bgHover);
+}
+/* le menu complet de navigation */
+#mainNav {
+  background-color: var(--cardBg);
+  position: fixed; /* ne défile pas */
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-bottom: solid 1px var(--borderBgLight);
+}
+#mainNav, #mainNav > nav {
+    flex-direction: row;
+}
+
+body {
+  position: absolute; /*pour prendre en compte le menu de navigation */
+  top: calc(var(--navHeight) + 1px);
+  left: 0;
+  margin: 1em;
+}
+
+/* flex en ligne avec wrap */
+#index_articles > * {
+  float: left;
+  padding: 0 1em;
+  margin: 1em;
+  background-color: var(--bgLight);
+  border-radius: 1em;
+  max-width: 30em;
+}
+#index_articles ~* {
+  clear: left;
+}
+
+.erreur {
+    background-color: rgba(219, 71, 71, 0.445);
+    color: rgb(117, 1, 1);
+    text-align: center;
+    margin-bottom: 20px;
+    margin: auto;
+    border-radius: 10px;
+}
+.success{
+    background-color: rgba(20, 223, 54, 0.445);
+    color: rgb(5, 71, 20);
+    text-align: center;
+    width: 100%;
+    margin: auto;
+    border-radius: 10px;
+}
+/* Horizontal flex container */
+.flexh {
+  display: flex;  
+}
+
+tr:nth-child(even) {
+  background-color: #EEEEEE;
+}
+tr:nth-child(odd) {
+  background-color: #DDDDDD;
+}
+tr:first-child {
+  background-color: #CCCCCC;
+}
+td, th {
+  padding: 0.5em 1em;
+}
+a:link.lienPasSouligne {
+  text-decoration: none;
+}
+
+/* Partie Anouar CSS Debut */
+p {
+    margin-top: 0px;
+  }
+   
+  fieldset {
+    margin-bottom: 15px;
+    padding: 10px;
+  }
+   
+  legend {
+    padding: 0px 3px;
+    font-weight: bold;
+    font-variant: small-caps;
+  }
+   
+  label {
+    width: 110px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 6px;
+  }
+   
+  em {
+    font-weight: bold;
+    font-style: normal;
+    color: #f00;
+  }
+   
+  input:focus {
+    background: #eaeaea;
+  }
+   
+  input, textarea {
+    width: 249px;
+  }
+   
+  textarea {
+    height: 100px;
+  }
+   
+  select {
+    width: 254px;
+  }
+   
+  input[type=checkbox] {
+    width: 10px;
+  }
+   
+  input[type=submit] {
+    width: 150px;
+    padding: 10px;
+  }
+  
+  .btn-efg{
+    background-color: rgb(47, 62, 192);
+    border-color: rgb(47, 62, 192);;
+    color: rgb(255, 255, 255);
+}
+
+/* Partie Anouar CSS Fin */
