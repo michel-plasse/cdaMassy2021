@@ -14,6 +14,8 @@ import java.util.List;
  * @author michel
  */
 public class PersonneDao {
+  private static final String TOUS_LES_MEMBRES =
+          "SELECT * FROM personne LIMIT ?, ?";
 
   /**
    * Personne de login et password donnés. Renvoie null si pas trouvé.
@@ -42,10 +44,31 @@ public class PersonneDao {
     return result;
   }
 
-  public static List<Personne> getTousMembres() {
+  /**
+   * Liste de tous les membres, en paginant à raison de nbElementsParPage par page
+   * pour la page n° noPage
+   * @param noPage n° de la page à afficher (1ere = 1)
+   * @param nbElementsParPage nombre maximal de membres à retourner
+   * @return
+   * @throws SQLException 
+   */
+  public static List<Personne> getTousMembres(int noPage, int nbElementsParPage) throws SQLException {
     // Mettre en dur le résultat
     List<Personne> result = new ArrayList();
-    result.add(new Personne(1, "prenom", "nom", "email", "tel", "pwd"));
+    Connection connection = Database.getConnection();
+    PreparedStatement stmt = connection.prepareStatement(TOUS_LES_MEMBRES);
+    stmt.setInt(1, nbElementsParPage * (noPage - 1));
+    stmt.setInt(2, nbElementsParPage);
+    ResultSet rs = stmt.executeQuery();
+    while (rs.next()) {
+      result.add(new Personne(
+              rs.getInt("id_personne"),
+              rs.getString("prenom"),
+              rs.getString("nom"),
+              rs.getString("email"),
+              rs.getString("tel"),
+              null));
+    }
     return result;
   }
 
