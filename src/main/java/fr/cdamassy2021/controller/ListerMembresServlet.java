@@ -5,8 +5,11 @@
  */
 package fr.cdamassy2021.controller;
 
+import fr.cdamassy2021.model.Personne;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,6 +36,12 @@ public class ListerMembresServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
+    // Mettre en dur le résultat
+    List<Personne> membres = new ArrayList();
+    membres.add(new Personne(1, "prenom", "nom", "email", "tel", "pwd"));
+    // Mettre en post-it les membres
+    request.setAttribute("membres", membres);
+    // Passer la main à la vue
     request.getRequestDispatcher(VUE).forward(request, response);
   }
 
