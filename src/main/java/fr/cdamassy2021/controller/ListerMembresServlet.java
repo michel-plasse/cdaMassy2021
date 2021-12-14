@@ -5,8 +5,11 @@
  */
 package fr.cdamassy2021.controller;
 
+import fr.cdamassy2021.dao.PersonneDao;
+import fr.cdamassy2021.model.Personne;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ListerMembresServlet", urlPatterns = {"/membres"})
 public class ListerMembresServlet extends HttpServlet {
 
-  private final String VUE = "WEB-INF/membres.jsp";
-          
+  private final String VUE_OK = "WEB-INF/membres.jsp";
+  private final String VUE_ERREUR = "WEB-INF/erreur.jsp";
+
   /**
    * Handles the HTTP <code>GET</code> method.
    *
@@ -33,7 +37,20 @@ public class ListerMembresServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
-    request.getRequestDispatcher(VUE).forward(request, response);
+    String vue = VUE_OK;
+    try {
+      // Les paramètres encore en dur
+      List<Personne> membres = PersonneDao.getTousMembres(1, 10);
+      // Mettre en post-it les membres
+      request.setAttribute("membres", membres);
+    } catch (SQLException exc) {
+      vue = VUE_ERREUR;
+      request.setAttribute("message", "Pb avec la BD");
+      // Journaliser l'exception dans le log de tomcat
+      exc.printStackTrace();
+    }
+    // Passer la main à la vue
+    request.getRequestDispatcher(vue).forward(request, response);
   }
 
 }
