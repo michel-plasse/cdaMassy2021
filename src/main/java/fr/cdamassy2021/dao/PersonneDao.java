@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -37,6 +39,13 @@ public class PersonneDao {
               rs.getString("tel"),
               null); // pas de mot de passe en mémoire
     }
+    return result;
+  }
+
+  public static List<Personne> getTousMembres() {
+    // Mettre en dur le résultat
+    List<Personne> result = new ArrayList();
+    result.add(new Personne(1, "prenom", "nom", "email", "tel", "pwd"));
     return result;
   }
 
