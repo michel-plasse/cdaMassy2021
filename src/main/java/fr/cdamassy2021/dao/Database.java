@@ -6,9 +6,9 @@ import java.time.LocalDateTime;
 public class Database {
 
    protected static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
-   protected static final String URL = "jdbc:mysql://localhost/siomassy2021?noAccessToProcedureBodies=true";
-   protected static final String USER = "siomassy2021_user";
-   protected static final String PASSWORD = "siomassy2021_pwd";
+   protected static final String URL = "jdbc:mysql://localhost/cdamassy2021?noAccessToProcedureBodies=true";
+   protected static final String USER = "cdamassy2021_user";
+   protected static final String PASSWORD = "cdamassy2021_pwd";
    
    public static final int DOUBLON = 1062;
 
