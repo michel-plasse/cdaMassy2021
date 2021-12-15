@@ -20,7 +20,7 @@ public class Question {
     private Long auteurId;
     private String statement;
     private OptionnalResponse.ReponseType type;
-    private ArrayList<OptionnalResponse> optionnalResponse;
+    private ArrayList<OptionnalResponse> optionnalResponse = null;
 
     /**
      * CTOR:
