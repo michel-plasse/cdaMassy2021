@@ -4,7 +4,7 @@
  */
 package fr.cdamassy2021.dao;
 
-import fr.cdamassy2021.model.OptionnalResponse;
+import fr.cdamassy2021.model.Proposition;
 import fr.cdamassy2021.model.Question;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -68,8 +68,8 @@ public class QuestionDao implements Dao<Question> {
                 found.setCanalId(res.getLong("canal_id"));
                 found.setAuteurId(res.getLong("auteur_id"));
                 found.setStatement(res.getString("enonce"));
-                OptionnalResponse.ReponseType type
-                        = OptionnalResponse.ReponseType.values()[res.getInt("type_reponses")];
+                Question.TypeQuestion type
+                        = Question.TypeQuestion.values()[res.getInt("type_reponses")];
                 found.setType(type);
             }
 

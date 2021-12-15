@@ -4,14 +4,14 @@
  */
 package fr.cdamassy2021.dao;
 
-import fr.cdamassy2021.model.OptionnalResponse;
+import fr.cdamassy2021.model.Proposition;
 import fr.cdamassy2021.model.Question;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- *
+ * 
  * @author thoma
  */
 public class QuestionDaoTest {
@@ -27,8 +27,8 @@ public class QuestionDaoTest {
         String enonceQuestion = "This is a YES/NO test question";
         Long idCanalTest= Long.valueOf(1);
         Long idAuteurTest= Long.valueOf(2);
-        Question inserted = new Question(idCanalTest, idAuteurTest, OptionnalResponse.ReponseType.YESNO, enonceQuestion, null);
-        System.out.println(OptionnalResponse.ReponseType.YESNO.ordinal());
+        Question inserted = new Question(idCanalTest, idAuteurTest, Question.TypeQuestion.YESNO, enonceQuestion, null);
+        System.out.println(Question.TypeQuestion.YESNO.ordinal());
         boolean expResult = true;
         //when:
         boolean result = instance.insert(inserted);
@@ -62,8 +62,8 @@ public class QuestionDaoTest {
         Long expectedId = Long.valueOf(2);
         Long expectedCanal= Long.valueOf(2);
         Long expectedAuteur= Long.valueOf(2);
-        OptionnalResponse.ReponseType expectedType 
-                = OptionnalResponse.ReponseType.values()[1];
+        Question.TypeQuestion expectedType 
+                = Question.TypeQuestion.values()[1];
         Question expResult = new Question(expectedId,expectedCanal,expectedAuteur,expectedType,"Ceci est la deuxieme question",null);
 
         assertEquals(expResult, result);
