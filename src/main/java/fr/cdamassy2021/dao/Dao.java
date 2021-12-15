@@ -19,7 +19,7 @@ public interface Dao<T>{ // method CRUD: Create/Read/Update/Delete
 	
 	public void delete(T deleted);
 	
-	public T findById(long id);
+	public T findById(long id) throws SQLException;
 	
 	public ArrayList<T> findAll();
 }
