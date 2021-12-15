@@ -18,31 +18,30 @@ import java.util.ArrayList;
  */
 public class QuestionDao implements Dao<Question> {
 
+    private final String INSERT = "INSERT INTO question (canal_id,auteur_id,enonce,type_reponses) VALUES ( ?, ?, ?, ?);";
+    private final String SELECTBYID = "SELECT * FROM question WHERE id=?";
     public QuestionDao() {
-        
+
     }
 
-    
     @Override
-    public boolean insert(Question inserted) throws SQLException{
-    Boolean result = false;
-    Connection connection = Database.getConnection();
-    String insert = "INSERT INTO question (canal_id,auteur_id,enonce,type_reponses) VALUES ( ?, ?, ?, ?);";
-    //compile la requete
-    PreparedStatement stmt = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+    public boolean insert(Question inserted) throws SQLException {
+        Boolean result = false;
+        Connection connection = Database.getConnection();
+        //compile la requete
+        PreparedStatement stmt = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+        stmt.setLong(1, inserted.getCanalId());
+        stmt.setLong(2, inserted.getAuteurId());
+        stmt.setString(3, inserted.getStatement());
+        stmt.setInt(4, inserted.getType().ordinal());
 
-    stmt.setLong(1, inserted.getCanalId());
-    stmt.setLong(2, inserted.getAuteurId());
-    stmt.setString(3, inserted.getStatement());
-    stmt.setInt(4, inserted.getType().ordinal());
-
-    stmt.execute();
-    // Récupérer le id auto-incrémenté
+        stmt.execute();
+        // Récupérer le id auto-incrémenté
         ResultSet rs = stmt.getGeneratedKeys();
-    if (rs.next()) {
-      // Le id est dans la 1ere colonne trouvee
-      inserted.setId((long)rs.getInt(1));
-    }
+        if (rs.next()) {
+            // Le id est dans la 1ere colonne trouvee
+            inserted.setId((long) rs.getInt(1));
+        }
         result = true;
         return result;
     }
@@ -53,8 +52,26 @@ public class QuestionDao implements Dao<Question> {
     }
 
     @Override
-    public Question findById(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Question findById(long id) throws SQLException {
+        Connection connection = Database.getConnection();
+        PreparedStatement preparedStatement = null;
+        Question found = null;
+        try {
+            preparedStatement = connection.prepareStatement(SELECTBYID);
+            preparedStatement.setLong(1, id);
+            ResultSet res = preparedStatement.executeQuery();
+            if (res.next()) {
+                found = new Question();
+                found.setId(res.getLong("id"));
+                found.setCanalId(res.getLong("canal_id"));
+                found.setAuteurId(res.getLong("auteur_id"));
+                found.setStatement(res.getString("enonce"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return found;
     }
 
     @Override
