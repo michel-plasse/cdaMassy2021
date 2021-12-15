@@ -8,20 +8,28 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * Java Bean / POJO 'Question' 
- * Une question peut être posée sur un canal (sondage)
- * Ou et/ou appartenir à questionnaire.
- * 
+ * Java Bean / POJO 'Question'  <br>
+ *  <br>
+ * Une 'Question' peut être posée sur un canal ( tel un sondage) <br>
+ * et/ou appartenir à questionnaire. <br>
+ * Lors de son edition par un 'Membre' et si besoin est (hors réponses libres) <br>
+ * il devra aussi définir des options de réponses ('Propositions') et les <br>
+ * qualifier de 'correct'/'inccorect'/'non-renseigné' <br>
+ *  <br>
  * @author thoma
  */
 public class Question {
 
+    public enum TypeQuestion {
+        CHECK, YESNO, QCM, FREE;
+        
+    }
     private Long id;
     private Long canalId;
     private Long auteurId;
     private String statement;
-    private OptionnalResponse.ReponseType type;
-    private ArrayList<OptionnalResponse> optionnalResponse = null;
+    private TypeQuestion type;
+    private ArrayList<Proposition> propositions = null;
 
     /**
      * CTOR:
@@ -33,33 +41,35 @@ public class Question {
      * @param statement
      * @param optionnalReponses
      */
-    public Question(Long id, Long canalId, Long auteurId, OptionnalResponse.ReponseType responseType,
-            String statement, ArrayList<OptionnalResponse> optionnalResponses) {
+    public Question(Long id, Long canalId, Long auteurId, TypeQuestion typeDeQuestion,
+            String statement, ArrayList<Proposition> propositions) {
         this.id = id;
         this.canalId = canalId;
         this.auteurId = auteurId;
         this.statement = statement;
-        this.type = responseType;
-        this.optionnalResponse = optionnalResponses;
+        this.type = typeDeQuestion;
+        this.propositions = propositions;
     }
     
       /**
-     * CTOR: (unidentified Bean)
-     * This constructer should be used only when creating
-     * a bean before storing it in the database gives it an id.
+     * CTOR: (unidentified Bean) <br>
+     * ! - This constructer should only be used before first insertion in <br>
+     * the database (in initial case no where id has never been assigned <br>
+     * to it yet).<br>
+     * <br>
      * @param canalId
      * @param auteurId
      * @param ResponseType
      * @param statement
      * @param optionnalReponses
      */
-    public Question(Long canalId, Long auteurId, OptionnalResponse.ReponseType responseType,
-            String statement, ArrayList<OptionnalResponse> optionnalResponses) {
+    public Question(Long canalId, Long auteurId, TypeQuestion typeDeLaQuestion,
+            String statement, ArrayList<Proposition> propositions) {
         this.canalId = canalId;
         this.auteurId = auteurId;
         this.statement = statement;
-        this.type = responseType;
-        this.optionnalResponse = optionnalResponses;
+        this.type = typeDeLaQuestion;
+        this.propositions = propositions;
     }
 
     /**
@@ -93,11 +103,11 @@ public class Question {
         this.auteurId = auteurId;
     }
 
-    public OptionnalResponse.ReponseType getType() {
+    public TypeQuestion getType() {
         return type;
     }
 
-    public void setType(OptionnalResponse.ReponseType type) {
+    public void setType(TypeQuestion type) {
         this.type = type;
     }
 
@@ -109,12 +119,12 @@ public class Question {
         this.statement = enonceQuestion;
     }
 
-    public ArrayList<OptionnalResponse> getOptionReponsesIds() {
-        return optionnalResponse;
+    public ArrayList<Proposition> getOptionReponsesIds() {
+        return propositions;
     }
 
-    public void setOptionReponsesIds(ArrayList<OptionnalResponse> reponsesIds) {
-        this.optionnalResponse = reponsesIds;
+    public void setOptionReponsesIds(ArrayList<Proposition> propositionsIds) {
+        this.propositions = propositionsIds;
     }
 
     @Override
