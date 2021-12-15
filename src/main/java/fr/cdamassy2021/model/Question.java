@@ -5,6 +5,7 @@
 package fr.cdamassy2021.model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Java Bean / POJO 'Question' 
@@ -116,4 +117,40 @@ public class Question {
         this.optionnalResponse = reponsesIds;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Question other = (Question) obj;
+        if (!Objects.equals(this.statement, other.statement)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.canalId, other.canalId)) {
+            return false;
+        }
+        if (!Objects.equals(this.auteurId, other.auteurId)) {
+            return false;
+        }
+        if (this.type != other.type) {
+            return false;
+        }
+        return true;
+    }
+    
 }
