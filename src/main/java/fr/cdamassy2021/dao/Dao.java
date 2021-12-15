@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package fr.cdamassy2021.dao;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 public interface Dao<T>{ // method CRUD: Create/Read/Update/Delete
 	
-	public boolean insert(T inserted);
+	public boolean insert (T inserted) throws SQLException;
 	
 	public void delete(T deleted);
 	
