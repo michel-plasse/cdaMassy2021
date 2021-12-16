@@ -8,22 +8,38 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
+ * class 'IQuestion'  <br>
+ * Java Bean implementation  <br>
+ *  <br>
+ Une 'IQuestion' peut être posée sur un canal (tel un sondage) <br>
+ * et/ou appartenir à questionnaire. <br>
+ * Lors de son edition par un 'Membre' et si besoin est (hors réponses libres) <br>
+ * il devra aussi définir des options de réponses ('Propositions') et les <br>
+ * qualifier de 'correct'/'inccorect'/'non-renseigné' <br>
+ *  <br>
  * @author thoma
  */
-public class QuestionQcmImpl implements IQuestion {
+public class Question {
+    
+    public enum modeQuestion {
+        SONDAGECANAL, QUESTIONNAIRE;
+    }
+    public enum TypeQuestion {
+        CHECK, OUINON, QCM, LIBRE, SMILEY, POURCENTAGE;
+    }
+    
+    private int id;
 
-    private Long id;
-
-    private Long auteurId;
+    private int auteurId;
     private String statement;
-    private IQuestion.TypeQuestion type;
+    private TypeQuestion type;
     private ArrayList<Proposition> propositions = null;
 
     private boolean appartientQuestionaire;
-    private Long questionaireId;
+    private int questionaireId;
 
     private boolean estSondage;
-    private Long canalId;
+    private int canalId;
 
     /**
      * CTOR: This provides an identified and fully constructed Question bean
@@ -35,7 +51,7 @@ public class QuestionQcmImpl implements IQuestion {
      * @param statement
      * @param propositions
      */
-    public QuestionQcmImpl(Long id, Long canalId, Long auteurId, IQuestion.TypeQuestion typeDeQuestion,
+    public Question(int id, TypeQuestion typeDeQuestion,int canalId, int auteurId,
             String statement, ArrayList<Proposition> propositions) {
         this.id = id;
         this.canalId = canalId;
@@ -58,7 +74,7 @@ public class QuestionQcmImpl implements IQuestion {
      * @param statement
      * @param propositions
      */
-    public QuestionQcmImpl(Long canalId, Long auteurId, IQuestion.TypeQuestion typeDeLaQuestion,
+    public Question(TypeQuestion typeDeLaQuestion,int canalId, int auteurId, 
             String statement, ArrayList<Proposition> propositions) {
         this.canalId = canalId;
         this.auteurId = auteurId;
@@ -70,39 +86,39 @@ public class QuestionQcmImpl implements IQuestion {
     /**
      * CTOR:(default)
      */
-    public QuestionQcmImpl() {
+    public Question() {
     }
 
     /*POJO*/
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Long getCanalId() {
+    public int getCanalId() {
         return canalId;
     }
 
-    public void setCanalId(Long canalId) {
+    public void setCanalId(int canalId) {
         this.canalId = canalId;
     }
 
-    public Long getAuteurId() {
+    public int getAuteurId() {
         return auteurId;
     }
 
-    public void setAuteurId(Long auteurId) {
+    public void setAuteurId(int auteurId) {
         this.auteurId = auteurId;
     }
 
-    public IQuestion.TypeQuestion getType() {
+    public TypeQuestion getType() {
         return type;
     }
 
-    public void setType(IQuestion.TypeQuestion type) {
+    public void setType(TypeQuestion type) {
         this.type = type;
     }
 
@@ -130,11 +146,11 @@ public class QuestionQcmImpl implements IQuestion {
         this.appartientQuestionaire = appartientQuestionaire;
     }
 
-    public Long getQuestionaireId() {
+    public int getQuestionaireId() {
         return questionaireId;
     }
 
-    public void setQuestionaireId(Long questionaireId) {
+    public void setQuestionaireId(int questionaireId) {
         this.questionaireId = questionaireId;
     }
 
@@ -146,12 +162,10 @@ public class QuestionQcmImpl implements IQuestion {
         this.estSondage = estSondage;
     }
 
-    @Override
     public boolean getEstSondage() {
         return estSondage;
     }
 
-    @Override
     public boolean getappartientQuestionaire() {
         return appartientQuestionaire;
     }
@@ -173,7 +187,7 @@ public class QuestionQcmImpl implements IQuestion {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final QuestionQcmImpl other = (QuestionQcmImpl) obj;
+        final Question other = (Question) obj;
         if (!Objects.equals(this.statement, other.statement)) {
             return false;
         }
@@ -192,3 +206,4 @@ public class QuestionQcmImpl implements IQuestion {
         return true;
     }
 }
+
