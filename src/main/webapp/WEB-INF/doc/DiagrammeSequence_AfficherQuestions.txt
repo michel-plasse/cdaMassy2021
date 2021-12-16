@@ -1,7 +1,7 @@
      ┌──────────┐              ┌───┐          ┌──────────┐          ┌───┐           ┌────┐
      │Navigateur│              │Vue│          │Controleur│          │Dao│           │SGBD│
      └────┬─────┘              └─┬─┘          └────┬─────┘          └─┬─┘           └─┬──┘
-          │      GET /question?noQuestion=...      │                  │               │   
+          │      GET /questions?noQuestion=...     │                  │               │   
           │ ───────────────────────────────────────>                  │               │   
           │                      │                 │                  │               │   
           │                      │                 │  QuestionDao.    │               │   
@@ -33,7 +33,7 @@
 participant Navigateur
 participant Vue
 
-Navigateur -> Controleur : GET /question?noQuestion=...
+Navigateur -> Controleur : GET /questions?noQuestion=...
 Controleur -> Dao: QuestionDao.\ngetAll(noPage)
 Dao -> SGBD: SELECT *\n FROM Question\n LIMIT ...
 SGBD -> Dao: lignes
