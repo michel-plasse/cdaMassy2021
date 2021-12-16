@@ -13,13 +13,6 @@ import java.util.ArrayList;
  */
 public class QuestionFactory {
 
-    private Long id;
-    private Long canalId;
-    private Long auteurId;
-    private String statement;
-    private IQuestion.TypeQuestion type;
-    private ArrayList<Proposition> propositions = null;
-
     public QuestionFactory() {
 
     }
@@ -41,7 +34,7 @@ public class QuestionFactory {
             ArrayList<Proposition> propositions) throws Exception {
         switch (type) {
             case QCM:
-                return new QuestionQcmImpl(idCanal,idAuteur,type, enonceQuestion, propositions);
+                return new QuestionQcmImpl(idCanal, idAuteur, type, enonceQuestion, propositions);
             default:
                 throw new Exception("Question Type not implemented yet");
         }
@@ -51,7 +44,7 @@ public class QuestionFactory {
             ArrayList<Proposition> propositions) throws Exception {
         switch (type) {
             case QCM:
-                return new QuestionQcmImpl(idCanal,idAuteur,type, enonceQuestion, propositions);
+                return new QuestionQcmImpl(idCanal, idAuteur, type, enonceQuestion, propositions);
             default:
                 throw new Exception("Question Type not implemented yet");
         }
