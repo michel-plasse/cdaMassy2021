@@ -19,9 +19,9 @@ BEGIN
     
 	INSERT INTO question(id,canal_id,auteur_id,enonce,type_reponses)
 	VALUES 
-    (1,null,1,'Ceci est la premiere question',1),
-    (2,2,2,'Ceci est la deuxieme question',1),
-    (3,3,3,'Ceci est la troisieme question',1),
-    (4,4,3,'Ceci est la quatrieme question',1);
+    (1,null,1,'Quelle est la coooleur du cheval blanc d\'Henry Kit-Kat? Répondez par oui ou par non.',1),
+    (2,2,2,'On a pas ramené un peu trop de croissant quand même là?',1),
+    (3,3,3,'Ca vous dit on vous fait un bouton random-question?',1),
+    (4,4,3,'Pourquoi',1);
     END;
 END
