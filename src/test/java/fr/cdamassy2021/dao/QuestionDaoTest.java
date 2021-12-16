@@ -5,17 +5,19 @@
 package fr.cdamassy2021.dao;
 
 import fr.cdamassy2021.model.Proposition;
-import fr.cdamassy2021.model.Question;
+import fr.cdamassy2021.model.IQuestion;
+import fr.cdamassy2021.model.QuestionFactory;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * 
+ *
+ *
  * @author thoma
  */
 public class QuestionDaoTest {
-    
+
     public QuestionDaoTest() {
     }
 
@@ -24,11 +26,13 @@ public class QuestionDaoTest {
         System.out.println("try insert");
         //given:
         QuestionDao instance = new QuestionDao();
-        String enonceQuestion = "This is a YES/NO test question";
-        Long idCanalTest= Long.valueOf(1);
-        Long idAuteurTest= Long.valueOf(2);
-        Question inserted = new Question(idCanalTest, idAuteurTest, Question.TypeQuestion.YESNO, enonceQuestion, null);
-        System.out.println(Question.TypeQuestion.YESNO.ordinal());
+        String enonceQuestion
+                = "dites-moi si vous me trouvez dans la"
+                + "database après le test d'insertion";
+        Long idCanalTest = Long.valueOf(1);
+        Long idAuteurTest = Long.valueOf(2);
+        QuestionFactory qFactory = new QuestionFactory();
+        IQuestion inserted = qFactory.createQuestion(IQuestion.TypeQuestion.QCM, idAuteurTest, idCanalTest, enonceQuestion, null);
         boolean expResult = true;
         //when:
         boolean result = instance.insert(inserted);
@@ -39,12 +43,11 @@ public class QuestionDaoTest {
 //    @Test
 //    public void testDelete() {
 //        System.out.println("delete");
-//        Question deleted = null;
+//        IQuestion deleted = null;
 //        QuestionDao instance = new QuestionDao();
 //        instance.delete(deleted);
 //        fail("The test case is a prototype.");
 //    }
-
     @Test
     public void testFindById() {
         //given:
@@ -52,19 +55,30 @@ public class QuestionDaoTest {
         QuestionDao instance = new QuestionDao();
         long testedId = 2;
         //when
-        Question result = null;
+        IQuestion result = null;
         try {
             result = instance.findById(testedId);
         } catch (Exception e) {
-            System.out.println("Fail finding question where id="+testedId);
+            System.out.println("Fail finding question where id=" + testedId);
         }
         //then
         Long expectedId = Long.valueOf(2);
-        Long expectedCanal= Long.valueOf(2);
-        Long expectedAuteur= Long.valueOf(2);
-        Question.TypeQuestion expectedType 
-                = Question.TypeQuestion.values()[1];
-        Question expResult = new Question(expectedId,expectedCanal,expectedAuteur,expectedType,"Ceci est la deuxieme question",null);
+        Long expectedCanal = Long.valueOf(2);
+        Long expectedAuteur = Long.valueOf(2);
+        IQuestion.TypeQuestion expectedType
+                = IQuestion.TypeQuestion.values()[3];
+
+        IQuestion expResult = null;
+        QuestionFactory qFactory = new QuestionFactory();
+        try {
+            expResult = qFactory.createQuestion(
+                expectedId, expectedType,
+                expectedAuteur, expectedCanal,
+                "On a pas ramené un peu trop de croissant quand même là?",
+                null);
+        } catch (Exception e) {
+            System.out.println("Factory can't create this QuestionBean");
+        }
 
         assertEquals(expResult, result);
     }
