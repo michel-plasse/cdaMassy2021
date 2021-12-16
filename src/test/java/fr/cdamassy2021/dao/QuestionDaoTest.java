@@ -5,6 +5,7 @@
 package fr.cdamassy2021.dao;
 
 import fr.cdamassy2021.model.Question;
+import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -61,47 +62,31 @@ public class QuestionDaoTest extends Cdamassy2021Test {
         }
         //then
         int expectedId = 2;
-        int expectedCanal = 2;
-        int expectedAuteur = 2;
+        int expectedCanal = 1;
+        int expectedAuteur = 1;
         Question.TypeQuestion expectedType
                 = Question.TypeQuestion.values()[3];
 
         Question expResult = new Question(
                 expectedId, expectedType,
                 expectedAuteur, expectedCanal,
-                "On a pas ramené un peu trop de croissant quand même là?",
+                "Combien de temps voulez-vous pour ce TP ?",
                 null);
 
         assertEquals(expResult, result);
     }
 
     @Test
-    public void testFindByIdPasTrouve() throws Exception {
+    public void testFindByIdPasTrouve() throws SQLException {
         //given:
         System.out.println("try testFindByIdPasTrouve");
         QuestionDao instance = new QuestionDao();
         long testedId = 111;
         //when
-        Question result = null;
-        try {
-            result = instance.findById(testedId);
-        } catch (Exception e) {
-            System.out.println("Fail finding question where id=" + testedId);
-        }
-        //then
-        int expectedId = 2;
-        int expectedCanal = 2;
-        int expectedAuteur = 2;
-        Question.TypeQuestion expectedType
-                = Question.TypeQuestion.values()[3];
+        Question result = instance.findById(testedId);
 
-        Question expResult = new Question(
-                expectedId, expectedType,
-                expectedAuteur, expectedCanal,
-                "On a pas ramené un peu trop de croissant quand même là?",
-                null);
-
-        assertEquals(expResult, result);
+        //then:
+        assertEquals(null, result);
     }
 
 }

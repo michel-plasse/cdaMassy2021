@@ -106,11 +106,11 @@ public class Question {
         this.canalId = canalId;
     }
 
-    public int getAuteurId() {
+    public int getCreateurId() {
         return auteurId;
     }
 
-    public void setAuteurId(int auteurId) {
+    public void setCreateurId(int auteurId) {
         this.auteurId = auteurId;
     }
 
@@ -188,16 +188,16 @@ public class Question {
             return false;
         }
         final Question other = (Question) obj;
-        if (!Objects.equals(this.statement, other.statement)) {
+        if (this.id != other.id) {
             return false;
         }
-        if (!Objects.equals(this.id, other.id)) {
+        if (this.auteurId != other.auteurId) {
             return false;
         }
-        if (!Objects.equals(this.canalId, other.canalId)) {
+        if (this.questionaireId != other.questionaireId) {
             return false;
         }
-        if (!Objects.equals(this.auteurId, other.auteurId)) {
+        if (this.canalId != other.canalId) {
             return false;
         }
         if (this.type != other.type) {
@@ -205,5 +205,12 @@ public class Question {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Question{" + "id=" + id + ", auteurId=" + auteurId + ", statement=" + statement + ", type=" + type + ", propositions=" + propositions + ", appartientQuestionaire=" + appartientQuestionaire + ", questionaireId=" + questionaireId + ", estSondage=" + estSondage + ", canalId=" + canalId + '}';
+    }
+
+    
 }
 

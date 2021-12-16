@@ -19,7 +19,7 @@ import fr.cdamassy2021.model.Question;
 public class QuestionDao implements Dao<Question> {
 
     private final String INSERT = "INSERT INTO question (id_canal,id_createur,libelle,id_type_question) VALUES ( ?, ?, ?, ?);";
-    private final String SELECTBYID = "SELECT * FROM question WHERE id=?";
+    private final String SELECTBYID = "SELECT * FROM question WHERE id_question=?";
 
     public QuestionDao() {
 
@@ -32,7 +32,7 @@ public class QuestionDao implements Dao<Question> {
         //compile la requete
         PreparedStatement stmt = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
         stmt.setLong(1, inserted.getCanalId());
-        stmt.setLong(2, inserted.getAuteurId());
+        stmt.setLong(2, inserted.getCreateurId());
         stmt.setString(3, inserted.getStatement());
         stmt.setInt(4, inserted.getType().ordinal());
 
@@ -63,13 +63,14 @@ public class QuestionDao implements Dao<Question> {
             ResultSet res = preparedStatement.executeQuery();
             if (res.next()) {
                 Question.TypeQuestion type
-                    = Question.TypeQuestion.values()[res.getInt("type_reponses")];
+                    = Question.TypeQuestion.values()[res.getInt("id_type_question")];
                 found = new Question();
                 found.setType(type);
-                found.setId(res.getInt("id"));
-                found.setCanalId(res.getInt("canal_id"));
-                found.setAuteurId(res.getInt("auteur_id"));
-                found.setStatement(res.getString("enonce"));
+                found.setId(res.getInt("id_question"));
+                found.setCanalId(res.getInt("id_canal"));
+                found.setCreateurId(res.getInt("id_createur"));
+                found.setStatement(res.getString("libelle"));
+                System.out.println("found question with id"+found.getId());
             }
 
         } catch (SQLException e) {
