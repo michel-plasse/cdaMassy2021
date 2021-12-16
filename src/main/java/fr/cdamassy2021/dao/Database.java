@@ -50,7 +50,7 @@ public class Database {
     */
    public static void reset(LocalDateTime dateEffet) throws SQLException {
       Connection connection = Database.getConnection();
-      CallableStatement stmt = connection.prepareCall("CALL reset_siomassy2021(?)");
+      CallableStatement stmt = connection.prepareCall("CALL reset_cdamassy2021(?)");
       stmt.setTimestamp(1, Timestamp.valueOf(dateEffet));
       stmt.execute();
       stmt.close();
