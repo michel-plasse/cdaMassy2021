@@ -17,10 +17,6 @@ public class QuestionFactory {
 
     }
 
-    public QuestionQcmImpl createQuestionQcmIpml() {
-        return new QuestionQcmImpl();
-    }
-
     public IQuestion createQuestion(IQuestion.TypeQuestion type) throws Exception {
         switch (type) {
             case QCM:
