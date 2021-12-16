@@ -5,7 +5,8 @@
 package fr.cdamassy2021.dao;
 
 import fr.cdamassy2021.model.Proposition;
-import fr.cdamassy2021.model.Question;
+import fr.cdamassy2021.model.IQuestion;
+import fr.cdamassy2021.model.QuestionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  *
  * @author thoma
  */
-public class QuestionDao implements Dao<Question> {
+public class QuestionDao implements Dao<IQuestion> {
 
     private final String INSERT = "INSERT INTO question (canal_id,auteur_id,enonce,type_reponses) VALUES ( ?, ?, ?, ?);";
     private final String SELECTBYID = "SELECT * FROM question WHERE id=?";
@@ -27,7 +28,7 @@ public class QuestionDao implements Dao<Question> {
     }
 
     @Override
-    public boolean insert(Question inserted) throws SQLException {
+    public boolean insert(IQuestion inserted) throws SQLException {
         Boolean result = false;
         Connection connection = Database.getConnection();
         //compile la requete
@@ -49,28 +50,36 @@ public class QuestionDao implements Dao<Question> {
     }
 
     @Override
-    public void delete(Question deleted) {
+    public void delete(IQuestion deleted) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Question findById(long id) throws SQLException {
+    public IQuestion findById(long id) throws SQLException {
         Connection connection = Database.getConnection();
         PreparedStatement preparedStatement = null;
-        Question found = null;
+        IQuestion found = null;
         try {
             preparedStatement = connection.prepareStatement(SELECTBYID);
             preparedStatement.setLong(1, id);
             ResultSet res = preparedStatement.executeQuery();
             if (res.next()) {
-                found = new Question();
+                IQuestion.TypeQuestion type
+                    = IQuestion.TypeQuestion.values()[res.getInt("type_reponses")];
+                QuestionFactory qFactory = new QuestionFactory();
+                try {
+                    IQuestion question = qFactory.createQuestion(type);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+
+                found.setType(type);
                 found.setId(res.getLong("id"));
                 found.setCanalId(res.getLong("canal_id"));
                 found.setAuteurId(res.getLong("auteur_id"));
                 found.setStatement(res.getString("enonce"));
-                Question.TypeQuestion type
-                        = Question.TypeQuestion.values()[res.getInt("type_reponses")];
-                found.setType(type);
+
+
             }
 
         } catch (SQLException e) {
@@ -80,7 +89,7 @@ public class QuestionDao implements Dao<Question> {
     }
 
     @Override
-    public ArrayList<Question> findAll() {
+    public ArrayList<IQuestion> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 
     }
