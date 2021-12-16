@@ -18,7 +18,7 @@ import fr.cdamassy2021.model.Question;
  */
 public class QuestionDao implements Dao<Question> {
 
-    private final String INSERT = "INSERT INTO question (canal_id,auteur_id,enonce,type_reponses) VALUES ( ?, ?, ?, ?);";
+    private final String INSERT = "INSERT INTO question (id_canal,id_createur,libelle,id_type_question) VALUES ( ?, ?, ?, ?);";
     private final String SELECTBYID = "SELECT * FROM question WHERE id=?";
 
     public QuestionDao() {
@@ -70,8 +70,6 @@ public class QuestionDao implements Dao<Question> {
                 found.setCanalId(res.getInt("canal_id"));
                 found.setAuteurId(res.getInt("auteur_id"));
                 found.setStatement(res.getString("enonce"));
-
-
             }
 
         } catch (SQLException e) {
