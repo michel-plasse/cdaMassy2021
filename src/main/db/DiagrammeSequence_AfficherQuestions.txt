@@ -28,3 +28,16 @@
      ┌────┴─────┐              ┌─┴─┐          ┌────┴─────┐          ┌─┴─┐           ┌─┴──┐
      │Navigateur│              │Vue│          │Controleur│          │Dao│           │SGBD│
      └──────────┘              └───┘          └──────────┘          └───┘           └────┘
+	 
+@startuml
+participant Navigateur
+participant Vue
+
+Navigateur -> Controleur : GET /question?noQuestion=...
+Controleur -> Dao: QuestionDao.\ngetAll(noPage)
+Dao -> SGBD: SELECT *\n FROM Question\n LIMIT ...
+SGBD -> Dao: lignes
+Dao -> Controleur: List<Question>
+Controleur -> Vue: questions.jsp
+Vue -> Navigateur: tableau des questions\n+pagination
+@enduml
