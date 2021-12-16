@@ -29,7 +29,7 @@ package fr.cdamassy2021.model;
 public class Proposition {
     
     public enum Correctness {
-        TRUE,FALSE,UNDEFINED;
+        CORRECT,INCORRECT,UNDEFINED;
     }
     
     private Long id;
