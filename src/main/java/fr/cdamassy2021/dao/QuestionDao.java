@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 public class QuestionDao implements Dao<IQuestion> {
 
-    private final String INSERT = "INSERT INTO question (canal_id,auteur_id,enonce,type_reponses) VALUES ( ?, ?, ?, ?);";
+    private final String INSERT = "INSERT INTO question (id_canal,id_createur,libelle,id_type_question) VALUES ( ?, ?, ?, ?);";
     private final String SELECTBYID = "SELECT * FROM question WHERE id=?";
 
     public QuestionDao() {
@@ -65,7 +65,7 @@ public class QuestionDao implements Dao<IQuestion> {
             ResultSet res = preparedStatement.executeQuery();
             if (res.next()) {
                 IQuestion.TypeQuestion type
-                    = IQuestion.TypeQuestion.values()[res.getInt("type_reponses")];
+                    = IQuestion.TypeQuestion.values()[res.getInt("id_type_question")];
                 QuestionFactory qFactory = new QuestionFactory();
                 try {
                     IQuestion question = qFactory.createQuestion(type);
@@ -74,10 +74,10 @@ public class QuestionDao implements Dao<IQuestion> {
                 }
 
                 found.setType(type);
-                found.setId(res.getLong("id"));
-                found.setCanalId(res.getLong("canal_id"));
-                found.setAuteurId(res.getLong("auteur_id"));
-                found.setStatement(res.getString("enonce"));
+                found.setId(res.getLong("id_question"));
+                found.setCanalId(res.getLong("id_canal"));
+                found.setAuteurId(res.getLong("id_createur"));
+                found.setStatement(res.getString("libelle"));
 
 
             }
