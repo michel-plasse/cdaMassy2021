@@ -8,12 +8,13 @@
 <%@taglib prefix="p" tagdir="/WEB-INF/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <p:header title="CDA Massy 2021"/>
- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}../WEB-INF/css/questionaire_style.css" />
+ <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/questionaire_style.css" />
 <h1>Question</h1>
+<div>
 <ol>
-    
+
   <c:forEach items="${questions}" var="question">
-    <li>${question.idCreateur} ${question.libelle}</li>
+     <li>${question.idCreateur} ${question.libelle}</li>
      <form class="form" action="">
         <div class="bordered">
           <p>Veuillez choisir la meilleure option ci-dessous :</p>
@@ -46,4 +47,6 @@
         </div>
       </form>
   </c:forEach>
+  
 </ol>
+</div>
