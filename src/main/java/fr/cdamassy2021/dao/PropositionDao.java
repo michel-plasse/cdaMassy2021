@@ -12,7 +12,7 @@ import fr.cdamassy2021.model.Question;
 
 
 public class PropositionDao implements Dao<Proposition>{
-    private static final String INSERT = "INSERT INTO proposition (id_question,libelle) VALUES ( ?, ?);";
+    private static final String INSERT = "INSERT INTO proposition (id_question,libelle,est_correcte) VALUES ( ?, ?, ?);";
    // private static final String SELECTBYID = "SELECT * FROM question WHERE id_question=?";
    // private static final String TOUS_LES_MEMBRES = "SELECT * FROM question LIMIT ?, ?";
     public PropositionDao() {
@@ -23,12 +23,22 @@ public class PropositionDao implements Dao<Proposition>{
     public boolean insert(Proposition inserted) throws SQLException {
         Boolean result = false;
         Connection connection = Database.getConnection();
+
         //compile la requete
         PreparedStatement stmt = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
         stmt.setInt(1, inserted.getIdQuestion());
         stmt.setString(2, inserted.getLibelle());
-        //stmt.setInt(3, inserted.getIsCorrect().ordinal());
-       
+        switch(inserted.getIsCorrect()){
+            case UNDEFINED:
+                stmt.setInt(3,2);
+                break;
+            case CORRECT:
+                stmt.setInt(3,1);
+                break;
+            case INCORRECT:
+                stmt.setInt(3,0);
+                break;
+        }
         stmt.execute();
         // Récupérer le id auto-incrémenté
         ResultSet rs = stmt.getGeneratedKeys();

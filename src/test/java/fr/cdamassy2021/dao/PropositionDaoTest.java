@@ -22,7 +22,8 @@ class PropositionDaoTest extends Cdamassy2021Test{
 				+ "database après le test d'insertion";
 		int idTest = -1;
 		int idQuestion = 1;
-		Proposition inserted= new Proposition(idQuestion, null, enonceProposition);
+		Proposition inserted= new Proposition(idQuestion,
+                        Proposition.Correctness.UNDEFINED, enonceProposition);
 		boolean expResult = true;
 		//when:
 		boolean result = instance.insert(inserted);
