@@ -30,16 +30,16 @@ public class Question {
     
     private int id;
 
-    private int auteurId;
-    private String statement;
+    private int idCreateur;
+    private String libelle;
     private TypeQuestion type;
     private ArrayList<Proposition> propositions = null;
 
     private boolean appartientQuestionaire;
-    private int questionaireId;
+    private int idQuestionnaire;
 
     private boolean estSondage;
-    private int canalId;
+    private int idCanal;
 
     /**
      * CTOR: This provides an identified and fully constructed Question bean
@@ -54,9 +54,9 @@ public class Question {
     public Question(int id, TypeQuestion typeDeQuestion,int canalId, int auteurId,
             String statement, ArrayList<Proposition> propositions) {
         this.id = id;
-        this.canalId = canalId;
-        this.auteurId = auteurId;
-        this.statement = statement;
+        this.idCanal = canalId;
+        this.idCreateur = auteurId;
+        this.libelle = statement;
         this.type = typeDeQuestion;
         this.propositions = propositions;
     }
@@ -76,9 +76,9 @@ public class Question {
      */
     public Question(TypeQuestion typeDeLaQuestion,int canalId, int auteurId, 
             String statement, ArrayList<Proposition> propositions) {
-        this.canalId = canalId;
-        this.auteurId = auteurId;
-        this.statement = statement;
+        this.idCanal = canalId;
+        this.idCreateur = auteurId;
+        this.libelle = statement;
         this.type = typeDeLaQuestion;
         this.propositions = propositions;
     }
@@ -99,19 +99,19 @@ public class Question {
     }
 
     public int getCanalId() {
-        return canalId;
+        return idCanal;
     }
 
     public void setCanalId(int canalId) {
-        this.canalId = canalId;
+        this.idCanal = canalId;
     }
 
-    public int getCreateurId() {
-        return auteurId;
+    public int getIdCreateur() {
+        return idCreateur;
     }
 
-    public void setCreateurId(int auteurId) {
-        this.auteurId = auteurId;
+    public void setIdCreateur(int auteurId) {
+        this.idCreateur = auteurId;
     }
 
     public TypeQuestion getType() {
@@ -122,12 +122,12 @@ public class Question {
         this.type = type;
     }
 
-    public String getStatement() {
-        return statement;
+    public String getLibelle() {
+        return libelle;
     }
 
-    public void setStatement(String enonceQuestion) {
-        this.statement = enonceQuestion;
+    public void setLibelle(String enonceQuestion) {
+        this.libelle = enonceQuestion;
     }
 
     public ArrayList<Proposition> getOptionReponsesIds() {
@@ -147,11 +147,11 @@ public class Question {
     }
 
     public int getQuestionaireId() {
-        return questionaireId;
+        return idQuestionnaire;
     }
 
     public void setQuestionaireId(int questionaireId) {
-        this.questionaireId = questionaireId;
+        this.idQuestionnaire = questionaireId;
     }
 
     public boolean isEstSondage() {
@@ -191,13 +191,13 @@ public class Question {
         if (this.id != other.id) {
             return false;
         }
-        if (this.auteurId != other.auteurId) {
+        if (this.idCreateur != other.idCreateur) {
             return false;
         }
-        if (this.questionaireId != other.questionaireId) {
+        if (this.idQuestionnaire != other.idQuestionnaire) {
             return false;
         }
-        if (this.canalId != other.canalId) {
+        if (this.idCanal != other.idCanal) {
             return false;
         }
         if (this.type != other.type) {
@@ -208,7 +208,7 @@ public class Question {
 
     @Override
     public String toString() {
-        return "Question{" + "id=" + id + ", auteurId=" + auteurId + ", statement=" + statement + ", type=" + type + ", propositions=" + propositions + ", appartientQuestionaire=" + appartientQuestionaire + ", questionaireId=" + questionaireId + ", estSondage=" + estSondage + ", canalId=" + canalId + '}';
+        return "Question{" + "id=" + id + ", auteurId=" + idCreateur + ", statement=" + libelle + ", type=" + type + ", propositions=" + propositions + ", appartientQuestionaire=" + appartientQuestionaire + ", questionaireId=" + idQuestionnaire + ", estSondage=" + estSondage + ", canalId=" + idCanal + '}';
     }
 
     
