@@ -8,7 +8,7 @@
 <%@taglib prefix="p" tagdir="/WEB-INF/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <p:header title="CDA Massy 2021"/>
- <link rel="stylesheet" href="/css/questionnaire_style.css">
+ <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}../WEB-INF/css/questionaire_style.css" />
 <h1>Question</h1>
 <ol>
     
