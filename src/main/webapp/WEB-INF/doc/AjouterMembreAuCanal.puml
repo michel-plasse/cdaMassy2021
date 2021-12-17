@@ -1,0 +1,14 @@
+@startuml
+
+participant Navigateur
+participant Vue
+
+Navigateur -> Controleur : POST /canaux/{idCanal}/membres\nidPersonne=...
+Controleur -> Dao: CanalDao.\najouterMembreAuCanal(idMembre,idCanal) 
+Dao -> SGBD: INSERT INTO \n membreCanal prenom nom email pwd tel ...
+SGBD -> Dao: true or sql exception
+Dao -> Controleur: true or sql exception
+Controleur -> Navigateur: /canaux/{idCanal}/membres
+Navigateur -> Controleur: GET /canaux/{idCanal}/membres 
+
+@enduml
