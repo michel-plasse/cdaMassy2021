@@ -1,0 +1,12 @@
+@startuml 
+participant Navigateur 
+participant Vue  
+Navigateur -> Controleur : POST /canaux/{idCanal}/membres\nidPersonne=... 
+Controleur -> Dao: CanalDao.\nsupprimerMembreDuCanal(idPersonne,idCanal)
+Dao -> SGBD: DELETE FROM membre_canal \n WHERE id_personne={idPersonne} AND id_canal={idCanal}
+SGBD -> Dao: true or sql exception 
+Dao -> Controleur: true or sql exception 
+Controleur -> Navigateur: /canaux/{idCanal}/membres
+Navigateur -> Controleur: GET /canaux/{idCanal}/membres 
+
+@enduml
