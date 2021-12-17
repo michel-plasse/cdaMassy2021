@@ -10,12 +10,12 @@
 <p:header title="CDA Massy 2021"/>
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/questionaire_style.css" />
 <h1>Question</h1>
-<div>
 <ol>
-
   <c:forEach items="${questions}" var="question">
      <li>${question.idCreateur} ${question.libelle}</li>
-     <form class="form" action="">
+    <div class="row"> 
+    <div class="column">
+      <form class="form" action="">
         <div class="bordered">
           <p>Veuillez choisir la meilleure option ci-dessous :</p>
           <div> <br>
@@ -46,7 +46,7 @@
           </div>
         </div>
       </form>
-  </c:forEach>
-  
+    </div>
+  </div>
+  </c:forEach> 
 </ol>
-</div>
