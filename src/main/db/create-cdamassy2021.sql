@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `question` (
   `id_canal` INT NOT NULL,
   `id_createur` INT NOT NULL,
   `id_type_question` INT NOT NULL,
-  `id_questionnaire` INT NOT NULL,
+  `id_questionnaire` INT,
   PRIMARY KEY (`id_question`),
   INDEX `fk_question_personne_idx` (`id_createur` ASC),
   INDEX `fk_question_canal_idx` (`id_canal` ASC),
@@ -156,6 +156,7 @@ CREATE TABLE IF NOT EXISTS `proposition` (
   `id_proposition` INT NOT NULL AUTO_INCREMENT,
   `id_question` INT NOT NULL,
   `libelle` VARCHAR(128) NOT NULL,
+  `est_correcte` TINYINT DEFAULT 0,
   PRIMARY KEY (`id_proposition`),
   INDEX `fk_option_question_question1_idx` (`id_question` ASC),
   CONSTRAINT `fk_option_question_question`
