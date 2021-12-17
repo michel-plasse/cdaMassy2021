@@ -6,6 +6,7 @@ package fr.cdamassy2021.dao;
 
 import fr.cdamassy2021.model.Question;
 import java.sql.SQLException;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -88,10 +89,26 @@ public class QuestionDaoTest extends Cdamassy2021Test {
         //then:
         assertEquals(null, result);
     }
+    
+    @Test
+    public void testgetAllWithinLimit() throws SQLException {
+        //given:
+        System.out.println("try getAllWithinLimit");
+        List<Question> questions = null;
+        
+        //when
+        questions = QuestionDao.getAllWithinLimit(1,10);
 
+        //then:
+        int expected = 7;
+        assertEquals(expected,questions.size());
+        for(Question q : questions){
+            System.out.println(q.toString());
+        }
+    }
 }
 //    @Test
-//    public void testFindAll() {
+//    public void getAllWithinLimit() {
 //        System.out.println("findAll");
 //        QuestionDao instance = new QuestionDao();
 //        ArrayList<Question> expResult = null;
