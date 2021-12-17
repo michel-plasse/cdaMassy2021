@@ -1,6 +1,8 @@
 /target/
 /nbproject/
 nb-configuration.xml
+src/main/.DS_Store
+.DS_Store
 .classpath
 .project
 .settings/.jsdtscope
@@ -12,5 +14,3 @@ nb-configuration.xml
 .settings/org.eclipse.wst.jsdt.ui.superType.container
 .settings/org.eclipse.wst.jsdt.ui.superType.name
 .settings/org.eclipse.wst.validation.prefs
-src/.DS_Store
-src/main/.DS_Store
