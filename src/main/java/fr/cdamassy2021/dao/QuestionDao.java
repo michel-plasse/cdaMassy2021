@@ -8,9 +8,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import fr.cdamassy2021.model.Question;
+import java.sql.Statement;
+import java.util.List;
 
 /**
  *
@@ -18,9 +19,9 @@ import fr.cdamassy2021.model.Question;
  */
 public class QuestionDao implements Dao<Question> {
 
-    private final String INSERT = "INSERT INTO question (id_canal,id_createur,libelle,id_type_question) VALUES ( ?, ?, ?, ?);";
-    private final String SELECTBYID = "SELECT * FROM question WHERE id_question=?";
-
+    private static final String INSERT = "INSERT INTO question (id_canal,id_createur,libelle,id_type_question) VALUES ( ?, ?, ?, ?);";
+    private static final String SELECTBYID = "SELECT * FROM question WHERE id_question=?";
+    private static final String TOUS_LES_MEMBRES = "SELECT * FROM question LIMIT ?, ?";
     public QuestionDao() {
 
     }
@@ -32,8 +33,8 @@ public class QuestionDao implements Dao<Question> {
         //compile la requete
         PreparedStatement stmt = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
         stmt.setLong(1, inserted.getCanalId());
-        stmt.setLong(2, inserted.getCreateurId());
-        stmt.setString(3, inserted.getStatement());
+        stmt.setLong(2, inserted.getIdCreateur());
+        stmt.setString(3, inserted.getLibelle());
         stmt.setInt(4, inserted.getType().ordinal());
 
         stmt.execute();
@@ -68,9 +69,8 @@ public class QuestionDao implements Dao<Question> {
                 found.setType(type);
                 found.setId(res.getInt("id_question"));
                 found.setCanalId(res.getInt("id_canal"));
-                found.setCreateurId(res.getInt("id_createur"));
-                found.setStatement(res.getString("libelle"));
-                System.out.println("found question with id"+found.getId());
+                found.setIdCreateur(res.getInt("id_createur"));
+                found.setLibelle(res.getString("libelle"));
             }
 
         } catch (SQLException e) {
@@ -79,6 +79,36 @@ public class QuestionDao implements Dao<Question> {
         return found;
     }
 
+      /**
+   * Liste de tous les membres, en paginant à raison de nbElementsParPage par page
+   * pour la page n° noPage
+   * @param noPage n° de la page à afficher (1ere = 1)
+   * @param nbElementsParPage nombre maximal de membres à retourner
+   * @return
+   * @throws SQLException 
+   */
+    public static List<Question> getAllWithinLimit(int noPage, int nbElementsParPage) throws SQLException {
+      // Mettre en dur le résultat
+      List<Question> result = new ArrayList();
+      Connection connection = Database.getConnection();
+      PreparedStatement stmt = connection.prepareStatement(TOUS_LES_MEMBRES);
+      stmt.setInt(1, nbElementsParPage * (noPage - 1));
+      stmt.setInt(2, nbElementsParPage);
+      ResultSet rs = stmt.executeQuery();
+      while (rs.next()) {
+        Question.TypeQuestion type
+        = Question.TypeQuestion.values()[rs.getInt("id_type_question")];
+        result.add(new Question(
+                rs.getInt("id_question"),
+                type,
+                rs.getInt("id_canal"),
+                rs.getInt("id_createur"),
+                rs.getString("libelle"),
+                null));
+      }
+        System.out.println(result.toString());
+      return result;
+    }
     @Override
     public ArrayList<Question> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
