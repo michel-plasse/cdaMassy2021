@@ -12,41 +12,22 @@
 <h1>Question</h1>
 <ol>
   <c:forEach items="${questions}" var="question">
-     <li>${question.idCreateur} ${question.libelle}</li>
-    <div class="row"> 
-    <div class="column">
-      <form class="form" action="">
-        <div class="bordered">
-          <p>Veuillez choisir la meilleure option ci-dessous :</p>
-          <div> <br>
-            <div class="reponseQuestion">
-              <input type="radio" name="card" id="option_1" value="option_1">
-              <label for="option_1" aria-label="option_1">
-                <span></span>
-                Option 1
-              </label>
-            </div>
-            <div class="option">
-              <input type="radio" name="card" id="option_2" value="option_2">
-              <label for="option_2" aria-label="option_2">
-                <span></span>
-                Option 2
-              </label>
-            </div>
-            <div class="option">
-              <input type="radio" name="card" id="option_3" value="option_3">
-              <label for="option_3" aria-label="option_3">
-                <span></span>
-                Other
-              </label>
-            </div>
-            <div class="button">
-              <button class="btn">Envoyer</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
+  <li>${question.idCreateur} ${question.libelle}</li>
+  
+  <H3>Bienvenu</H3>
+  <h4>Répondre aux questions</h4>
+   <p>Veuillez choisir la meilleure option ci-dessous :</p>
+   <div class="reponseQuestion">
+  <form class="form-question">
+ 
+  <label for="01">Option 1</label>
+  <input id="01" type="radio" name="r" value="1" checked>
+  <label for="02">Option 2</label>
+  <input id="02" type="radio" name="r" value="2">
+  <label for="03">Others</label>
+  <input id="03" type="radio" name="r" value="3">
+  <button class="btn">Envoyer</button>
+</form>
+</div>
   </c:forEach> 
 </ol>
