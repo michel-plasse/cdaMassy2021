@@ -1,3 +1,5 @@
 /target/
 /nbproject/
 nb-configuration.xml
+src/main/.DS_Store
+.DS_Store
