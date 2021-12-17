@@ -13,7 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Cette Servet Demo présente une redirection entre differentes Servlets<br>
+ * 
+ * Exemple d'application: Une redirection directe entre servlet nous permet<br>
+ * entre autre d'empêcher un double appel d'une sevlet d'insertion lorsqu'un <br>
+ * utilisateur actualise sa page web depuis son navigateur web.<br>
+
  * @author thoma
  */
 @WebServlet(name = "DemoRedirectServlet", urlPatterns = {"/DemoRedirect"})
@@ -44,7 +49,8 @@ public class DemoRedirectServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Servlet présentant la "
+                + "redirection entre deux Servlets";
     }// </editor-fold>
     
 }
