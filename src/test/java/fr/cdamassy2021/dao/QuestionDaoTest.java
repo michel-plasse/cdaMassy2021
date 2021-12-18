@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- *
+ * 
  *
  * @author thoma
  */
@@ -22,7 +22,7 @@ public class QuestionDaoTest extends Cdamassy2021Test {
     public QuestionDaoTest() {
     }
 
-    //@Test
+    @Test
     public void testInsert() throws Exception {
         System.out.println("try insert");
         //given:
@@ -113,7 +113,7 @@ public class QuestionDaoTest extends Cdamassy2021Test {
         //given:
         System.out.println("try testFindByIdPasTrouve");
         QuestionDao instance = new QuestionDao();
-        long testedId = 111;
+        long testedId = -1;
         //when
         Question result = instance.findById(testedId);
 
