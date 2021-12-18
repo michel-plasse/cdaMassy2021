@@ -35,6 +35,7 @@ public class QuestionDao implements Dao<Question> {
 
     /**
      * Insert une question sans proposition dans la base de donnée
+     *
      * @param inserted
      * @return isInsertionOk
      * @throws SQLException
@@ -62,8 +63,8 @@ public class QuestionDao implements Dao<Question> {
     }
 
     /**
-     * Insertion des 'Question' et de sa liste de 'Proposition' sur le
-     * modèle transactionnel.<br>
+     * Insertion des 'Question' et de sa liste de 'Proposition' sur le modèle
+     * transactionnel.<br>
      * Si l'insertion de la question ou de chacune des proposition de la <br>
      * liste échoue la transaction est annulée avec un connection.rollback()<br>
      * <br>
@@ -97,14 +98,13 @@ public class QuestionDao implements Dao<Question> {
                 // Le id est dans la 1ere colonne trouvee
                 inserted.setId(rs.getInt(1));
             }
-
+            //compile la requete insertion proposition
+            PreparedStatement stmt1
+                    = connection.prepareStatement(
+                            INSERT_PROPOSITION,
+                            Statement.RETURN_GENERATED_KEYS);
             // Inserer Propositions //
             for (Proposition p : propositions) {
-                //compile la requete insertion proposition
-                PreparedStatement stmt1
-                        = connection.prepareStatement(
-                                INSERT_PROPOSITION,
-                                Statement.RETURN_GENERATED_KEYS);
                 stmt1.setInt(1, inserted.getId());
                 stmt1.setString(2, p.getLibelle());
                 //Store la valeur de l'enum Correctness en DB.
@@ -123,6 +123,7 @@ public class QuestionDao implements Dao<Question> {
         } catch (Exception e) {
             System.out.println("error");
             connection.rollback();
+            throw e;
         }
         return isCommit;
     }
@@ -169,8 +170,8 @@ public class QuestionDao implements Dao<Question> {
     }
 
     /**
-     * Liste de toutes les questions, en paginant à raison de nbElementsParPage par
-     * page pour la page n° noPage
+     * Liste de toutes les questions, en paginant à raison de nbElementsParPage
+     * par page pour la page n° noPage
      *
      * @param noPage n° de la page à afficher (1ere = 1)
      * @param nbElementsParPage nombre maximal de questions à retourner
