@@ -27,9 +27,18 @@ public class QuestionDao implements Dao<Question> {
     private static final String ALL_QUESTIONS = "SELECT * FROM question LIMIT ?, ?";
     private static final String INSERT_PROPOSITION = "INSERT INTO proposition (id_question,libelle,est_correcte) VALUES ( ?, ?, ?);";
 
+    /**
+     * class default constructor
+     */
     public QuestionDao() {
     }
 
+    /**
+     * Insert une question sans proposition dans la base de donnée
+     * @param inserted
+     * @return isInsertionOk
+     * @throws SQLException
+     */
     @Override
     public boolean insert(Question inserted) throws SQLException {
         Boolean result = false;
@@ -52,15 +61,21 @@ public class QuestionDao implements Dao<Question> {
         return result;
     }
 
-    /*
-    *  Transaction : Si l'insertion de Question 
-    * ou de chacune des Proposition de la liste échoue
-    * la transaction est annulée et la connection.rollback()
-    *  
+    /**
+     * Insertion des 'Question' et de sa liste de 'Proposition' sur le
+     * modèle transactionnel.<br>
+     * Si l'insertion de la question ou de chacune des proposition de la <br>
+     * liste échoue la transaction est annulée avec un connection.rollback()<br>
+     * <br>
+     *
+     * @param inserted : question à inserer dans la DB<br>
+     * @param propositions : reponses possibles relatives à la question<br>
+     * @return isCommit: true si l'insertion s'est passée comme prévu.<br>
+     * @throws SQLException <br>
      */
-    public boolean insert(Question insertedQuestion, List<Proposition> propositions)
+    public boolean insert(Question inserted, List<Proposition> propositions)
             throws SQLException {
-        Boolean result = false;
+        Boolean isCommit = false;
         Connection connection = Database.getConnection();
         try {
             connection.setAutoCommit(false);
@@ -71,16 +86,16 @@ public class QuestionDao implements Dao<Question> {
                     = connection.prepareStatement(
                             INSERT_QUESTION,
                             Statement.RETURN_GENERATED_KEYS);
-            stmt.setLong(1, insertedQuestion.getCanalId());
-            stmt.setLong(2, insertedQuestion.getIdCreateur());
-            stmt.setString(3, insertedQuestion.getLibelle());
-            stmt.setInt(4, insertedQuestion.getType().ordinal());
+            stmt.setLong(1, inserted.getCanalId());
+            stmt.setLong(2, inserted.getIdCreateur());
+            stmt.setString(3, inserted.getLibelle());
+            stmt.setInt(4, inserted.getType().ordinal());
             stmt.execute();
             // Récupérer le id auto-incrémenté
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next()) {
                 // Le id est dans la 1ere colonne trouvee
-                insertedQuestion.setId(rs.getInt(1));
+                inserted.setId(rs.getInt(1));
             }
 
             // Inserer Propositions //
@@ -90,7 +105,7 @@ public class QuestionDao implements Dao<Question> {
                         = connection.prepareStatement(
                                 INSERT_PROPOSITION,
                                 Statement.RETURN_GENERATED_KEYS);
-                stmt1.setInt(1, insertedQuestion.getId());
+                stmt1.setInt(1, inserted.getId());
                 stmt1.setString(2, p.getLibelle());
                 //Store la valeur de l'enum Correctness en DB.
                 Proposition.Correctness correctness = p.getIsCorrect();
@@ -104,19 +119,29 @@ public class QuestionDao implements Dao<Question> {
                 }
             }
             connection.commit();
+            isCommit = true;
         } catch (Exception e) {
             System.out.println("error");
             connection.rollback();
         }
-        result = true;
-        return result;
+        return isCommit;
     }
 
+    /**
+     *
+     * @param deleted
+     */
     @Override
     public void delete(Question deleted) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Question findById(long id) throws SQLException {
         Connection connection = Database.getConnection();
@@ -144,11 +169,11 @@ public class QuestionDao implements Dao<Question> {
     }
 
     /**
-     * Liste de tous les membres, en paginant à raison de nbElementsParPage par
+     * Liste de toutes les questions, en paginant à raison de nbElementsParPage par
      * page pour la page n° noPage
      *
      * @param noPage n° de la page à afficher (1ere = 1)
-     * @param nbElementsParPage nombre maximal de membres à retourner
+     * @param nbElementsParPage nombre maximal de questions à retourner
      * @return
      * @throws SQLException
      */
@@ -175,6 +200,10 @@ public class QuestionDao implements Dao<Question> {
         return result;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public ArrayList<Question> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
