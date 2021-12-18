@@ -96,10 +96,13 @@ public class CreerQuestionServlet extends HttpServlet {
             //creates List<Proposition>:
             ArrayList<Proposition> newPropositions = new ArrayList();
             for (String libelleProposition : allPropositions){
-                newPropositions.add(
+                // retire les propositions dont le libelle n'a pas été renseigné
+                if (libelleProposition.length()>0){
+                    newPropositions.add(
                         new Proposition(-1,
                                 Proposition.Correctness.UNDEFINED,
                                 libelleProposition));
+                }
             }
 
             try {
