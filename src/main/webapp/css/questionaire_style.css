@@ -1,59 +1,66 @@
-body{
-	z-index:1;
+body {
+	background: #E8EBF3;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-self: center;
 }
- .form-question {
-    --background: #ffffff;
-    --text: #414856;
-    --radio: #7C96B2;
-    --radio-checked: #4F29F0;
-    --radio-size: 20px;
-    --width: 100px;
-    --height: 140px;
-    --border-radius: 10px;
-    background: var(--background);
-    width: var(--width);
-    height: var(--height);
-    border-radius: var(--border-radius);
-    color: var(--text);
-  
-    box-shadow: 0 10px 30px rgba(65, 72, 86, 0.05);
-    padding: 30px 45px;
-    display: grid;
-    grid-template-columns: auto var(--radio-size);
-    align-items: center;
-  }
-  .form-question label {
-    cursor: pointer;
-  }
- 
-  
-  @-webkit-keyframes stretch-animate {
-    0% {
-      transform: scale(1, 1);
-    }
-    28% {
-      transform: scale(1.15, 0.85);
-    }
-    50% {
-      transform: scale(0.9, 1.1);
-    }
-    100% {
-      transform: scale(1, 1);
-    }
-  }
-  
-  @keyframes stretch-animate {
-    0% {
-      transform: scale(1, 1);
-    }
-    28% {
-      transform: scale(1.15, 0.85);
-    }
-    50% {
-      transform: scale(0.9, 1.1);
-    }
-    100% {
-      transform: scale(1, 1);
-    }
-  }
+
+.form-question {
+	--background: #ffffff;
+	--text: #414856;
+	--radio: #7C96B2;
+	--radio-checked: #4F29F0;
+	--radio-size: 25px;
+	--max-width: 30px;
+	--max-height: 100%;
+	--border-radius: 10px;
+	background: var(--background);
+	width: var(--width);
+	height: var(--height);
+	border-radius: var(--border-radius);
+	color: var(--text);
+	box-shadow: 0 10px 30px rgba(65, 72, 86, 0.05);
+	padding: 30px 45px;
+	display: grid;
+	grid-template-columns: auto var(--radio-size);
+}
+
+.form-question input:focus {
+	background: #eaeaea;
+}
+
+.form-question input,
+textarea {
+	width: auto;
+}
+
+.form-question textarea {
+	height: 100px;
+}
+
+.form-question select {
+	width: auto;
+}
+
+.form-question input[type=checkbox] {
+	width: 10px;
+}
+
+.form-question input[type=submit] {
+	width: auto;
+	padding: 10px;
+}
+
+.form-question fieldset {
+	margin-bottom: 15px;
+	padding: 10px;
+}
+
+.form-question label {
+	width: auto;
+	display: inline-block;
+	vertical-align: top;
+	margin: 6px;
+}
 
