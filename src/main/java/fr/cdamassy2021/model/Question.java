@@ -87,6 +87,7 @@ public class Question {
      * CTOR:(default)
      */
     public Question() {
+        propositions = new ArrayList<>();
     }
 
     /*POJO*/
@@ -130,7 +131,7 @@ public class Question {
         this.libelle = enonceQuestion;
     }
 
-    public ArrayList<Proposition> getOptionReponsesIds() {
+    public ArrayList<Proposition> getPropositions() {
         return propositions;
     }
 
