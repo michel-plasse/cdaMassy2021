@@ -5,7 +5,7 @@
 <h1>Canaux</h1>
 <nav>
   <c:forEach items="${canaux}" var="canal">
-    <a href="canal?idCanal=${canal.id}">${canal.nom}</a>
+    <a href="membrecanal?idCanal=${canal.idCanal}">${canal.nomCanal}</a>
     ${message}
   </c:forEach>
 </nav>
