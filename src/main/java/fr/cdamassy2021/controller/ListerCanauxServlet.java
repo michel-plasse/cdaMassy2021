@@ -17,9 +17,10 @@ import fr.cdamassy2021.dao.CanalDao;
 import fr.cdamassy2021.model.Canal;
 
 /**
- *
- * @author michel
- */
+*
+* @author borel,beatrice,huawei
+*/
+
 @WebServlet(name = "ListerCanauxServlet", urlPatterns = {"/canaux"})
 public class ListerCanauxServlet extends HttpServlet {
 
@@ -39,9 +40,9 @@ public class ListerCanauxServlet extends HttpServlet {
           throws ServletException, IOException {
     String vue = VUE_OK;
     try {
-      // Les paramètres encore en dur
+      // je reccupere la liste que me renvoi ma Dao
       List<Canal> canaux = CanalDao.getAllCanaux();
-      // Mettre en post-it les membres
+      // Mettre en post-it les canaux afin de les reccuperer dans la jsp 
       request.setAttribute("canaux", canaux);
     } catch (SQLException exc) {
       vue = VUE_ERREUR;
