@@ -73,9 +73,9 @@ public class QuestionDaoTest extends Cdamassy2021Test {
         }
         assertEquals(true, result);
         assertEquals(8, insertedQuestion.getId());
-        assertEquals(16, prop1.getIdProposition());
-        assertEquals(17, prop2.getIdProposition());
-        assertEquals(18, prop3.getIdProposition());
+        assertEquals(18, prop1.getIdProposition());
+        assertEquals(19, prop2.getIdProposition());
+        assertEquals(20, prop3.getIdProposition());
 
     }
 
@@ -105,7 +105,9 @@ public class QuestionDaoTest extends Cdamassy2021Test {
                 "Combien de temps voulez-vous pour ce TP ?",
                 null);
 
+        
         assertEquals(expResult, result);
+        assertEquals(3, result.getPropositions().size());
     }
 
     @Test
@@ -133,8 +135,16 @@ public class QuestionDaoTest extends Cdamassy2021Test {
         //then:
         int expected = 7;
         assertEquals(expected, questions.size());
-        for (Question q : questions) {
-            System.out.println(q.toString());
+
+        int expectedNbPropositions = 17;
+        int actualNbProposition = 0;
+        for(Question q : questions){
+            for(Proposition p : q.getPropositions())
+            {
+                actualNbProposition ++;
+            }
         }
+        System.out.println("props count="+ actualNbProposition);
+        assertEquals(expectedNbPropositions,actualNbProposition);
     }
 }
