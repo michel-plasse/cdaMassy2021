@@ -26,6 +26,8 @@ public class QuestionDao implements Dao<Question> {
     private static final String SELECT_BY_ID = "SELECT * FROM question WHERE id_question=?";
     private static final String ALL_QUESTIONS = "SELECT * FROM question LIMIT ?, ?";
     private static final String INSERT_PROPOSITION = "INSERT INTO proposition (id_question,libelle,est_correcte) VALUES ( ?, ?, ?);";
+    private static final String SELECT_PROPOSITIONS_WITH_QUESTION_ID
+            = "SELECT * FROM proposition WHERE id_question=?;";
 
     /**
      * class default constructor
@@ -149,6 +151,7 @@ public class QuestionDao implements Dao<Question> {
         PreparedStatement preparedStatement = null;
         Question found = null;
         try {
+            // Chercher l'ID puis et initialiser l'objet Question
             preparedStatement = connection.prepareStatement(SELECT_BY_ID);
             preparedStatement.setLong(1, id);
             ResultSet res = preparedStatement.executeQuery();
@@ -161,8 +164,25 @@ public class QuestionDao implements Dao<Question> {
                 found.setCanalId(res.getInt("id_canal"));
                 found.setIdCreateur(res.getInt("id_createur"));
                 found.setLibelle(res.getString("libelle"));
+                
+                // Chercher les proposition, les intialiser et 
+                //ajouter à l'objet question.
+                preparedStatement = connection.prepareStatement(
+                        SELECT_PROPOSITIONS_WITH_QUESTION_ID);
+                preparedStatement.setLong(1, id);
+                ResultSet resProps = preparedStatement.executeQuery();
+                ArrayList<Proposition> resList = found.getPropositions();
+                while (resProps.next()) {
+                    Proposition pFound = new Proposition();
+                    pFound.setIdProposition(resProps.getInt("id_proposition"));
+                    Proposition.Correctness correctness
+                            = Proposition.Correctness.values()[resProps.getInt("est_correcte")];
+                    pFound.setIsCorrect(correctness);
+                    pFound.setIdQuestion(resProps.getInt("id_question"));
+                    pFound.setLibelle(resProps.getString("libelle"));
+                    resList.add(pFound);
+                }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

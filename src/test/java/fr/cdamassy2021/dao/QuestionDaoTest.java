@@ -105,7 +105,9 @@ public class QuestionDaoTest extends Cdamassy2021Test {
                 "Combien de temps voulez-vous pour ce TP ?",
                 null);
 
+        
         assertEquals(expResult, result);
+        assertEquals(6, result.getPropositions().size());
     }
 
     @Test
