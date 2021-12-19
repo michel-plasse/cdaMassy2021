@@ -10,13 +10,12 @@
 <p:header title="CDA Massy 2021"/>
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/questionaire_style.css" />
 <h1>Question</h1>
+ <H3>Bienvenu</H3>
+  <h4>Répondre aux questions</h4>
 <ol>
   <c:forEach items="${questions}" var="question">
-  <li>${question.idCreateur} ${question.libelle}</li>
-  
-  <H3>Bienvenu</H3>
-  <h4>Répondre aux questions</h4>
-   <p>Veuillez choisir la meilleure option ci-dessous :</p>
+  <li>${question.idCreateur} ${question.libelle}</li><br>
+   <p><i>Veuillez choisir la meilleure option ci-dessous :</i></p>
    <div class="reponseQuestion">
   <form class="form-question">
  
