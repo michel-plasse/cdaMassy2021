@@ -140,9 +140,10 @@ public class QuestionDao implements Dao<Question> {
     }
 
     /**
-     *
-     * @param id
-     * @return
+     * Renvoit la 'Question' qui a pour id celui passé en paramètre et l'initialise avec
+     * la liste de ses 'Proposition' de réponses.
+     * @param id de la 'Question' à chercher.
+     * @return la 'Question' recherchée.
      * @throws SQLException
      */
     @Override
@@ -164,7 +165,7 @@ public class QuestionDao implements Dao<Question> {
                 found.setCanalId(res.getInt("id_canal"));
                 found.setIdCreateur(res.getInt("id_createur"));
                 found.setLibelle(res.getString("libelle"));
-                
+
                 // Chercher les proposition, les intialiser et 
                 //ajouter à l'objet question.
                 preparedStatement = connection.prepareStatement(
@@ -190,9 +191,11 @@ public class QuestionDao implements Dao<Question> {
     }
 
     /**
-     * Liste de toutes les questions, en paginant à raison de nbElementsParPage
+     * Liste de toutes les questions avec leurs propositions de réponse,
+     * en paginant à raison de nbElementsParPage
+     * 
      * par page pour la page n° noPage
-     *
+     * 
      * @param noPage n° de la page à afficher (1ere = 1)
      * @param nbElementsParPage nombre maximal de questions à retourner
      * @return
@@ -202,22 +205,40 @@ public class QuestionDao implements Dao<Question> {
         // Mettre en dur le résultat
         List<Question> result = new ArrayList();
         Connection connection = Database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(ALL_QUESTIONS);
-        stmt.setInt(1, nbElementsParPage * (noPage - 1));
-        stmt.setInt(2, nbElementsParPage);
-        ResultSet rs = stmt.executeQuery();
+        PreparedStatement selectQuestionStmt = connection.prepareStatement(ALL_QUESTIONS);
+        PreparedStatement selectPropsStmt = connection.prepareStatement(
+                SELECT_PROPOSITIONS_WITH_QUESTION_ID);
+        selectQuestionStmt.setInt(1, nbElementsParPage * (noPage - 1));
+        selectQuestionStmt.setInt(2, nbElementsParPage);
+        ResultSet rs = selectQuestionStmt.executeQuery();
         while (rs.next()) {
             Question.TypeQuestion type
                     = Question.TypeQuestion.values()[rs.getInt("id_type_question")];
-            result.add(new Question(
+            ArrayList<Proposition> propsList = new ArrayList<Proposition>();
+            Question found = new Question(
                     rs.getInt("id_question"),
                     type,
                     rs.getInt("id_canal"),
                     rs.getInt("id_createur"),
                     rs.getString("libelle"),
-                    null));
+                    propsList);
+            result.add(found);
+            // Chercher les proposition, les intialiser et 
+            //ajouter à l'objet question.
+            selectPropsStmt.setLong(1, found.getId());
+            ResultSet resProps = selectPropsStmt.executeQuery();
+            while (resProps.next()) {
+                Proposition pFound = new Proposition();
+                pFound.setIdProposition(resProps.getInt("id_proposition"));
+                Proposition.Correctness correctness
+                        = Proposition.Correctness.values()[resProps.getInt("est_correcte")];
+                pFound.setIsCorrect(correctness);
+                pFound.setIdQuestion(resProps.getInt("id_question"));
+                pFound.setLibelle(resProps.getString("libelle"));
+                propsList.add(pFound);
+            }
+            System.out.println(result.toString());
         }
-        System.out.println(result.toString());
         return result;
     }
 
