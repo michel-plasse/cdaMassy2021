@@ -1,6 +1,4 @@
-DELIMITER $$
-DROP PROCEDURE IF EXISTS reset_cdamassy2021$$
-CREATE PROCEDURE reset_cdamassy2021(date_effet DATETIME)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reset_cdamassy2021`(date_effet DATETIME)
 BEGIN
 	CALL truncate_all_tables();
   IF date_effet IS NULL THEN
@@ -63,8 +61,29 @@ BEGIN
 			(4, "Chassez l'intrus",1,2,3,1), -- portée
 			(5, 'Que vaut s, avec String s = "0" + 1 ?', 1, 1, 3,1), -- plusieurs choix 
 			(6, "Quel fruit est un fruit d'hiver ?", 1, 1, 3,2), -- plusieurs choix 
-			(7, "Quel légume est le plus riche en vitamine C ?", 1, 1, 3,2); -- plusieurs choix 
-		
+			(7, "Quel légume est le plus riche en vitamine C ?", 1, 1, 3,2); -- plusieurs choix
+            
+		INSERT INTO proposition(id_proposition, id_question, libelle, est_correcte) VALUES
+			-- 2 questions dans les 2 questionnaires (1= Java, 2=fruits et légumes)
+			(1, 4, 'private', 0), -- portée
+			(2, 4, 'protege', 1),
+			(3, 4, 'public', 0),
+			(4, 5, '1', 0), -- Que vaut s, avec String s = "0" + 1 ?'
+			(5, 5, '01', 1),
+			(6, 5, 'erreur', 0),
+			(7, 6, 'kaki', 1), -- Quel fruit est un fruit d'hiver ?
+			(8, 6, 'melon', 0),
+			(9, 6, 'orange', 1),
+			(10, 7, 'chou', 1), -- Quel légume est le plus riche en vitamine C ?
+			(11, 7, 'carotte', 0),
+			(12, 7, 'epinard', 0),
+            (13, 1, 'oui', 0),
+            (14, 1, 'non', 0),
+			-- sondages
+			(15, 2, '1/2h', null),
+			(16, 2, '1h', null),
+			(17, 2, '1h30', null);
+      
         INSERT INTO membre_canal(id_canal, id_personne, ajoute_a) VALUES
 			-- les 2 formateurs dans canal 1
 			(1, 1, date_effet - INTERVAL 2 MONTH),
@@ -80,6 +99,8 @@ BEGIN
 			(2, 3, date_effet - INTERVAL 1 MONTH),
 			(2, 4, date_effet - INTERVAL 1 MONTH),
 			(2, 5, date_effet - INTERVAL 1 MONTH);
+            
+
 		INSERT INTO questionnaire(id_questionnaire, id_createur,id_canal, libelle) VALUES
 			(1, 1, 1, 'Bases de Java'),
 			(2, 1, 1, 'Fruits et légumes');
@@ -92,24 +113,7 @@ BEGIN
       (2, 3),
       (2, 5);
 
-		INSERT INTO proposition(id_proposition, id_question, libelle, est_correcte) VALUES
-			-- 2 questions dans les 2 questionnaires (1= Java, 2=fruits et légumes)
-      (1, 1, 'private', 0), -- portée
-      (2, 1, 'protege', 1),
-      (3, 1, 'public', 0),
-      (4, 2, '1', 0), -- Que vaut s, avec String s = "0" + 1 ?'
-      (5, 2, '01', 1),
-      (6, 2, 'erreur', 0),
-      (7, 3, 'kaki', 1), -- Quel fruit est un fruit d'hiver ?
-      (8, 3, 'melon', 0),
-      (9, 3, 'orange', 1),
-      (10, 4, 'chou', 1), -- Quel légume est le plus riche en vitamine C ?
-      (11, 4, 'carotte', 0),
-      (12, 4, 'epinard', 0),
-			-- sondages
-      (13, 2, '1/2h', null),
-      (14, 2, '1h', null),
-      (15, 2, '1h30', null);
+
         
 		INSERT INTO reponse(id_question, id_personne, libelle) VALUES
 			-- question 1 avez-vous fini
@@ -147,13 +151,4 @@ BEGIN
       -- Valider tout
       COMMIT;
 	END;
-END$$
-
-DROP PROCEDURE IF EXISTS reset_to_now$$
-CREATE PROCEDURE reset_to_now()
-BEGIN
-  CALL reset_cdamassy2021(NOW());
-END$$
-
-CALL reset_to_now()$$
-CALL reset_to_now()
+END
