@@ -26,7 +26,7 @@ public class CanalDao {
 	  /**
 	   * Canal d'id et de nom donnés.
 	   * Classe le resultat par id et renvoie null si pas trouvé
-	   * @return
+	   * @return Une liste de Canal
 	   * @throws SQLException
 	   */
 	  public static List<Canal> getAllCanaux() throws SQLException {
@@ -70,7 +70,7 @@ public class CanalDao {
 	   * renvoi l'ensemble des membre en fonction de l'id et renvoie null si pas trouvé
 	   * 
 	   * @param idCanal
-	   * @return
+	   * @return  Une liste de Personne
 	   * @throws SQLException
 	   */
 	public static List<Personne> getMembresDuCanal(int idCanal) throws SQLException {
