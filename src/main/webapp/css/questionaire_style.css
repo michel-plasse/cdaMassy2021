@@ -1,66 +1,68 @@
 body {
-	background: #E8EBF3;
-	height: 100vh;
-	display: flex;
-	flex-direction: column;
-	align-self: center;
+    background: #E8EBF3;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
 }
 
 .form-question {
-	--background: #ffffff;
-	--text: #414856;
-	--radio: #7C96B2;
-	--radio-checked: #4F29F0;
-	--radio-size: 25px;
-	--max-width: 30px;
-	--max-height: 100%;
-	--border-radius: 10px;
-	background: var(--background);
-	width: var(--width);
-	height: var(--height);
-	border-radius: var(--border-radius);
-	color: var(--text);
-	box-shadow: 0 10px 30px rgba(65, 72, 86, 0.05);
-	padding: 30px 45px;
-	display: grid;
-	grid-template-columns: auto var(--radio-size);
+    --background: #ffffff;
+    --text: #414856;
+    --radio: #7C96B2;
+    --radio-checked: #4F29F0;
+    --radio-size: 25px;
+    --max-width: 30px;
+    --max-height: 100%;
+    --border-radius: 10px;
+    background: var(--background);
+    width: var(--width);
+    height: var(--height);
+    border-radius: var(--border-radius);
+    color: var(--text);
+    box-shadow: 0 10px 30px rgba(65, 72, 86, 0.05);
+    padding: 20px 32px;
+    grid-template-columns: auto var(--radio-size);
+    margin: 12px;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-question input:focus {
-	background: #eaeaea;
+    background: #eaeaea;
 }
 
 .form-question input,
 textarea {
-	width: auto;
+    width: auto;
 }
 
 .form-question textarea {
-	height: 100px;
+    height: 80px;
 }
 
 .form-question select {
-	width: auto;
+    width: auto;
 }
 
 .form-question input[type=checkbox] {
-	width: 10px;
+    width: 10px;
 }
 
 .form-question input[type=submit] {
-	width: auto;
-	padding: 10px;
+    width: auto;
+    padding: 10px;
 }
 
 .form-question fieldset {
-	margin-bottom: 15px;
-	padding: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
 }
 
 .form-question label {
-	width: auto;
-	display: inline-block;
-	vertical-align: top;
-	margin: 6px;
+    width: auto;
+    display: inline-block;
+    vertical-align: top;
+    margin: 6px;
 }
 

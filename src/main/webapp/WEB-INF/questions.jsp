@@ -4,7 +4,7 @@
    Document   : questions
    Created on : 17 déc. 2021, 02:52:58
    Author     : thoma
-   --%>
+--%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="p" tagdir="/WEB-INF/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,24 +13,34 @@
 <h1>Question</h1>
 <H3>Bienvenu</H3>
 <h4>Répondre aux questions</h4>
-<div class="questionLayout">
-   <ol>
-      <c:forEach items="${questions}" var="question">
-         <form class="form-question">
-            <li><b>${question.idCreateur} ${question.libelle}</b></li>
-            <br>
-            <p><i>Veuillez choisir la meilleure option ci-dessous :</i></p>
-            <br>
-            <label for="01">Option 1</label>
-            <input id="01" type="radio" name="r" value="1" checked>
-            <label for="02">Option 2</label>
-            <input id="02" type="radio" name="r" value="2">
-            <label for="03">Others</label>
-            <input id="03" type="radio" name="r" value="3">
+<form>
+    <div class="questionLayout">
+        <ol>
+            <c:forEach items="${questions}" var="question">
+                <div class="form-question">
+                    <li> <b>${question.libelle}</b></li>
+                    <br> autorId:${question.idCreateur}
+                    <c:if test="${question.propositions.size() gt 1}">
+                        <p><i> Choisissez une réponses: </i></p>
+                        <br>
+                    </c:if>
+                    <c:forEach items="${question.getPropositions()}" var="proposition">
+                        <div>
+                            <input id="01" type="radio" name="r" value="1" checked>
+                            <label for="01">${proposition.libelle}</label>
+                        </div>
+                    </c:forEach>
+                    <c:if test="${question.propositions.size() lt 1}">
+                     <br>
+                    <p><i> Inscrivez votre réponse: </i></p>
+                    <textarea type="text" size="80px"  placeholder="..."></textarea>
+                    <br>
+                    </c:if>
+                </div>
+            </c:forEach>
             <button class="btn">Envoyer</button>
-         </form>
-         <br>
-      </c:forEach>
-   </ol>
-</div>
+            <br>
+        </ol>
+    </div>
+</form>
 
