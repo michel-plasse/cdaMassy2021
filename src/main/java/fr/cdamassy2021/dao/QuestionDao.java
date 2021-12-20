@@ -23,11 +23,30 @@ import java.util.List;
 public class QuestionDao implements Dao<Question> {
 
     private static final String INSERT_QUESTION = "INSERT INTO question (id_canal,id_createur,libelle,id_type_question) VALUES ( ?, ?, ?, ?);";
-    private static final String SELECT_BY_ID = "SELECT * FROM question WHERE id_question=?";
-    private static final String ALL_QUESTIONS = "SELECT * FROM question LIMIT ?, ?";
     private static final String INSERT_PROPOSITION = "INSERT INTO proposition (id_question,libelle,est_correcte) VALUES ( ?, ?, ?);";
+    private static final String SELECT_BY_QUESTION_ID
+            = "SELECT  q.*, p.nom, p.prenom\n"
+            + "FROM question q\n"
+            + "	INNER JOIN \n"
+            + "		personne p \n"
+            + "			ON p.id_personne = q.id_createur\n"
+            + "WHERE id_question = ?;";
+    private static final String SELECT_ALL_QUESTIONS_IN_LIMIT
+            = "SELECT q.*, p.prenom, p.nom\n"
+            + "FROM question q\n"
+            + "	INNER JOIN\n"
+            + "		personne p\n"
+            + "			ON q.id_createur = p.id_personne\n" 
+            + "LIMIT ?, ?;";
     private static final String SELECT_PROPOSITIONS_WITH_QUESTION_ID
             = "SELECT * FROM proposition WHERE id_question=?;";
+    private static final String SELECT_ALL_BY_CREATOR = ""
+            + "SELECT q.*, p.prenom, p.nom"
+            + "FROM question q"
+            + "     INNER JOIN"
+            + "         personne p"
+            + "         ON q.id_createur = ?"
+            + "LIMIT ?, ?;";
 
     /**
      * class default constructor
@@ -140,8 +159,9 @@ public class QuestionDao implements Dao<Question> {
     }
 
     /**
-     * Renvoit la 'Question' qui a pour id celui passé en paramètre et l'initialise avec
-     * la liste de ses 'Proposition' de réponses.
+     * Renvoit la 'Question' qui a pour id celui passé en paramètre et
+     * l'initialise avec la liste de ses 'Proposition' de réponses.
+     *
      * @param id de la 'Question' à chercher.
      * @return la 'Question' recherchée.
      * @throws SQLException
@@ -153,7 +173,7 @@ public class QuestionDao implements Dao<Question> {
         Question found = null;
         try {
             // Chercher l'ID puis et initialiser l'objet Question
-            preparedStatement = connection.prepareStatement(SELECT_BY_ID);
+            preparedStatement = connection.prepareStatement(SELECT_BY_QUESTION_ID);
             preparedStatement.setLong(1, id);
             ResultSet res = preparedStatement.executeQuery();
             if (res.next()) {
@@ -191,11 +211,11 @@ public class QuestionDao implements Dao<Question> {
     }
 
     /**
-     * Liste de toutes les questions avec leurs propositions de réponse,
-     * en paginant à raison de nbElementsParPage
-     * 
+     * Liste de toutes les questions avec leurs propositions de réponse, en
+     * paginant à raison de nbElementsParPage
+     *
      * par page pour la page n° noPage
-     * 
+     *
      * @param noPage n° de la page à afficher (1ere = 1)
      * @param nbElementsParPage nombre maximal de questions à retourner
      * @return
@@ -205,7 +225,7 @@ public class QuestionDao implements Dao<Question> {
         // Mettre en dur le résultat
         List<Question> result = new ArrayList();
         Connection connection = Database.getConnection();
-        PreparedStatement selectQuestionStmt = connection.prepareStatement(ALL_QUESTIONS);
+        PreparedStatement selectQuestionStmt = connection.prepareStatement(SELECT_ALL_QUESTIONS_IN_LIMIT);
         PreparedStatement selectPropsStmt = connection.prepareStatement(
                 SELECT_PROPOSITIONS_WITH_QUESTION_ID);
         selectQuestionStmt.setInt(1, nbElementsParPage * (noPage - 1));
@@ -220,6 +240,7 @@ public class QuestionDao implements Dao<Question> {
                     type,
                     rs.getInt("id_canal"),
                     rs.getInt("id_createur"),
+                    rs.getString("prenom")+" "+rs.getString("nom"),
                     rs.getString("libelle"),
                     propsList);
             result.add(found);

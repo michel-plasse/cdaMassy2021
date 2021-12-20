@@ -43,6 +43,13 @@ public class Proposition {
     	
     }
 
+    	public Proposition(Correctness isCorrect, String libelle) {
+		super();
+		this.idQuestion = idQuestion;
+		this.isCorrect = isCorrect;
+		this.libelle = libelle;
+	}
+        
 	public Proposition(int idQuestion, Correctness isCorrect, String libelle) {
 		super();
 		this.idQuestion = idQuestion;

@@ -10,18 +10,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <p:header title="CDA Massy 2021"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/questionaire_style.css" />
-<h1>Question</h1>
-<H3>Bienvenu</H3>
-<h4>Répondre aux questions</h4>
+<h1>Questionnaire</h1>
+<h3>Répondre aux questions</h3>
 <form>
     <div class="questionLayout">
-        <ol>
             <c:forEach items="${questions}" var="question">
                 <div class="form-question">
-                    <li> <b>${question.libelle}</b></li>
-                    <br> autorId:${question.idCreateur}
+                    <div class="intituleQuestion" id="intituleQuestion">
+                            <b>${question.libelle}</b>
+                            <p> auteur: ${question.nomAuteur}<p>
+                    </div>
                     <c:if test="${question.propositions.size() gt 1}">
-                        <p><i> Choisissez une réponses: </i></p>
                         <br>
                     </c:if>
                     <c:forEach items="${question.getPropositions()}" var="proposition">
@@ -31,16 +30,16 @@
                         </div>
                     </c:forEach>
                     <c:if test="${question.propositions.size() lt 1}">
-                     <br>
-                    <p><i> Inscrivez votre réponse: </i></p>
-                    <textarea type="text" size="80px"  placeholder="..."></textarea>
-                    <br>
+                        <br>
+                        <p><i> Inscrivez votre réponse: </i></p>
+                        <textarea type="text" size="80px"  placeholder="..."></textarea>
+                        <br>
                     </c:if>
                 </div>
             </c:forEach>
             <button class="btn">Envoyer</button>
             <br>
-        </ol>
     </div>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/questionaire_style.css" />
 </form>
 

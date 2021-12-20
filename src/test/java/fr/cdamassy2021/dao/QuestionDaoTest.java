@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * 
+ * Cette classe teste les select et insertion de la classe QuestionDao.
  *
  * @author thoma
  */
@@ -30,10 +30,9 @@ public class QuestionDaoTest extends Cdamassy2021Test {
         String enonceQuestion
                 = "dites-moi si vous me trouvez dans la"
                 + "database après le test d'insertion";
-        int idTest = -1;
         int idCanalTest = 1;
         int idAuteurTest = 2;
-        Question inserted = new Question(idTest, Question.TypeQuestion.QCM, idAuteurTest, idCanalTest, enonceQuestion, null);;
+        Question inserted = new Question(Question.TypeQuestion.QCM, idAuteurTest, idCanalTest, enonceQuestion, null);;
         boolean expResult = true;
         //when:
         boolean result = instance.insert(inserted);
@@ -50,16 +49,15 @@ public class QuestionDaoTest extends Cdamassy2021Test {
         //given:
         // Une Question 
         String enonceQuestion = "Je suis un TEST d'insertion";
-        int idQuestion = -2;
         int idCanalTest = 1;
         int idAuteurTest = 2;
-        Question insertedQuestion = new Question(idQuestion, Question.TypeQuestion.QCM, idAuteurTest, idCanalTest, enonceQuestion, null);
+        Question insertedQuestion = new Question(Question.TypeQuestion.QCM, idAuteurTest, idCanalTest, enonceQuestion, null);
 
         // Une List<Proposition>
         List<Proposition> testedPropositions = new ArrayList<Proposition>();
-        Proposition prop1 = new Proposition(idQuestion, Proposition.Correctness.CORRECT, "Je suis un TEST insertion propos est_correct 1");
-        Proposition prop2 = new Proposition(idQuestion, Proposition.Correctness.INCORRECT, "Je suis un TEST insertion propos est_correct 0");
-        Proposition prop3 = new Proposition(idQuestion, Proposition.Correctness.UNDEFINED, "Je suis un TEST insertion propos est_correct 2");
+        Proposition prop1 = new Proposition(Proposition.Correctness.CORRECT, "Je suis un TEST insertion propos est_correct 1");
+        Proposition prop2 = new Proposition(Proposition.Correctness.INCORRECT, "Je suis un TEST insertion propos est_correct 0");
+        Proposition prop3 = new Proposition(Proposition.Correctness.UNDEFINED, "Je suis un TEST insertion propos est_correct 2");
         testedPropositions.add(prop1);
         testedPropositions.add(prop2);
         testedPropositions.add(prop3);
@@ -73,10 +71,9 @@ public class QuestionDaoTest extends Cdamassy2021Test {
         }
         assertEquals(true, result);
         assertEquals(8, insertedQuestion.getId());
-        assertEquals(16, prop1.getIdProposition());
-        assertEquals(17, prop2.getIdProposition());
-        assertEquals(18, prop3.getIdProposition());
-
+        assertEquals(18, prop1.getIdProposition());
+        assertEquals(19, prop2.getIdProposition());
+        assertEquals(20, prop3.getIdProposition());
     }
 
     @Test
@@ -101,13 +98,11 @@ public class QuestionDaoTest extends Cdamassy2021Test {
 
         Question expResult = new Question(
                 expectedId, expectedType,
-                expectedAuteur, expectedCanal,
+                expectedAuteur, expectedCanal, "Tryphon Tournesol",
                 "Combien de temps voulez-vous pour ce TP ?",
                 null);
-
-        
         assertEquals(expResult, result);
-        assertEquals(6, result.getPropositions().size());
+        assertEquals(3, result.getPropositions().size());
     }
 
     @Test
@@ -136,15 +131,15 @@ public class QuestionDaoTest extends Cdamassy2021Test {
         int expected = 7;
         assertEquals(expected, questions.size());
 
-        int expectedNbPropositions = 15;
+        int expectedNbPropositions = 17;
         int actualNbProposition = 0;
-        for(Question q : questions){
-            for(Proposition p : q.getPropositions())
-            {
-                actualNbProposition ++;
+        System.out.println("nbQuestion" + questions.size());
+        for (Question q : questions) {
+            for (Proposition p : q.getPropositions()) {
+                actualNbProposition++;
             }
         }
-        System.out.println("props count="+ actualNbProposition);
-        assertEquals(expectedNbPropositions,actualNbProposition);
+        System.out.println("props count=" + actualNbProposition);
+        assertEquals(expectedNbPropositions, actualNbProposition);
     }
 }

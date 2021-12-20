@@ -5,7 +5,6 @@
 package fr.cdamassy2021.model;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * class 'IQuestion'  <br>
@@ -29,8 +28,8 @@ public class Question {
     }
     
     private int id;
-
     private int idCreateur;
+    private String nomAuteur;
     private String libelle;
     private TypeQuestion type;
     private ArrayList<Proposition> propositions = null;
@@ -47,15 +46,17 @@ public class Question {
      * @param id
      * @param canalId
      * @param auteurId
+     * @param nomAuteur
      * @param typeDeQuestion
      * @param statement
      * @param propositions
      */
-    public Question(int id, TypeQuestion typeDeQuestion,int canalId, int auteurId,
+    public Question(int id, TypeQuestion typeDeQuestion,int canalId, int auteurId, String nomAuteur,
             String statement, ArrayList<Proposition> propositions) {
         this.id = id;
         this.idCanal = canalId;
         this.idCreateur = auteurId;
+        this.nomAuteur = nomAuteur;
         this.libelle = statement;
         this.type = typeDeQuestion;
         this.propositions = propositions;
@@ -64,20 +65,22 @@ public class Question {
     /**
      * CTOR: (unidentified Bean) <br>
      * ! - This constructer should only be used before first insertion in <br>
-     * the database (in initial case no where id has never been assigned <br>
+     * the database (when no id has never been assigned <br>
      * to it yet).<br>
      * <br>
      *
      * @param canalId
      * @param auteurId
+     * @param nomAuteur
      * @param typeDeQuestion
      * @param statement
      * @param propositions
      */
-    public Question(TypeQuestion typeDeLaQuestion,int canalId, int auteurId, 
-            String statement, ArrayList<Proposition> propositions) {
+    public Question(TypeQuestion typeDeLaQuestion,int canalId, int auteurId,
+        String statement, ArrayList<Proposition> propositions) {
         this.idCanal = canalId;
         this.idCreateur = auteurId;
+        this.nomAuteur = "undefined";
         this.libelle = statement;
         this.type = typeDeLaQuestion;
         this.propositions = propositions;
@@ -115,6 +118,14 @@ public class Question {
         this.idCreateur = auteurId;
     }
 
+    public String getNomAuteur() {
+        return nomAuteur;
+    }
+
+    public void setNomAuteur(String nomAuteur) {
+        this.nomAuteur = nomAuteur;
+    }
+
     public TypeQuestion getType() {
         return type;
     }
@@ -147,15 +158,15 @@ public class Question {
         this.appartientQuestionaire = appartientQuestionaire;
     }
 
-    public int getQuestionaireId() {
+    public int getIdQuestionaire() {
         return idQuestionnaire;
     }
 
-    public void setQuestionaireId(int questionaireId) {
+    public void setIdQuestionaire(int questionaireId) {
         this.idQuestionnaire = questionaireId;
     }
 
-    public boolean isEstSondage() {
+    public boolean isSondage() {
         return estSondage;
     }
 
