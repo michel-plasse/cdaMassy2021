@@ -4,6 +4,7 @@ body {
     display: flex;
     flex-direction: column;
     align-self: center;
+    background-color: antiquewhite;
 }
 
 .form-question {
@@ -13,10 +14,8 @@ body {
     --radio-checked: #4F29F0;
     --radio-size: 25px;
     --max-width: 30px;
-    --max-height: 100%;
     --border-radius: 10px;
     background: var(--background);
-    width: var(--width);
     height: var(--height);
     border-radius: var(--border-radius);
     color: var(--text);
@@ -26,6 +25,7 @@ body {
     margin: 12px;
     display: flex;
     flex-direction: column;
+    max-width: 50vw;
 }
 
 .form-question input:focus {
@@ -38,7 +38,8 @@ textarea {
 }
 
 .form-question textarea {
-    height: 80px;
+    height: 60px;
+    width: 120px;
 }
 
 .form-question select {
@@ -71,17 +72,33 @@ textarea {
 #intituleQuestion {
     background-color: #E8EBF3;
     padding: 6px;
-    margin-bottom: 15px;
+    margin-bottom: 2em;
     border-radius: 12px 26px;
     margin-left: -1em;
 }
 /*libelle*/
 #intituleQuestion b{
+    height: 2em;
     color: #181a24;
     margin-left: 1em;
+    margin-bottom: 1em;
 }
 /*auteur*/
 #intituleQuestion p{
     color: #7C96B2;
     margin-left: 2em;
+}
+/* PROPOSITIONS*/
+/*containerAllPropositions*/
+.containerAllPropositions{
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+}
+/*blocProposition*/
+#blocProposition {
+    display: flex;
+    padding: 1em;
+    background-color:#E8EBF3;
+    margin: 2em, 1em;
 }
