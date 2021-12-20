@@ -5,18 +5,19 @@
 package fr.cdamassy2021.dao;
 
 import fr.cdamassy2021.model.Proposition;
-import fr.cdamassy2021.model.IQuestion;
-import fr.cdamassy2021.model.QuestionFactory;
+import fr.cdamassy2021.model.Question;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- *
+ * Cette classe teste les select et insertion de la classe QuestionDao.
  *
  * @author thoma
  */
-public class QuestionDaoTest {
+public class QuestionDaoTest extends Cdamassy2021Test {
 
     public QuestionDaoTest() {
     }
@@ -29,67 +30,116 @@ public class QuestionDaoTest {
         String enonceQuestion
                 = "dites-moi si vous me trouvez dans la"
                 + "database après le test d'insertion";
-        Long idCanalTest = Long.valueOf(1);
-        Long idAuteurTest = Long.valueOf(2);
-        QuestionFactory qFactory = new QuestionFactory();
-        IQuestion inserted = qFactory.createQuestion(IQuestion.TypeQuestion.QCM, idAuteurTest, idCanalTest, enonceQuestion, null);
+        int idCanalTest = 1;
+        int idAuteurTest = 2;
+        Question inserted = new Question(Question.TypeQuestion.QCM, idAuteurTest, idCanalTest, enonceQuestion, null);;
         boolean expResult = true;
         //when:
         boolean result = instance.insert(inserted);
         //then:
+        assertEquals(8, inserted.getId());
         assertEquals(expResult, result);
     }
 
-//    @Test
-//    public void testDelete() {
-//        System.out.println("delete");
-//        IQuestion deleted = null;
-//        QuestionDao instance = new QuestionDao();
-//        instance.delete(deleted);
-//        fail("The test case is a prototype.");
-//    }
     @Test
-    public void testFindById() {
+    public void testInsertQuestionQCM() throws Exception {
+        System.out.println("try testInsert_avecDeuxPropositions");
+        QuestionDao instance = new QuestionDao();
+
+        //given:
+        // Une Question 
+        String enonceQuestion = "Je suis un TEST d'insertion";
+        int idCanalTest = 1;
+        int idAuteurTest = 2;
+        Question insertedQuestion = new Question(Question.TypeQuestion.QCM, idAuteurTest, idCanalTest, enonceQuestion, null);
+
+        // Une List<Proposition>
+        List<Proposition> testedPropositions = new ArrayList<Proposition>();
+        Proposition prop1 = new Proposition(Proposition.Correctness.CORRECT, "Je suis un TEST insertion propos est_correct 1");
+        Proposition prop2 = new Proposition(Proposition.Correctness.INCORRECT, "Je suis un TEST insertion propos est_correct 0");
+        Proposition prop3 = new Proposition(Proposition.Correctness.UNDEFINED, "Je suis un TEST insertion propos est_correct 2");
+        testedPropositions.add(prop1);
+        testedPropositions.add(prop2);
+        testedPropositions.add(prop3);
+
+        //when:
+        boolean result = instance.insert(insertedQuestion, testedPropositions);
+
+        //then:
+        for (Proposition p : testedPropositions) {
+            System.out.println(p.toString());
+        }
+        assertEquals(true, result);
+        assertEquals(8, insertedQuestion.getId());
+        assertEquals(18, prop1.getIdProposition());
+        assertEquals(19, prop2.getIdProposition());
+        assertEquals(20, prop3.getIdProposition());
+    }
+
+    @Test
+    public void testFindByIdTrouve() throws Exception {
         //given:
         System.out.println("try findById");
         QuestionDao instance = new QuestionDao();
         long testedId = 2;
         //when
-        IQuestion result = null;
+        Question result = null;
         try {
             result = instance.findById(testedId);
         } catch (Exception e) {
             System.out.println("Fail finding question where id=" + testedId);
         }
         //then
-        Long expectedId = Long.valueOf(2);
-        Long expectedCanal = Long.valueOf(2);
-        Long expectedAuteur = Long.valueOf(2);
-        IQuestion.TypeQuestion expectedType
-                = IQuestion.TypeQuestion.values()[3];
+        int expectedId = 2;
+        int expectedCanal = 1;
+        int expectedAuteur = 1;
+        Question.TypeQuestion expectedType
+                = Question.TypeQuestion.values()[3];
 
-        IQuestion expResult = null;
-        QuestionFactory qFactory = new QuestionFactory();
-        try {
-            expResult = qFactory.createQuestion(
+        Question expResult = new Question(
                 expectedId, expectedType,
-                expectedAuteur, expectedCanal,
-                "On a pas ramené un peu trop de croissant quand même là?",
+                expectedAuteur, expectedCanal, "Tryphon Tournesol",
+                "Combien de temps voulez-vous pour ce TP ?",
                 null);
-        } catch (Exception e) {
-            System.out.println("Factory can't create this QuestionBean");
-        }
-
         assertEquals(expResult, result);
+        assertEquals(3, result.getPropositions().size());
     }
 
-//    @Test
-//    public void testFindAll() {
-//        System.out.println("findAll");
-//        QuestionDao instance = new QuestionDao();
-//        ArrayList<Question> expResult = null;
-//        ArrayList<Question> result = instance.findAll();
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    public void testFindByIdPasTrouve() throws SQLException {
+        //given:
+        System.out.println("try testFindByIdPasTrouve");
+        QuestionDao instance = new QuestionDao();
+        long testedId = -1;
+        //when
+        Question result = instance.findById(testedId);
+
+        //then:
+        assertEquals(null, result);
+    }
+
+    @Test
+    public void testgetAllWithinLimit() throws SQLException {
+        //given:
+        System.out.println("try getAllWithinLimit");
+        List<Question> questions = null;
+
+        //when
+        questions = QuestionDao.getAllWithinLimit(1, 10);
+
+        //then:
+        int expected = 7;
+        assertEquals(expected, questions.size());
+
+        int expectedNbPropositions = 17;
+        int actualNbProposition = 0;
+        System.out.println("nbQuestion" + questions.size());
+        for (Question q : questions) {
+            for (Proposition p : q.getPropositions()) {
+                actualNbProposition++;
+            }
+        }
+        System.out.println("props count=" + actualNbProposition);
+        assertEquals(expectedNbPropositions, actualNbProposition);
+    }
 }
