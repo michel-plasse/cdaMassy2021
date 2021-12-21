@@ -12,11 +12,11 @@ class CanalDaoTest {
  * teste les methode de notre classe CanalDao avant de les implementer dans notre servlet
  */
    @Test
-   public void TestgetAllCanaux() throws Exception {
+   public void TestgetAllByByIdPersonne() throws Exception {
        
-       List<Canal> listeCanaux = CanalDao.getAllCanaux();
+       List<Canal> listeCanaux = CanalDao.getAllByIdPersonne(1);
        
-       int expected = 3;
+       int expected = 2;
        assertEquals(expected, listeCanaux.size());
        for (Canal listeC : listeCanaux) {
            System.out.println(listeC.getIdCanal()+ "- "  + listeC.getNomCanal());
