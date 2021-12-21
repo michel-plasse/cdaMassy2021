@@ -54,6 +54,7 @@ public class CanalDao {
 	  }
 	  
           public static List<Canal> getAllCanaux() throws SQLException {
+
 	    // Mettre en dur le résultat
 		  /*
 		    List<Canal>canaux = new ArrayList<Canal>();
