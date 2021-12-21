@@ -122,13 +122,13 @@ public class QuestionDaoTest extends Cdamassy2021Test {
 
     @Test
     public void testgetAllWithinLimit() throws SQLException {
-        //given:
         System.out.println("try getAllWithinLimit");
+        //given: c'est des préréquis
         Dao dao = new QuestionDao();
         List<Question> questions = null;
-        //when
+        //when : la methode que je test 
         questions = dao.getAllPaging(1, 10);
-        //then:
+        //then: 
         int expected = 7;
         assertEquals(expected, questions.size());
         int expectedNbPropositions = 17;
@@ -141,5 +141,22 @@ public class QuestionDaoTest extends Cdamassy2021Test {
         }
         System.out.println("props count=" + actualNbProposition);
         assertEquals(expectedNbPropositions, actualNbProposition);
+    }
+    
+    @Test
+    public void testgetAllByCanalPaging() throws SQLException {
+        System.out.println("try getAllByCanalPaging");
+        // GIVEN
+        Dao dao = new QuestionDao();
+        List<Question> questions = null;
+        int idCanal = 1;
+        int noPage = 1;
+        int nbElementsParPage = 10;
+        // WHEN
+        questions = dao.getAllByCanalPaging(idCanal, noPage, nbElementsParPage);
+        // THEN
+        int expected = 7;
+        int actual = questions.size();
+        assertEquals(expected, actual);
     }
 }

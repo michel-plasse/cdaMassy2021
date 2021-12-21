@@ -325,4 +325,60 @@ public class QuestionDao implements Dao<Question> {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public ArrayList<Question> getAllByCanalPaging(int idCanal, int noPage, int nbElementsParPage) throws SQLException {
+        Connection connection = Database.getConnection();
+        ArrayList<Question> result = new ArrayList();
+        // prepare questions selection
+        PreparedStatement selectQuestionStmt
+                = connection.prepareStatement(
+                        SELECT_ALL_QUESTIONS_BY_CANAL_ID);
+        selectQuestionStmt.setInt(1, idCanal);
+        selectQuestionStmt.setInt(2, nbElementsParPage * (noPage - 1));
+        selectQuestionStmt.setInt(3, nbElementsParPage);
+        ResultSet rs = selectQuestionStmt.executeQuery();
+        // Pour chaque question trouvée:
+        while (rs.next()) {
+            // convert int to enum of TypeQuestion
+            Question.TypeQuestion type
+                    = Question.TypeQuestion.values()[rs.getInt("id_type_question")];
+            ArrayList<Proposition> propsList = new ArrayList<Proposition>();
+            // Initialiser le bean 
+            Question found = new Question(
+                    rs.getInt("id_question"),
+                    type,
+                    rs.getInt("id_canal"),
+                    rs.getInt("id_createur"),
+                    rs.getString("prenom") + " " + rs.getString("nom"),
+                    rs.getString("libelle"),
+                    propsList);
+            result.add(found);
+            // prepare propositions selection
+            PreparedStatement selectPropsStmt
+                    = connection.prepareStatement(
+                            SELECT_PROPOSITIONS_WITH_QUESTION_ID);
+            // Chercher les propositions
+            selectPropsStmt.setLong(1, found.getId());
+            ResultSet resProps = selectPropsStmt.executeQuery();
+            // Pour chaque propositions trouvée:
+            while (resProps.next()) {
+                Proposition pFound = new Proposition();
+                // Initialiser le bean
+                pFound.setIdProposition(resProps.getInt("id_proposition"));
+                Proposition.Correctness correctness
+                        = Proposition.Correctness.values()[resProps.getInt(
+                        "est_correcte")];
+                pFound.setIsCorrect(correctness);
+                pFound.setIdQuestion(resProps.getInt("id_question"));
+                pFound.setLibelle(resProps.getString("libelle"));
+                // L'ajouter à la liste de propositions
+                propsList.add(pFound);
+            }
+            System.out.println(result.toString());
+        }
+        //retourner la liste de beans Questions fournit par la BDD.
+        return result;
+        
+    }
+
 }

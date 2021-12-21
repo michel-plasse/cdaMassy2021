@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package fr.cdamassy2021.dao;
+
+import fr.cdamassy2021.model.Question;
 import java.awt.List;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,19 +12,20 @@ import java.util.ArrayList;
 /**
  *
  * @author thoma
- * 
+ *
  * @T = Bean Type
  */
+public interface Dao<T> { // method CRUD: Create/Read/Update/Delete
 
-public interface Dao<T>{ // method CRUD: Create/Read/Update/Delete
-	
-	public boolean insert (T inserted) throws SQLException;
-	
-	public void delete(T deleted) throws SQLException;
-	
-	public T findById(long id) throws SQLException;
-	
-	public ArrayList<T> findAll() throws SQLException;
-        
-        public ArrayList<T> getAllPaging(int noPage, int nbElementsParPage) throws SQLException;
+    public boolean insert(T inserted) throws SQLException;
+
+    public void delete(T deleted) throws SQLException;
+
+    public T findById(long id) throws SQLException;
+
+    public ArrayList<T> findAll() throws SQLException;
+
+    public ArrayList<T> getAllPaging(int noPage, int nbElementsParPage) throws SQLException;
+
+    public ArrayList<Question> getAllByCanalPaging(int idCanal, int noPage, int nbElementsParPage) throws SQLException;
 }
