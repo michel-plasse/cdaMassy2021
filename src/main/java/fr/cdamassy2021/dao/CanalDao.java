@@ -14,7 +14,14 @@ import fr.cdamassy2021.model.Personne;
 */
 
 public class CanalDao {
-	 private static final String TOUS_LES_CANAUX =
+	 private static final String TOUS_LES_CANAUX_DU_MEMBRE =
+	          "SELECT nom, ca.id_canal\n" +
+                  "FROM membre_canal \n" +
+                  "            INNER JOIN canal ca\n" +
+                  "                    ON membre_canal.id_canal = ca.id_canal\n" +
+                  "WHERE id_personne=?\n" +
+                  "ORDER BY ca.id_canal";
+         private static final String TOUS_LES_CANAUX =
 	          "SELECT * FROM canal ORDER BY id_canal";
 	 private static final String TOUS_LES_MEMBRE_DU_CANAL =""
 	 		+ "SELECT id_canal,p.id_personne,p.nom,p.prenom, ajoute_a \n"
@@ -24,12 +31,29 @@ public class CanalDao {
 	 		+ "WHERE id_canal=?";
 
 	  /**
-	   * Canal d'id et de nom donnés.
+	   * Canal d'id et de nom donnés sur lesquels sont enregistres le membre en session.
 	   * Classe le resultat par id et renvoie null si pas trouvé
+           * @param id_personne
 	   * @return Une liste de Canal
 	   * @throws SQLException
 	   */
-	  public static List<Canal> getAllCanaux() throws SQLException {
+	  public static List<Canal> getAllByIdPersonne(int id_personne) throws SQLException {
+		  
+	    List<Canal>canaux = new ArrayList<>();
+	    Connection connection = Database.getConnection();
+	    PreparedStatement stmt = connection.prepareStatement(TOUS_LES_CANAUX_DU_MEMBRE);
+            stmt.setInt(1, id_personne);
+	    ResultSet rs = stmt.executeQuery();
+	    while (rs.next()) {
+	    	canaux.add(new Canal(
+	              rs.getInt("id_canal"),
+	              rs.getString("nom")
+	              ));
+	    }
+	    return canaux;
+	  }
+	  
+          public static List<Canal> getAllCanaux() throws SQLException {
 	    // Mettre en dur le résultat
 		  /*
 		    List<Canal>canaux = new ArrayList<Canal>();
@@ -52,7 +76,7 @@ public class CanalDao {
 	        return canaux;
 	       */
 		  
-	    List<Canal>canaux = new ArrayList<Canal>();
+	    List<Canal>canaux = new ArrayList<>();
 	    Connection connection = Database.getConnection();
 	    PreparedStatement stmt = connection.prepareStatement(TOUS_LES_CANAUX);
 	    ResultSet rs = stmt.executeQuery();
@@ -64,10 +88,10 @@ public class CanalDao {
 	    }
 	    return canaux;
 	  }
-	  
+          
 	  /**
 	   * Liste des membres d'un canal donnés.
-	   * renvoi l'ensemble des membre en fonction de l'id et renvoie null si pas trouvé
+	   * renvoi l'ensemble des membres en fonction de l'idCanal et renvoie null si pas trouvé
 	   * 
 	   * @param idCanal
 	   * @return  Une liste de Personne
