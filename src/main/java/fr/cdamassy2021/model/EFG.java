@@ -1,5 +1,7 @@
 package fr.cdamassy2021.model;
 
+import java.util.Objects;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -60,6 +62,43 @@ public class EFG {
     @Override
     public String toString() {
         return "EFG n°" + id + ", crée par " + idCreateur + " dans " + idCanal + ". Intitule: " + intitule;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash + this.id;
+        hash = 89 * hash + this.idCreateur;
+        hash = 89 * hash + this.idCanal;
+        hash = 89 * hash + Objects.hashCode(this.intitule);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final EFG other = (EFG) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.idCreateur != other.idCreateur) {
+            return false;
+        }
+        if (this.idCanal != other.idCanal) {
+            return false;
+        }
+        if (!Objects.equals(this.intitule, other.intitule)) {
+            return false;
+        }
+        return true;
     }
 
 }
