@@ -5,10 +5,12 @@ package fr.cdamassy2021.controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
+import fr.cdamassy2021.dao.Dao;
 import fr.cdamassy2021.dao.QuestionDao;
 import fr.cdamassy2021.model.Question;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,11 +31,12 @@ public class ListerQuestionsServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
+      Dao dao = new QuestionDao();
     String vue = VUE_OK;
     try {
       // Les paramètres encore en dur
               System.out.println("TRY");
-      List<Question> questions = QuestionDao.getAllWithinLimit(1, 10);
+        ArrayList<Question> questions = dao.getAllPaging(1, 10);
                     System.out.println("OK1");
       // Mettre en post-it les questions
       request.setAttribute("questions", questions);

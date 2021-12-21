@@ -51,7 +51,11 @@ public class QuestionDaoTest extends Cdamassy2021Test {
         String enonceQuestion = "Je suis un TEST d'insertion";
         int idCanalTest = 1;
         int idAuteurTest = 2;
-        Question insertedQuestion = new Question(Question.TypeQuestion.QCM, idAuteurTest, idCanalTest, enonceQuestion, null);
+        Question insertedQuestion = new Question(
+                Question.TypeQuestion.QCM, 
+                idAuteurTest, idCanalTest,
+                enonceQuestion,
+                null);
 
         // Une List<Proposition>
         List<Proposition> testedPropositions = new ArrayList<Proposition>();
@@ -61,10 +65,8 @@ public class QuestionDaoTest extends Cdamassy2021Test {
         testedPropositions.add(prop1);
         testedPropositions.add(prop2);
         testedPropositions.add(prop3);
-
         //when:
         boolean result = instance.insert(insertedQuestion, testedPropositions);
-
         //then:
         for (Proposition p : testedPropositions) {
             System.out.println(p.toString());
@@ -122,15 +124,13 @@ public class QuestionDaoTest extends Cdamassy2021Test {
     public void testgetAllWithinLimit() throws SQLException {
         //given:
         System.out.println("try getAllWithinLimit");
+        Dao dao = new QuestionDao();
         List<Question> questions = null;
-
         //when
-        questions = QuestionDao.getAllWithinLimit(1, 10);
-
+        questions = dao.getAllPaging(1, 10);
         //then:
         int expected = 7;
         assertEquals(expected, questions.size());
-
         int expectedNbPropositions = 17;
         int actualNbProposition = 0;
         System.out.println("nbQuestion" + questions.size());
