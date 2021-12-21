@@ -1,8 +1,3 @@
-<%-- 
-    Document   : Creation Question
-
-    Author     : thoma
---%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="p" tagdir="/WEB-INF/tags/"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -42,7 +37,7 @@
                         Ajouter une proposition:<button type="button" id="addProposition">+</button>
                         <div id="blocProposition">
                             <textarea id="proposition" placeholder="Ecrivez votre proposition" name="libelleProposition"></textarea><br>
-                           <input type="radio" id="undefined" name="undefined" value="Undefined">Undefined
+                            <input type="radio" id="undefined" name="undefined" value="Undefined">Undefined
                             <input type="radio" id="correct" name="correct" value="Correct">Correct
                             <input type="radio" id="incorrect" name="incorrect" value="Incorrect">Incorrect               
                         </div>
@@ -51,7 +46,7 @@
             </div>
         </div>
         <br/>
-        </div>
+       
         <button type="submit">Valider</button>
 
         <script>
