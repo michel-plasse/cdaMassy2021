@@ -5,6 +5,7 @@
 package fr.cdamassy2021.controller;
 
 import fr.cdamassy2021.dao.QuestionDao;
+import fr.cdamassy2021.dao.QuestionDaoQcmImpl;
 import fr.cdamassy2021.model.Proposition;
 import fr.cdamassy2021.model.Question;
 import java.io.IOException;
@@ -90,7 +91,7 @@ public class CreerQuestionServlet extends HttpServlet {
 
 
         if (valide) {
-            QuestionDao dao = new QuestionDao();
+            QuestionDao dao = new QuestionDaoQcmImpl();
             //create Question bean:
             Question newQuestion = new Question(Question.TypeQuestion.QCM,1,1,libelleQuestion,null);
             //creates List<Proposition>:

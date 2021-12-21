@@ -17,22 +17,20 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author thoma
  */
-public class QuestionDaoTest extends Cdamassy2021Test {
-
-    public QuestionDaoTest() {
-    }
+public class QuestionDaoQcmImplTest extends Cdamassy2021Test {
 
     @Test
     public void testInsert() throws Exception {
         System.out.println("try insert");
         //given:
-        QuestionDao instance = new QuestionDao();
+        QuestionDao instance = new QuestionDaoQcmImpl();
         String enonceQuestion
                 = "dites-moi si vous me trouvez dans la"
                 + "database après le test d'insertion";
         int idCanalTest = 1;
         int idAuteurTest = 2;
-        Question inserted = new Question(Question.TypeQuestion.QCM, idAuteurTest, idCanalTest, enonceQuestion, null);;
+        Question inserted = new Question(Question.TypeQuestion.QCM,
+                idAuteurTest, idCanalTest, enonceQuestion, null);
         boolean expResult = true;
         //when:
         boolean result = instance.insert(inserted);
@@ -44,8 +42,7 @@ public class QuestionDaoTest extends Cdamassy2021Test {
     @Test
     public void testInsertQuestionQCM() throws Exception {
         System.out.println("try testInsert_avecDeuxPropositions");
-        QuestionDao instance = new QuestionDao();
-
+        QuestionDao instance = new QuestionDaoQcmImpl();
         //given:
         // Une Question 
         String enonceQuestion = "Je suis un TEST d'insertion";
@@ -59,9 +56,12 @@ public class QuestionDaoTest extends Cdamassy2021Test {
 
         // Une List<Proposition>
         List<Proposition> testedPropositions = new ArrayList<Proposition>();
-        Proposition prop1 = new Proposition(Proposition.Correctness.CORRECT, "Je suis un TEST insertion propos est_correct 1");
-        Proposition prop2 = new Proposition(Proposition.Correctness.INCORRECT, "Je suis un TEST insertion propos est_correct 0");
-        Proposition prop3 = new Proposition(Proposition.Correctness.UNDEFINED, "Je suis un TEST insertion propos est_correct 2");
+        Proposition prop1 = new Proposition(Proposition.Correctness.CORRECT,
+                "Je suis un TEST insertion proposition est_correct 1");
+        Proposition prop2 = new Proposition(Proposition.Correctness.INCORRECT,
+                "Je suis un TEST insertion proposition est_correct 0");
+        Proposition prop3 = new Proposition(Proposition.Correctness.UNDEFINED,
+                "Je suis un TEST insertion proposition est_correct 2");
         testedPropositions.add(prop1);
         testedPropositions.add(prop2);
         testedPropositions.add(prop3);
@@ -82,13 +82,13 @@ public class QuestionDaoTest extends Cdamassy2021Test {
     public void testFindByIdTrouve() throws Exception {
         //given:
         System.out.println("try findById");
-        QuestionDao instance = new QuestionDao();
+        QuestionDao instance = new QuestionDaoQcmImpl();
         long testedId = 2;
         //when
         Question result = null;
         try {
             result = instance.findById(testedId);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Fail finding question where id=" + testedId);
         }
         //then
@@ -111,10 +111,10 @@ public class QuestionDaoTest extends Cdamassy2021Test {
     public void testFindByIdPasTrouve() throws SQLException {
         //given:
         System.out.println("try testFindByIdPasTrouve");
-        QuestionDao instance = new QuestionDao();
+        QuestionDao dao = new QuestionDaoQcmImpl();
         long testedId = -1;
         //when
-        Question result = instance.findById(testedId);
+        Question result = dao.findById(testedId);
 
         //then:
         assertEquals(null, result);
@@ -124,8 +124,8 @@ public class QuestionDaoTest extends Cdamassy2021Test {
     public void testgetAllWithinLimit() throws SQLException {
         System.out.println("try getAllWithinLimit");
         //given: c'est des préréquis
-        Dao dao = new QuestionDao();
-        List<Question> questions = null;
+        Dao dao = new QuestionDaoQcmImpl();
+        List<Question> questions;
         //when : la methode que je test 
         questions = dao.getAllPaging(1, 10);
         //then: 
@@ -146,15 +146,15 @@ public class QuestionDaoTest extends Cdamassy2021Test {
     @Test
     public void testgetAllByCanalPaging() throws SQLException {
         System.out.println("try getAllByCanalPaging");
-        // GIVEN
-        Dao dao = new QuestionDao();
-        List<Question> questions = null;
+        // given:
+        QuestionDao dao = new QuestionDaoQcmImpl();
+        List<Question> questions;
         int idCanal = 1;
         int noPage = 1;
         int nbElementsParPage = 10;
-        // WHEN
+        // when:
         questions = dao.getAllByCanalPaging(idCanal, noPage, nbElementsParPage);
-        // THEN
+        // then:
         int expected = 7;
         int actual = questions.size();
         assertEquals(expected, actual);

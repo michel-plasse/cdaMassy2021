@@ -26,6 +26,4 @@ public interface Dao<T> { // method CRUD: Create/Read/Update/Delete
     public ArrayList<T> findAll() throws SQLException;
 
     public ArrayList<T> getAllPaging(int noPage, int nbElementsParPage) throws SQLException;
-
-    public ArrayList<Question> getAllByCanalPaging(int idCanal, int noPage, int nbElementsParPage) throws SQLException;
 }
