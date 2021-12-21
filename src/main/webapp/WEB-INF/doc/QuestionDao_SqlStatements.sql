@@ -25,3 +25,21 @@ FROM question q
 		personne p
 			ON q.id_createur = p.id_personne
 LIMIT 2, 10;
+
+/*SELECT_ALL_QUESTIONS_BY_CANAL*/
+SELECT q.*, p.prenom, p.nom
+FROM question q
+	INNER JOIN
+		personne p
+			ON q.id_createur = p.id_personne
+WHERE id_canal=1
+LIMIT 0, 10;
+
+/*SELECT_ALL_QUESTIONS_BY_QUESTIONNAIRE*/
+SELECT q.*, p.prenom, p.nom
+FROM question q
+	INNER JOIN
+		personne p
+			ON q.id_createur = p.id_personne
+WHERE id_questionnaire=1
+LIMIT 0, 10;
