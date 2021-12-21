@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import fr.cdamassy2021.dao.CanalDao;
 import fr.cdamassy2021.model.Canal;
+import fr.cdamassy2021.model.Personne;
+import javax.servlet.http.HttpSession;
 
 /**
 *
@@ -40,8 +42,15 @@ public class ListerCanauxServlet extends HttpServlet {
           throws ServletException, IOException {
     String vue = VUE_OK;
     try {
-      // je reccupere la liste que me renvoi ma Dao
-      List<Canal> canaux = CanalDao.getAllCanaux();
+        //Recupere la session 
+        HttpSession session = request.getSession();
+        //Recupere l'utilisateur qui a ete ajoute a la session lorsqu'il s'est connecte(voir ConnexionServlet ligne 89)et 
+        //on le stocke dans une objet de type personne et 
+      
+        Personne personne_en_session = (Personne) session.getAttribute("user");
+       //On utilise cet objet pour acceder a l'id de l'utilisateur en session et l'envoyer a notre methode
+      // je recupere la liste que me renvoi ma Dao
+      List<Canal> canaux = CanalDao.getAllByByIdPersonne(personne_en_session.getId());      
       // Mettre en post-it les canaux afin de les reccuperer dans la jsp 
       request.setAttribute("canaux", canaux);
     } catch (SQLException exc) {
