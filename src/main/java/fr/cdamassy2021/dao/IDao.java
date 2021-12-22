@@ -15,7 +15,7 @@ import java.util.ArrayList;
  *
  * @T = Bean Type
  */
-public interface Dao<T> { // method CRUD: Create/Read/Update/Delete
+public interface IDao<T> { // method CRUD: Create/Read/Update/Delete
 
     public boolean insert(T inserted) throws SQLException;
 
