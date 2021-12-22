@@ -19,60 +19,12 @@ import java.util.List;
  *
  * @author thoma
  */
-public class QuestionDaoQcmImpl implements QuestionDao {
-
-    private static final String INSERT_QUESTION
-            = "INSERT INTO question ("
-            + "id_canal,id_createur,libelle,id_type_question) "
-            + "VALUES ( ?, ?, ?, ?);";
-
+public class QuestionDaoQcmImpl extends QuestionDao {
+    
     private static final String INSERT_PROPOSITION = "INSERT INTO proposition ("
             + "id_question,libelle,est_correcte)"
             + " VALUES ( ?, ?, ?);";
-
-    private static final String SELECT_BY_QUESTION_ID
-            = "SELECT  q.*, p.nom, p.prenom\n"
-            + "FROM question q\n"
-            + "	INNER JOIN \n"
-            + "		personne p \n"
-            + "			ON p.id_personne = q.id_createur\n"
-            + "WHERE id_question = ?;";
-
-    private static final String SELECT_ALL_QUESTIONS_IN_LIMIT
-            = "SELECT q.*, p.prenom, p.nom\n"
-            + "FROM question q\n"
-            + "	INNER JOIN\n"
-            + "		personne p\n"
-            + "			ON q.id_createur = p.id_personne\n"
-            + "LIMIT ?, ?;";
-
-    private static final String SELECT_ALL_BY_CREATOR_ID = ""
-            + "SELECT q.*, p.prenom, p.nom"
-            + "FROM question q"
-            + "     INNER JOIN"
-            + "         personne p"
-            + "         ON q.id_createur = ?"
-            + "LIMIT ?, ?;";
-
-    private static final String SELECT_ALL_QUESTIONS_BY_CANAL_ID
-            = "SELECT q.*, p.prenom, p.nom\n"
-            + "FROM question q\n"
-            + "	INNER JOIN\n"
-            + "		personne p\n"
-            + "			ON q.id_createur = p.id_personne\n"
-            + "WHERE id_canal=?\n"
-            + "LIMIT ?, ?;";
-
-    private static final String SELECT_ALL_QUESTIONS_BY_QUESTIONNAIRE_ID
-            = "SELECT q.*, p.prenom, p.nom\n"
-            + "FROM question q\n"
-            + "	INNER JOIN\n"
-            + "		personne p\n"
-            + "			ON q.id_createur = p.id_personne\n"
-            + "WHERE id_questionnaire=?\n"
-            + "LIMIT ?, ?;";
-
-    private static final String SELECT_PROPOSITIONS_WITH_QUESTION_ID
+        private static final String SELECT_PROPOSITIONS_WITH_QUESTION_ID
             = "SELECT * FROM proposition WHERE id_question=?;";
 
     /**
