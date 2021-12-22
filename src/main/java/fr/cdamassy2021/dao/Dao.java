@@ -1,25 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package fr.cdamassy2021.dao;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 
-/**
- *
- * @author thoma
- * 
- * @T = Bean Type
- */
 
-public interface Dao<T>{ // method CRUD: Create/Read/Update/Delete
+
+public interface Dao<T> {
 	
-	public boolean insert (T inserted) throws SQLException;
-	
-	public void delete(T deleted);
-	
-	public T findById(long id) throws SQLException;
-	
+	public T findById(long id);
 	public ArrayList<T> findAll();
+	public  int insert(T t);
+	public boolean update(T t);
+	public boolean delete(T t);
+
+	
+
 }
