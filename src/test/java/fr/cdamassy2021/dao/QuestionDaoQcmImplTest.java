@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Cette classe teste les select et insertion de la classe QuestionDao.
+ * Cette classe teste les select et insertion de la classe IQuestionDao.
  *
  * @author thoma
  */
@@ -23,7 +23,7 @@ public class QuestionDaoQcmImplTest extends Cdamassy2021Test {
     public void testInsert() throws Exception {
         System.out.println("try insert");
         //given:
-        QuestionDao instance = new QuestionDaoQcmImpl();
+        IQuestionDao instance = new QuestionDaoQcmImpl();
         String enonceQuestion
                 = "dites-moi si vous me trouvez dans la"
                 + "database après le test d'insertion";
@@ -42,7 +42,7 @@ public class QuestionDaoQcmImplTest extends Cdamassy2021Test {
     @Test
     public void testInsertQuestionQCM() throws Exception {
         System.out.println("try testInsert_avecDeuxPropositions");
-        QuestionDao instance = new QuestionDaoQcmImpl();
+        QuestionDaoQcmImpl instance = new QuestionDaoQcmImpl();
         //given:
         // Une Question 
         String enonceQuestion = "Je suis un TEST d'insertion";
@@ -82,7 +82,7 @@ public class QuestionDaoQcmImplTest extends Cdamassy2021Test {
     public void testFindByIdTrouve() throws Exception {
         //given:
         System.out.println("try findById");
-        QuestionDao instance = new QuestionDaoQcmImpl();
+        IQuestionDao instance = new QuestionDaoQcmImpl();
         long testedId = 2;
         //when
         Question result = null;
@@ -111,7 +111,7 @@ public class QuestionDaoQcmImplTest extends Cdamassy2021Test {
     public void testFindByIdPasTrouve() throws SQLException {
         //given:
         System.out.println("try testFindByIdPasTrouve");
-        QuestionDao dao = new QuestionDaoQcmImpl();
+        IQuestionDao dao = new QuestionDaoQcmImpl();
         long testedId = -1;
         //when
         Question result = dao.findById(testedId);
@@ -124,7 +124,7 @@ public class QuestionDaoQcmImplTest extends Cdamassy2021Test {
     public void testgetAllWithinLimit() throws SQLException {
         System.out.println("try getAllWithinLimit");
         //given: c'est des préréquis
-        Dao dao = new QuestionDaoQcmImpl();
+        IDao dao = new QuestionDaoQcmImpl();
         List<Question> questions;
         //when : la methode que je test 
         questions = dao.getAllPaging(1, 10);
@@ -147,7 +147,7 @@ public class QuestionDaoQcmImplTest extends Cdamassy2021Test {
     public void testgetAllByCanalPaging() throws SQLException {
         System.out.println("try getAllByCanalPaging");
         // given:
-        QuestionDao dao = new QuestionDaoQcmImpl();
+        IQuestionDao dao = new QuestionDaoQcmImpl();
         List<Question> questions;
         int idCanal = 1;
         int noPage = 1;
