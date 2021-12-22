@@ -3,105 +3,57 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package fr.cdamassy2021.dao;
-import fr.cdamassy2021.model.Question;
-import fr.cdamassy2021.model.Proposition;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * class QuestionDao<br>
- * 
- * eng: This Dao is responsible for inserting and retrieving 'Question' beans from the DB
- * and initialise those with their respective Proposition beans list.<br>
- * For this reason it also provide those operations with the 'Proposition' beans.<br>
- * <br>
- * fr: Cette Dao a pour résponsabilité d'insérer dans la BDD, et d'en extraire<br>
- * les beans 'Question' initialisés avec leur liste de Propositions respectives.<br>
- * Pour ce faire, elle assure aussi ces opérations avec avec les beans <br>
- * 'Proposition'.
  *
- * @author Kamal, Thomas
+ * @author thoma
  */
-public interface QuestionDao extends Dao<Question> {
+public abstract class QuestionDao implements IQuestionDao {
 
-    
-        /**
-         * Insere newQuestion dans la base de donnée et positionne newQuestion.id à
-         * la valeur auto-incrémentée dans la base.
-         *
-         * @param newQuestion est le bean à inserer.
-         * @return isInsertionOk est le résultat de l'opération
-         * @throws SQLException
-         */
-        @Override
-        public boolean insert(Question newQuestion) 
-                throws SQLException;
+    protected static final String INSERT_QUESTION
+            = "INSERT INTO question ("
+            + "id_canal,id_createur,libelle,id_type_question) "
+            + "VALUES ( ?, ?, ?, ?);";
 
-        /**
-         * Insertion des 'Question' et de sa liste de 'Proposition' sur le modèle
-         * transactionnel.<br>
-         * Si l'insertion de la question ou de chacune des proposition de la <br>
-         * liste échoue la transaction est annulée avec un connection.rollback()<br>
-         * <br>
-         *
-         * @param inserted : question à inserer dans la DB<br>
-         * @param propositions : reponses possibles relatives à la question<br>
-         * @return isCommit: true si l'insertion s'est passée comme prévu.<br>
-         * @throws SQLException <br>
-         */
-        public boolean insert(Question inserted, List<Proposition> propositions)
-                throws SQLException;
+    protected static final String SELECT_BY_QUESTION_ID
+            = "SELECT  q.*, p.nom, p.prenom\n"
+            + "FROM question q\n"
+            + "	INNER JOIN \n"
+            + "		personne p \n"
+            + "			ON p.id_personne = q.id_createur\n"
+            + "WHERE id_question = ?;";
 
-        /**
-         * Renvoit la 'Question' qui a pour id searchedId, initialisé avec la liste
-         * complête des 'Propositions' de réponses qui lui sont associées.
-         *
-         * @param searchedId est la clef à trouver dans la base de données.
-         * @return le bean 'Question' recherché.
-         * @throws SQLException
-         */
-        @Override
-        public Question findById(long searchedId) 
-                throws SQLException;
+    protected static final String SELECT_ALL_QUESTIONS_IN_LIMIT
+            = "SELECT q.*, p.prenom, p.nom\n"
+            + "FROM question q\n"
+            + "	INNER JOIN\n"
+            + "		personne p\n"
+            + "			ON q.id_createur = p.id_personne\n"
+            + "LIMIT ?, ?;";
 
-        /**
-         * Renvoit une liste de toutes les 'Question' en paginant à raison de
-         * nbElementsParPages par pages pour la page n° noPage.
-         *
-         * Chaque 'Question' est initialisée avec la liste de 'Propositions' de
-         * réponses qui lui est associée.
-         *
-         * @param noPage n° de la page à afficher (1ere = 1)
-         * @param nbElementsParPage nombre maximal de questions à retourner
-         * @return
-         * @throws SQLException
-         *
-         */
-        public ArrayList<Question> getAllPaging(int noPage, 
-                int nbElementsParPage) 
-                throws SQLException;
-        
-        /**
-         * Renvoit une liste de toutes les 'Question' appartenant au canal
-         * designé par idCanal en paginant à raison de
-         * nbElementsParPages par pages pour la page n° noPage.
-         *
-         * Chaque 'Question' est initialisée avec la liste de 'Propositions' de
-         * réponses qui lui est associée.
-         *
-         * @param noPage n° de la page à afficher (1ere = 1)
-         * @param nbElementsParPage nombre maximal de questions à retourner
-         * @return
-         * @throws SQLException
-         *
-         */
-        public ArrayList<Question> getAllByCanalPaging(int idCanal, int noPage,
-                int nbElementsParPage) throws SQLException;
-        
-        @Override
-        public void delete(Question deleted) throws SQLException;
+    protected static final String SELECT_ALL_BY_CREATOR_ID = ""
+            + "SELECT q.*, p.prenom, p.nom"
+            + "FROM question q"
+            + "     INNER JOIN"
+            + "         personne p"
+            + "         ON q.id_createur = ?"
+            + "LIMIT ?, ?;";
 
-        @Override
-        public ArrayList<Question> findAll() throws SQLException;
+    protected static final String SELECT_ALL_QUESTIONS_BY_CANAL_ID
+            = "SELECT q.*, p.prenom, p.nom\n"
+            + "FROM question q\n"
+            + "	INNER JOIN\n"
+            + "		personne p\n"
+            + "			ON q.id_createur = p.id_personne\n"
+            + "WHERE id_canal=?\n"
+            + "LIMIT ?, ?;";
+
+    protected static final String SELECT_ALL_QUESTIONS_BY_QUESTIONNAIRE_ID
+            = "SELECT q.*, p.prenom, p.nom\n"
+            + "FROM question q\n"
+            + "	INNER JOIN\n"
+            + "		personne p\n"
+            + "			ON q.id_createur = p.id_personne\n"
+            + "WHERE id_questionnaire=?\n"
+            + "LIMIT ?, ?;";
 }
