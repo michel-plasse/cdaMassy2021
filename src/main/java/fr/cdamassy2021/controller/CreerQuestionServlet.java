@@ -4,7 +4,7 @@
  */
 package fr.cdamassy2021.controller;
 
-import fr.cdamassy2021.dao.QuestionDaoQcmImpl;
+import fr.cdamassy2021.dao.QuestionDaoImpl;
 import fr.cdamassy2021.model.Proposition;
 import fr.cdamassy2021.model.Question;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import fr.cdamassy2021.dao.IQuestionDao;
+import fr.cdamassy2021.dao.QuestionDao;
 
 /**
  *
@@ -85,7 +85,7 @@ public class CreerQuestionServlet extends HttpServlet {
         }
 
         if (valide) {
-            QuestionDaoQcmImpl dao = new QuestionDaoQcmImpl(); // Ici nous avons besoins d'une QuestionDaoFactory
+            QuestionDaoImpl dao = new QuestionDaoImpl(); // Ici nous avons besoins d'une QuestionDaoFactory
             //create Question bean:
             Question newQuestion = new Question(Question.TypeQuestion.QCM, 1, 1, libelleQuestion, null);
             //creates List<Proposition>:

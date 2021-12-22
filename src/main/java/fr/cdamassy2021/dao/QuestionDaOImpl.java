@@ -14,12 +14,66 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
 /**
+ * eng: This IDao is responsible for inserting and retrieving 'Question' beans from the DB
+ * and initialise those with their respective Proposition beans list.<br>
+ * For this reason it also provide those operations with the 'Proposition' beans.<br>
+ * <br>
+ * fr: Cette IDao a pour résponsabilité d'insérer dans la BDD, et d'en extraire<br>
+ * les beans 'Question' initialisés avec leur liste de Propositions respectives.<br>
+ * Pour ce faire, elle assure aussi ces opérations avec avec les beans <br>
+ * 'Proposition'.
  *
- * @author thoma
+ * @author Kamal, Thomas
  */
-public class QuestionDaoQcmImpl extends QuestionDao {
+public class QuestionDaoImpl implements QuestionDao {
+    
+        protected static final String INSERT_QUESTION
+            = "INSERT INTO question ("
+            + "id_canal,id_createur,libelle,id_type_question) "
+            + "VALUES ( ?, ?, ?, ?);";
+
+    protected static final String SELECT_BY_QUESTION_ID
+            = "SELECT  q.*, p.nom, p.prenom\n"
+            + "FROM question q\n"
+            + "	INNER JOIN \n"
+            + "		personne p \n"
+            + "			ON p.id_personne = q.id_createur\n"
+            + "WHERE id_question = ?;";
+
+    protected static final String SELECT_ALL_QUESTIONS_IN_LIMIT
+            = "SELECT q.*, p.prenom, p.nom\n"
+            + "FROM question q\n"
+            + "	INNER JOIN\n"
+            + "		personne p\n"
+            + "			ON q.id_createur = p.id_personne\n"
+            + "LIMIT ?, ?;";
+
+    protected static final String SELECT_ALL_BY_CREATOR_ID = ""
+            + "SELECT q.*, p.prenom, p.nom"
+            + "FROM question q"
+            + "     INNER JOIN"
+            + "         personne p"
+            + "         ON q.id_createur = ?"
+            + "LIMIT ?, ?;";
+
+    protected static final String SELECT_ALL_QUESTIONS_BY_CANAL_ID
+            = "SELECT q.*, p.prenom, p.nom\n"
+            + "FROM question q\n"
+            + "	INNER JOIN\n"
+            + "		personne p\n"
+            + "			ON q.id_createur = p.id_personne\n"
+            + "WHERE id_canal=?\n"
+            + "LIMIT ?, ?;";
+
+    protected static final String SELECT_ALL_QUESTIONS_BY_QUESTIONNAIRE_ID
+            = "SELECT q.*, p.prenom, p.nom\n"
+            + "FROM question q\n"
+            + "	INNER JOIN\n"
+            + "		personne p\n"
+            + "			ON q.id_createur = p.id_personne\n"
+            + "WHERE id_questionnaire=?\n"
+            + "LIMIT ?, ?;";
     
     private static final String INSERT_PROPOSITION = "INSERT INTO proposition ("
             + "id_question,libelle,est_correcte)"
@@ -30,7 +84,7 @@ public class QuestionDaoQcmImpl extends QuestionDao {
     /**
      * class default constructor
      */
-    public QuestionDaoQcmImpl() {
+    public QuestionDaoImpl() {
     }
 
     /**
