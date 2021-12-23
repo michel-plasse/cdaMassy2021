@@ -76,11 +76,7 @@ public class CreerQuestionServlet extends HttpServlet {
         for (int i = 2; i < allPropositions.length + 1; i++) {
             allCorrectnesses.add(request.getParameter("correctness" + i));
         }
-        String test = "";
-        for (String str : allCorrectnesses) {
-            test += str;
-        }
-        request.setAttribute("message", test);
+        
         //test de validité du formulaire
         boolean valide = true;
 
