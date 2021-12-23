@@ -60,10 +60,13 @@
         let copie = ele.cloneNode(true);
         let rank = ele.parentNode.childElementCount;
         copie.id = ele.id + rank;
-        copie.getElementsByTagName('input')[1].name = "correctness" +rank;
+        copie.getElementsByTagName('input')[1].name = "correctness" + rank;
+        copie.getElementsByTagName('input')[1].id = "correctness" + rank;
         copie.getElementsByTagName('input')[1].checked = "checked";
-        copie.getElementsByTagName('input')[2].name = "correctness" +rank;
-        copie.getElementsByTagName('input')[3].name = "correctness" +rank;
+        copie.getElementsByTagName('input')[2].name = "correctness" + rank;
+        copie.getElementsByTagName('input')[2].id = "correctness" + rank;
+        copie.getElementsByTagName('input')[3].name = "correctness" + rank;
+        copie.getElementsByTagName('input')[3].id = "correctness" + rank;
         ele.parentNode.appendChild(copie);
     };
 

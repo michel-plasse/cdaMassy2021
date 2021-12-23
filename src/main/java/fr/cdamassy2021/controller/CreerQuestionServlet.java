@@ -4,9 +4,6 @@
  */
 package fr.cdamassy2021.controller;
 
-import fr.cdamassy2021.dao.QuestionDaoImpl;
-import fr.cdamassy2021.model.Proposition;
-import fr.cdamassy2021.model.Question;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -17,7 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import fr.cdamassy2021.dao.QuestionDao;
+import fr.cdamassy2021.service.QuestionService;
 
 /**
  *
@@ -58,8 +55,8 @@ public class CreerQuestionServlet extends HttpServlet {
         //recupere libelle question
         String libelleQuestion = request.getParameter("libelleQuestion");
         //test acceptation:
-        boolean isLegitQuestion = (libelleQuestion.length() <= 255 
-               && libelleQuestion.length()>0) ? true : false;
+        boolean isLegitQuestion = (libelleQuestion.length() <= 255
+                && libelleQuestion.length() > 0) ? true : false;
 
         //recupere les libelles des propositions dans un tableau
         String[] allPropositions = request.getParameterValues("proposition");
@@ -67,13 +64,24 @@ public class CreerQuestionServlet extends HttpServlet {
         boolean isLegitPropositions = true;
         if (allPropositions != null) {
             for (String proposition : allPropositions) {
-                if (proposition.length() > 255 || proposition.length() ==0 ) {
+                if (proposition.length() > 255 || proposition.length() == 0) {
                     isLegitPropositions = false;
                 }
             }
         }
 
-        //test de validation du formulaire
+        //recupere la value de est_correct des propositions dans un tableau
+        ArrayList<String> allCorrectnesses = new ArrayList<>();
+        allCorrectnesses.add(request.getParameter("correctness"));
+        for (int i = 2; i < allPropositions.length + 1; i++) {
+            allCorrectnesses.add(request.getParameter("correctness" + i));
+        }
+        String test = "";
+        for (String str : allCorrectnesses) {
+            test += str;
+        }
+        request.setAttribute("message", test);
+        //test de validité du formulaire
         boolean valide = true;
 
         if (!isLegitQuestion) {
@@ -84,29 +92,15 @@ public class CreerQuestionServlet extends HttpServlet {
             request.setAttribute("message", "proposition null ou Trop de caracteres (max=255)");
             valide = false;
         }
-
+        boolean operationOk = false;
         if (valide) {
-            QuestionDaoImpl dao = new QuestionDaoImpl(); // Ici nous avons besoins d'une QuestionDaoFactory
-            //create Question bean:
-            Question newQuestion = new Question(Question.TypeQuestion.QCM, 1, 1, libelleQuestion, null);
-            //creates List<Proposition>:
-            ArrayList<Proposition> newPropositions = new ArrayList();
-            if (allPropositions != null) {
-                for (String libelleProposition : allPropositions) {
-                    // retire les propositions dont le libelle n'a pas été renseigné
-                    if (libelleProposition.length() > 0) {
-                        newPropositions.add(
-                                new Proposition(-1,
-                                        Proposition.Correctness.UNDEFINED,
-                                        libelleProposition));
-                    }
-                }
-
-            }
-
+            // callService:
+            QuestionService qService = new QuestionService();
             try {
-                dao.insert(newQuestion, newPropositions);
-
+                operationOk = qService.insererNouvelleQuestion(
+                        libelleQuestion,
+                        allPropositions,
+                        allCorrectnesses);
             } catch (SQLException ex) {
                 if (ex.getErrorCode() == 1062) {
                     request.setAttribute("message", "Cette question existe dejà !");
@@ -119,7 +113,7 @@ public class CreerQuestionServlet extends HttpServlet {
             }
         }
         // redirection
-        if (valideForm && valide) {
+        if (valideForm && valide && operationOk) {
             request.setAttribute("messageSuccess", "Votre Question est validée !"
                     + " Vous pouvez vous maintenant la trouver dans la"
                     + "liste de vos questions.");
