@@ -1,30 +1,50 @@
 package fr.cdamassy2021.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 /**
  *
  * @author scdel
+ * Exercices en groupe
  */
 public class EFG {
 
     private int id, idCreateur, idCanal;
     private String intitule;
+    private List<Groupe> groupes;
 
-    // private List<Groupe> groupes avec dans Groupe 
-    //  private List<Personne> membres ??
     public EFG() {
     }
-
+    /**
+     * Constructeur avec tous les paramètres, par exemple pourr récupérer depuis la BDD
+     * @param id
+     * @param idCreateur
+     * @param idCanal
+     * @param intitule
+     * @param desgroupes 
+     */
+    public EFG(int id, int idCreateur, int idCanal, String intitule, List<Groupe> desgroupes) {
+        this.id = id;
+        this.idCreateur = idCreateur;
+        this.idCanal = idCanal;
+        this.intitule = intitule;
+        this.groupes = desgroupes;
+    }
+/**
+ * Constructeur sans groupes, pour l'initialisation
+ * @param id
+ * @param idCreateur
+ * @param idCanal
+ * @param intitule 
+ */
     public EFG(int id, int idCreateur, int idCanal, String intitule) {
         this.id = id;
         this.idCreateur = idCreateur;
         this.idCanal = idCanal;
         this.intitule = intitule;
+        this.groupes = new ArrayList<Groupe>();
     }
 
     public int getId() {
@@ -57,6 +77,14 @@ public class EFG {
 
     public void setIntitule(String intitule) {
         this.intitule = intitule;
+    }
+
+    public List<Groupe> getGroupes() {
+        return groupes;
+    }
+
+    public void setGroupes(List<Groupe> groupes) {
+        this.groupes = groupes;
     }
 
     @Override
