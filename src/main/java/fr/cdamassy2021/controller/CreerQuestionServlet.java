@@ -4,7 +4,7 @@
  */
 package fr.cdamassy2021.controller;
 
-import fr.cdamassy2021.dao.QuestionDao;
+import fr.cdamassy2021.dao.QuestionDaoImpl;
 import fr.cdamassy2021.model.Proposition;
 import fr.cdamassy2021.model.Question;
 import java.io.IOException;
@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import fr.cdamassy2021.dao.QuestionDao;
 
 /**
  *
@@ -38,17 +39,14 @@ public class CreerQuestionServlet extends HttpServlet {
     }
 
     /**
-     * Recupere le formulaire Post recu d'editionQuestion.jps
-     * test les données recues de l'utilisateur
-     * Si le formulaire est valide
-     * - QuestionDao.insert()
-     * Sinon
-     * - message d'erreur renvoyé
-     * 
+     * Recupere le formulaire Post recu d'editionQuestion.jps test les données
+     * recues de l'utilisateur Si le formulaire est valide -
+     * IQuestionDao.insert() Sinon - message d'erreur renvoyé
+     *
      * @param request
      * @param response
      * @throws ServletException
-     * @throws IOException 
+     * @throws IOException
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -66,14 +64,12 @@ public class CreerQuestionServlet extends HttpServlet {
         String[] allPropositions = request.getParameterValues("proposition");
         //test acceptation
         boolean isLegitPropositions = true;
-        if(allPropositions!=null)
-        {
+        if (allPropositions != null) {
             for (String proposition : allPropositions) {
-            if (libelleQuestion.length() > 255) {
-                isLegitPropositions = false;
+                if (libelleQuestion.length() > 255) {
+                    isLegitPropositions = false;
+                }
             }
-        }
-
         }
 
         //test de validation du formulaire
@@ -88,20 +84,19 @@ public class CreerQuestionServlet extends HttpServlet {
             valide = false;
         }
 
-
         if (valide) {
-            QuestionDao dao = new QuestionDao();
+            QuestionDaoImpl dao = new QuestionDaoImpl(); // Ici nous avons besoins d'une QuestionDaoFactory
             //create Question bean:
-            Question newQuestion = new Question(Question.TypeQuestion.QCM,1,1,libelleQuestion,null);
+            Question newQuestion = new Question(Question.TypeQuestion.QCM, 1, 1, libelleQuestion, null);
             //creates List<Proposition>:
             ArrayList<Proposition> newPropositions = new ArrayList();
-            for (String libelleProposition : allPropositions){
+            for (String libelleProposition : allPropositions) {
                 // retire les propositions dont le libelle n'a pas été renseigné
-                if (libelleProposition.length()>0){
+                if (libelleProposition.length() > 0) {
                     newPropositions.add(
-                        new Proposition(-1,
-                                Proposition.Correctness.UNDEFINED,
-                                libelleProposition));
+                            new Proposition(-1,
+                                    Proposition.Correctness.UNDEFINED,
+                                    libelleProposition));
                 }
             }
 
@@ -113,7 +108,7 @@ public class CreerQuestionServlet extends HttpServlet {
                     request.setAttribute("message", "Cette question existe dejà !");
                     valideForm = false;
                 } else {
-                    request.setAttribute( "message", "Problème interne !");
+                    request.setAttribute("message", "Problème interne !");
                     valideForm = false;
                 }
                 Logger.getLogger(CreerQuestionServlet.class.getName()).log(Level.SEVERE, null, ex);

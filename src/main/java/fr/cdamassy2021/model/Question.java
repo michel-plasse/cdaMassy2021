@@ -71,8 +71,6 @@ public class Question {
      *
      * @param canalId
      * @param auteurId
-     * @param nomAuteur
-     * @param typeDeQuestion
      * @param statement
      * @param propositions
      */
