@@ -45,8 +45,11 @@ public class ListerQuestionsServlet extends HttpServlet {
 
         IDao dao = new QuestionDaoImpl();
         String vue = VUE_OK;
+        int pageRequest =1;
         String page = request.getParameter("noPage");
-        int pageRequest = Integer.parseInt(page);
+        if (page != null){
+           pageRequest = Integer.parseInt(page);
+        }
         pageRequest = (pageRequest==0)?1: pageRequest;
         try {
             // Les paramètres encore en dur
