@@ -58,7 +58,8 @@ public class CreerQuestionServlet extends HttpServlet {
         //recupere libelle question
         String libelleQuestion = request.getParameter("libelleQuestion");
         //test acceptation:
-        boolean isLegitQuestion = (libelleQuestion.length() <= 255) ? true : false;
+        boolean isLegitQuestion = (libelleQuestion.length() <= 255 
+               && libelleQuestion.length()>0) ? true : false;
 
         //recupere les libelles des propositions dans un tableau
         String[] allPropositions = request.getParameterValues("proposition");
@@ -66,7 +67,7 @@ public class CreerQuestionServlet extends HttpServlet {
         boolean isLegitPropositions = true;
         if (allPropositions != null) {
             for (String proposition : allPropositions) {
-                if (libelleQuestion.length() > 255) {
+                if (proposition.length() > 255 || proposition.length() ==0 ) {
                     isLegitPropositions = false;
                 }
             }
@@ -76,11 +77,11 @@ public class CreerQuestionServlet extends HttpServlet {
         boolean valide = true;
 
         if (!isLegitQuestion) {
-            request.setAttribute("erreur_Question", "Trop de caracteres (max=255)");
+            request.setAttribute("message", "question null ou Trop de caracteres (max=255)");
             valide = false;
         }
         if (!isLegitPropositions) {
-            request.setAttribute("erreur_proposition", "Trop de caracteres (max=255)");
+            request.setAttribute("message", "proposition null ou Trop de caracteres (max=255)");
             valide = false;
         }
 
@@ -90,14 +91,17 @@ public class CreerQuestionServlet extends HttpServlet {
             Question newQuestion = new Question(Question.TypeQuestion.QCM, 1, 1, libelleQuestion, null);
             //creates List<Proposition>:
             ArrayList<Proposition> newPropositions = new ArrayList();
-            for (String libelleProposition : allPropositions) {
-                // retire les propositions dont le libelle n'a pas été renseigné
-                if (libelleProposition.length() > 0) {
-                    newPropositions.add(
-                            new Proposition(-1,
-                                    Proposition.Correctness.UNDEFINED,
-                                    libelleProposition));
+            if (allPropositions != null) {
+                for (String libelleProposition : allPropositions) {
+                    // retire les propositions dont le libelle n'a pas été renseigné
+                    if (libelleProposition.length() > 0) {
+                        newPropositions.add(
+                                new Proposition(-1,
+                                        Proposition.Correctness.UNDEFINED,
+                                        libelleProposition));
+                    }
                 }
+
             }
 
             try {
