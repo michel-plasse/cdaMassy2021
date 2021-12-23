@@ -49,7 +49,7 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         int idCanalTest = 1;
         int idAuteurTest = 2;
         Question insertedQuestion = new Question(
-                Question.TypeQuestion.QCM, 
+                Question.TypeQuestion.QCM,
                 idAuteurTest, idCanalTest,
                 enonceQuestion,
                 null);
@@ -76,6 +76,20 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         assertEquals(18, prop1.getIdProposition());
         assertEquals(19, prop2.getIdProposition());
         assertEquals(20, prop3.getIdProposition());
+
+        Proposition.Correctness expectedCorrectness1
+                = Proposition.Correctness.CORRECT;
+        Proposition.Correctness expectedCorrectness2
+                = Proposition.Correctness.INCORRECT;
+        Proposition.Correctness expectedCorrectness3
+                = Proposition.Correctness.UNDEFINED;
+        assertEquals(expectedCorrectness1,
+                instance.findPropositionById(18).getCorrectness());
+        assertEquals(expectedCorrectness2,
+                instance.findPropositionById(19).getCorrectness());
+        assertEquals(expectedCorrectness3,
+                instance.findPropositionById(20).getCorrectness());
+
     }
 
     @Test
@@ -142,7 +156,7 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         System.out.println("props count=" + actualNbProposition);
         assertEquals(expectedNbPropositions, actualNbProposition);
     }
-    
+
     @Test
     public void testgetAllByCanalPaging() throws SQLException {
         System.out.println("try getAllByCanalPaging");

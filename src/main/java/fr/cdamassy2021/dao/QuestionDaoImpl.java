@@ -14,32 +14,42 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * eng: This IDao is responsible for inserting and retrieving 'Question' beans from the DB
- * and initialise those with their respective Proposition beans list.<br>
- * For this reason it also provide those operations with the 'Proposition' beans.<br>
+ * eng: This IDao is responsible for inserting and retrieving 'Question' beans
+ * from the DB and initialise those with their respective Proposition beans
+ * list.<br>
+ * For this reason it also provide those operations with the 'Proposition'
+ * beans.<br>
  * <br>
- * fr: Cette IDao a pour résponsabilité d'insérer dans la BDD, et d'en extraire<br>
- * les beans 'Question' initialisés avec leur liste de Propositions respectives.<br>
+ * fr: Cette IDao a pour résponsabilité d'insérer dans la BDD, et d'en
+ * extraire<br>
+ * les beans 'Question' initialisés avec leur liste de Propositions
+ * respectives.<br>
  * Pour ce faire, elle assure aussi ces opérations avec avec les beans <br>
  * 'Proposition'.
  *
  * @author Kamal, Thomas
  */
 public class QuestionDaoImpl implements QuestionDao {
-    
-        protected static final String INSERT_QUESTION
+
+    protected static final String INSERT_QUESTION
             = "INSERT INTO question ("
             + "id_canal,id_createur,libelle,id_type_question) "
             + "VALUES ( ?, ?, ?, ?);";
 
-    protected static final String SELECT_BY_QUESTION_ID
+    protected static final String SELECT_QUESTION_BY_ID
             = "SELECT  q.*, p.nom, p.prenom\n"
             + "FROM question q\n"
             + "	INNER JOIN \n"
             + "		personne p \n"
             + "			ON p.id_personne = q.id_createur\n"
             + "WHERE id_question = ?;";
+
+    protected static final String SELECT_PROPOSITION_BY_ID
+            = "SELECT *\n"
+            + "FROM proposition\n"
+            + "WHERE id_proposition = ?;";
 
     protected static final String SELECT_ALL_QUESTIONS_IN_LIMIT
             = "SELECT q.*, p.prenom, p.nom\n"
@@ -74,11 +84,11 @@ public class QuestionDaoImpl implements QuestionDao {
             + "			ON q.id_createur = p.id_personne\n"
             + "WHERE id_questionnaire=?\n"
             + "LIMIT ?, ?;";
-    
+
     private static final String INSERT_PROPOSITION = "INSERT INTO proposition ("
             + "id_question,libelle,est_correcte)"
             + " VALUES ( ?, ?, ?);";
-        private static final String SELECT_PROPOSITIONS_WITH_QUESTION_ID
+    private static final String SELECT_PROPOSITIONS_WITH_QUESTION_ID
             = "SELECT * FROM proposition WHERE id_question=?;";
 
     /**
@@ -163,7 +173,7 @@ public class QuestionDaoImpl implements QuestionDao {
                 stmt1.setInt(1, inserted.getId());
                 stmt1.setString(2, p.getLibelle());
                 //Store la valeur de l'enum Correctness en DB.
-                Proposition.Correctness correctness = p.getIsCorrect();
+                Proposition.Correctness correctness = p.getCorrectness();
                 stmt1.setInt(3, correctness.ordinal());
                 stmt1.execute();
                 // Récupérer le id auto-incrémenté
@@ -199,7 +209,7 @@ public class QuestionDaoImpl implements QuestionDao {
 
         try {
             // Chercher l'ID puis et initialiser l'objet Question
-            preparedStatement = connection.prepareStatement(SELECT_BY_QUESTION_ID);
+            preparedStatement = connection.prepareStatement(SELECT_QUESTION_BY_ID);
             preparedStatement.setLong(1, searchedId);
             ResultSet res = preparedStatement.executeQuery();
             if (res.next()) {
@@ -228,11 +238,46 @@ public class QuestionDaoImpl implements QuestionDao {
                     Proposition.Correctness correctness
                             = Proposition.Correctness
                                     .values()[resProps.getInt("est_correcte")];
-                    pFound.setIsCorrect(correctness);
+                    pFound.setCorrectness(correctness);
                     pFound.setIdQuestion(resProps.getInt("id_question"));
                     pFound.setLibelle(resProps.getString("libelle"));
                     resList.add(pFound);
                 }
+            }
+        } catch (SQLException e) {
+        }
+        // retourne un bean initialisé.
+        return found;
+    }
+
+    /**
+     * Renvoit la 'Proposition' qui a pour id searchedId.
+     * 
+     * @param searchedId est la clef à trouver dans la base de données.
+     * @return le bean 'Question' recherché.
+     * @throws SQLException
+     */
+    public Proposition findPropositionById(long searchedId) throws SQLException {
+        Connection connection = Database.getConnection();
+        PreparedStatement preparedStatement = null;
+        Proposition found = null;
+
+        try {
+            // Chercher l'ID puis et initialiser l'objet Question
+            preparedStatement = connection.prepareStatement(SELECT_PROPOSITION_BY_ID);
+            preparedStatement.setLong(1, searchedId);
+            ResultSet res = preparedStatement.executeQuery();
+            if (res.next()) {
+                // recupère son type sous forme d'enum
+                Proposition.Correctness estCorrect
+                        = Proposition.Correctness
+                                .values()[res.getInt("est_correcte")];
+                // initialiseation de la question 
+                found = new Proposition();
+                found.setCorrectness(estCorrect);
+                found.setIdProposition(res.getInt("id_proposition"));
+                found.setIdQuestion(res.getInt("id_question"));
+                found.setLibelle("libelle");
             }
         } catch (SQLException e) {
         }
@@ -295,7 +340,7 @@ public class QuestionDaoImpl implements QuestionDao {
                 Proposition.Correctness correctness
                         = Proposition.Correctness.values()[resProps.getInt(
                         "est_correcte")];
-                pFound.setIsCorrect(correctness);
+                pFound.setCorrectness(correctness);
                 pFound.setIdQuestion(resProps.getInt("id_question"));
                 pFound.setLibelle(resProps.getString("libelle"));
                 // L'ajouter à la liste de propositions
@@ -365,7 +410,7 @@ public class QuestionDaoImpl implements QuestionDao {
                 Proposition.Correctness correctness
                         = Proposition.Correctness.values()[resProps.getInt(
                         "est_correcte")];
-                pFound.setIsCorrect(correctness);
+                pFound.setCorrectness(correctness);
                 pFound.setIdQuestion(resProps.getInt("id_question"));
                 pFound.setLibelle(resProps.getString("libelle"));
                 // L'ajouter à la liste de propositions

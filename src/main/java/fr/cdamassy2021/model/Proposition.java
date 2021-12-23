@@ -81,11 +81,11 @@ public class Proposition {
 		this.idQuestion = idQuestion;
 	}
 
-	public Correctness getIsCorrect() {
+	public Correctness getCorrectness() {
 		return isCorrect;
 	}
 
-	public void setIsCorrect(Correctness isCorrect) {
+	public void setCorrectness(Correctness isCorrect) {
 		this.isCorrect = isCorrect;
 	}
 
