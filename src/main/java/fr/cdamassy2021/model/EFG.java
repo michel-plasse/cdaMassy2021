@@ -32,13 +32,13 @@ public class EFG {
         this.intitule = intitule;
         this.groupes = desgroupes;
     }
-/**
- * Constructeur sans groupes, pour l'initialisation
- * @param id
- * @param idCreateur
- * @param idCanal
- * @param intitule 
- */
+    /**
+     * Constructeur sans groupes, pour l'initialisation
+     * @param id
+     * @param idCreateur
+     * @param idCanal
+     * @param intitule 
+     */
     public EFG(int id, int idCreateur, int idCanal, String intitule) {
         this.id = id;
         this.idCreateur = idCreateur;

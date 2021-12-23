@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author scdel
  */
-public class EFGDao implements Dao<EFG> {
+public class EFGDao implements IDao<EFG> {
 
     @Override
     public boolean insert(EFG inserted) throws SQLException {
