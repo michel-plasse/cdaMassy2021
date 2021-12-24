@@ -9,14 +9,12 @@ import fr.cdamassy2021.model.Question;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import fr.cdamassy2021.dao.IDao;
-import fr.cdamassy2021.dao.QuestionDao;
 
 /**
  *
@@ -29,10 +27,8 @@ public class ListerQuestionsServlet extends HttpServlet {
     private final String VUE_ERREUR = "WEB-INF/erreur.jsp";
 
     /**
-     * Recupère la liste de toutes les questions présente dans la Database les
-     * 10 premières questions via QuestionDao.getAllPaging(1,10). Passe cette
-     * liste en attribut de la requete (post-it) puis redirige l'utilisateur
-     * vers la vue questions.jsp pour en afficher le contenu.
+     * Recupere la liste de 10 questions specifiée par l'utilisateur avec noPage
+     * et redirige vers questions.jsp pour les y afficher.
      *
      * @param request
      * @param response
