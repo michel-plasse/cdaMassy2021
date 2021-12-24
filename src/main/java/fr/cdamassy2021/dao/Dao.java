@@ -3,7 +3,12 @@ package fr.cdamassy2021.dao;
 import java.util.ArrayList;
 
 
-
+/**
+ * rajout de la methode update
+ * Groupe2
+ *
+ * @param <T>
+ */
 public interface Dao<T> {
 	
 	public T findById(long id);

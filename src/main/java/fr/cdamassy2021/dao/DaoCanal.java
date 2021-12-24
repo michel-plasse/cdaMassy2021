@@ -8,7 +8,12 @@ import fr.cdamassy2021.model.Personne;
 import fr.cdamassy2021.model.Question;
 import fr.cdamassy2021.model.Questionnaire;
 import fr.cdamassy2021.model.Sondage;
-
+/**
+ * 
+ * @author Groupe2
+ * 23/12/2021
+ *
+ */
 public interface DaoCanal extends Dao<Canal> {
 
 public	ArrayList<Questionnaire> getAllQuestionnairesByIdCanal(int idCanal);

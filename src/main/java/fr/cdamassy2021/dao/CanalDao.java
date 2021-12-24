@@ -1,5 +1,6 @@
 /**
- * 
+Groupe2
+ * 23/12/2021
  */
 package fr.cdamassy2021.dao;
 
@@ -15,16 +16,15 @@ import fr.cdamassy2021.model.Personne;
 import fr.cdamassy2021.model.Questionnaire;
 import fr.cdamassy2021.model.Sondage;
 
-
 public class CanalDao implements DaoCanal {
-	
+
 	protected DaoFactory factory;
 
 	public CanalDao(DaoFactory factory) {
 		super();
 		this.factory = factory;
 	}
-	
+
 	@Override
 	public Canal findById(long id) {
 		// TODO Auto-generated method stub
@@ -55,9 +55,14 @@ public class CanalDao implements DaoCanal {
 		return false;
 	}
 
+	/**
+	 * Groupe2 
+	 * 23/12/2021 
+	 * get All Questionnaires ByI dCanal
+	 */
 	@Override
 	public ArrayList<Questionnaire> getAllQuestionnairesByIdCanal(int idCanal) {
-		
+
 		String sql = "SELECT * FROM questionnaire WHERE id_canal=? ";
 
 		ArrayList<Questionnaire> questionnaires = new ArrayList<>();
@@ -66,14 +71,14 @@ public class CanalDao implements DaoCanal {
 			ps.setInt(1, idCanal);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Questionnaire q=new Questionnaire();
+				Questionnaire q = new Questionnaire();
 				q.setIdQuestionnaire(rs.getInt("id_questionnaire"));
 				q.setIdCreateur(rs.getInt("id_createur"));
 				q.setIdCanal(rs.getInt("id_canal"));
 				q.setLibelle(rs.getString("libelle"));
 				q.setDateAjout(rs.getDate("date_ajout"));
 				questionnaires.add(q);
-				
+
 			}
 		} catch (SQLException e) {
 			e.getMessage();
@@ -81,10 +86,15 @@ public class CanalDao implements DaoCanal {
 		return questionnaires;
 	}
 
+	/**
+	 * Groupe2 
+	 * 23/12/2021
+	 * get All Efgs By IdCanal
+	 */
 	@Override
 	public ArrayList<EFG> getAllEfgsByIdCanal(int idCanal) {
-		
-		String sql = "SELECT * FROM efg WHERE id_canal=? ";
+
+		String sql = "SELECT * FROM efg WHERE id_canal= ? ";
 
 		ArrayList<EFG> efgs = new ArrayList<>();
 
@@ -92,14 +102,14 @@ public class CanalDao implements DaoCanal {
 			ps.setInt(1, idCanal);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				EFG e=new EFG();
-				e.setIdEFG(rs.getInt("id_efg"));
-				e.setIdCreateur(rs.getInt("id_createur"));
-				e.setIdCanal(rs.getInt("id_canal"));
-				e.setIntitule(rs.getString("libelle"));
-				e.setDateCreation(rs.getDate("date_ajout"));
-				efgs.add(e);
-				
+				EFG efg = new EFG();
+				efg.setIdEFG(rs.getInt("id_efg"));
+				efg.setIdCreateur(rs.getInt("id_createur"));
+				efg.setIdCanal(rs.getInt("id_canal"));
+				efg.setIntitule(rs.getString("intitule"));
+				efg.setDateCreation(rs.getDate("date_creation"));
+				efgs.add(efg);
+
 			}
 		} catch (SQLException e) {
 			e.getMessage();
@@ -107,10 +117,14 @@ public class CanalDao implements DaoCanal {
 		return efgs;
 	}
 
-
+	/**
+	 * Groupe2 
+	 * 23/12/2021
+	 * get All Sondages By IdCanal
+	 */
 	@Override
 	public ArrayList<Sondage> getAllSondagesByIdCanal(int idCanal) {
-		
+
 		String sql = "SELECT * FROM question WHERE id_canal=? ";
 
 		ArrayList<Sondage> sondages = new ArrayList<>();
@@ -119,12 +133,12 @@ public class CanalDao implements DaoCanal {
 			ps.setInt(1, idCanal);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Sondage s=new Sondage();
+				Sondage s = new Sondage();
 				s.setIdQuestion(rs.getInt("id_question"));
 				s.setIdQuestionnaire(rs.getInt("id_questionnaire"));
 				s.setIdCreateur(rs.getInt("id_createur"));
 				s.setIdCanal(rs.getInt("id_canal"));
-				s.setIdTypeQuestion(rs.getInt("id_typeQuestion"));
+				s.setIdTypeQuestion(rs.getInt("id_type_question"));
 				s.setLibelle(rs.getString("libelle"));
 				sondages.add(s);
 			}
@@ -134,6 +148,11 @@ public class CanalDao implements DaoCanal {
 		return sondages;
 	}
 
+	/**
+	 * Groupe2 
+	 * 23/12/2021
+	 * get All Membres By IdCanal
+	 */
 	@Override
 	public ArrayList<Personne> getAllMembresByIdCanal(int idCanal) {
 		String sql = "SELECT * FROM personne WHERE id_personne IN (SELECT id_personne FROM membre_canal where id_canal=?)";
@@ -144,7 +163,7 @@ public class CanalDao implements DaoCanal {
 			ps.setInt(1, idCanal);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Personne personne=new Personne();
+				Personne personne = new Personne();
 				personne.setId(rs.getInt("id_personne"));
 				personne.setPrenom(rs.getString("prenom"));
 				personne.setNom(rs.getString("nom"));
@@ -158,7 +177,5 @@ public class CanalDao implements DaoCanal {
 		}
 		return personnes;
 	}
-
-	
 
 }

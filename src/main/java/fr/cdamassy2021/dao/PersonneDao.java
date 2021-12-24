@@ -9,16 +9,26 @@ import java.util.List;
 
 import fr.cdamassy2021.model.Personne;
 
+/**
+ * Groupe2 23/12/2021 On a changé la methode de connexion pour qu'elle soit
+ * completement DAO.(voir DaoFactory). On a utilisé le try with resources pour
+ * pouvoir benificier du caractere autoClosebale de Connection et de
+ * PreparedStatement.
+ */
 public class PersonneDao implements DaoPersonne {
-	
+
 	protected DaoFactory factory;
 
+	/**
+	 * Groupe2 23/12/2021
+	 */
 	public PersonneDao(DaoFactory factory) {
 		super();
 		this.factory = factory;
 	}
-
-
+	/**
+	 * Groupe2 23/12/2021
+	 */
 	@Override
 	public Personne findById(long id) {
 		String sql = "select * from personne where id_personne=?";
@@ -29,7 +39,7 @@ public class PersonneDao implements DaoPersonne {
 			ps.setLong(1, id);
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				personne  = new Personne ();
+				personne = new Personne();
 				personne.setId(rs.getInt("id_personne"));
 				personne.setPrenom(rs.getString("prenom"));
 				personne.setNom(rs.getString("nom"));
@@ -42,7 +52,9 @@ public class PersonneDao implements DaoPersonne {
 		}
 		return personne;
 	}
-
+	/**
+	 * Groupe2 23/12/2021
+	 */
 	@Override
 	public ArrayList<Personne> findAll() {
 		String sql = "select * from personne";
@@ -53,7 +65,7 @@ public class PersonneDao implements DaoPersonne {
 
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Personne personne=new Personne();
+				Personne personne = new Personne();
 				personne.setId(rs.getInt("id_personne"));
 				personne.setPrenom(rs.getString("prenom"));
 				personne.setNom(rs.getString("nom"));
@@ -66,9 +78,11 @@ public class PersonneDao implements DaoPersonne {
 			e.getMessage();
 		}
 		return personnes;
-	
-	}
 
+	}
+	/**
+	 * Groupe2 23/12/2021
+	 */
 	@Override
 	public int insert(Personne p) {
 		String sql = "insert into personne (prenom, nom, email, tel, pwd) values(?,?,?,?,?)";
@@ -78,13 +92,14 @@ public class PersonneDao implements DaoPersonne {
 			ps.setString(3, p.getEmail());
 			ps.setString(4, p.getTel());
 			ps.setString(2, p.getPwd());
-			
-			if(ps.executeUpdate()==1) {
+
+			if (ps.executeUpdate() == 1) {
 				ResultSet RSid = ps.getGeneratedKeys();
 				RSid.next();
-				System.out.println( RSid.getInt(1));
-				return RSid.getInt(1);}
-				else return 0;
+				System.out.println(RSid.getInt(1));
+				return RSid.getInt(1);
+			} else
+				return 0;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return 0;
@@ -102,18 +117,14 @@ public class PersonneDao implements DaoPersonne {
 		return false;
 	}
 
-
 	public static List<Personne> getTousMembres(int i, int j) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
 	public static Personne getByLoginPassword(String login, String pwd) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 
 }

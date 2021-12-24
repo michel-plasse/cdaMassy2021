@@ -10,15 +10,17 @@ import fr.cdamassy2021.model.EFG;
 import fr.cdamassy2021.model.GroupeEfg;
 import fr.cdamassy2021.model.Personne;
 
+/**
+ * Groupe2 23/12/2021
+ */
 public class EfgDao implements DaoEFG {
-	
+
 	protected DaoFactory factory;
 
 	public EfgDao(DaoFactory factory) {
 		super();
 		this.factory = factory;
 	}
-
 
 	@Override
 	public EFG findById(long id) {
@@ -50,10 +52,12 @@ public class EfgDao implements DaoEFG {
 		return false;
 	}
 
-	
+	/**
+	 * get all groupes by idEfg.
+	 */
 	@Override
-	public ArrayList<GroupeEfg> listerGroupesByIdEfg(int idEfg) {
-		
+	public ArrayList<GroupeEfg> getAllGroupesByIdEfg(int idEfg) {
+
 		String sql = "SELECT * FROM groupe_efg where id_efg=?";
 
 		ArrayList<GroupeEfg> groupes = new ArrayList<>();
@@ -62,10 +66,10 @@ public class EfgDao implements DaoEFG {
 			ps.setInt(1, idEfg);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				GroupeEfg g=new GroupeEfg();
+				GroupeEfg g = new GroupeEfg();
 				g.setIdCreateur(rs.getInt("id_createur"));
 				g.setIdEfg(rs.getInt("id_efg"));
-				
+
 				groupes.add(g);
 			}
 		} catch (SQLException e) {
@@ -73,14 +77,4 @@ public class EfgDao implements DaoEFG {
 		}
 		return groupes;
 	}
-
-
-	@Override
-	public GroupeEfg creerGroupe(int IdCreateur) {
-		
-		return null;
-	}
-	
-	
-
 }
