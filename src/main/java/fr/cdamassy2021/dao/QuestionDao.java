@@ -4,9 +4,11 @@
  */
 package fr.cdamassy2021.dao;
 
+import fr.cdamassy2021.model.Proposition;
 import fr.cdamassy2021.model.Question;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * class QuestionDao<br>
@@ -39,7 +41,10 @@ public interface QuestionDao extends IDao<Question> {
     @Override
     public boolean insert(Question newQuestion)
             throws SQLException;
-
+    
+    public boolean insert(Question inserted, List<Proposition> propositions)
+            throws SQLException;
+    
     @Override
     public Question findById(long searchedId)
             throws SQLException;
@@ -83,4 +88,6 @@ public interface QuestionDao extends IDao<Question> {
 
     @Override
     public ArrayList<Question> findAll() throws SQLException;
+    
+    public Proposition findPropositionById(long searchedId) throws SQLException;
 }

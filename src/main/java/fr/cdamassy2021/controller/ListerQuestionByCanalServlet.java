@@ -4,6 +4,7 @@
  */
 package fr.cdamassy2021.controller;
 
+import fr.cdamassy2021.dao.DaoFactory;
 import fr.cdamassy2021.dao.QuestionDaoImpl;
 import fr.cdamassy2021.model.Question;
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class ListerQuestionByCanalServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        QuestionDao dao = new QuestionDaoImpl();
+        QuestionDao dao = DaoFactory.getInstance().getQuestionDao();
         String vue = VUE_OK;
         try {
             // Les paramètres encore en dur

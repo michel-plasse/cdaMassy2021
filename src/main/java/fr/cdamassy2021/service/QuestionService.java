@@ -4,14 +4,15 @@
  */
 package fr.cdamassy2021.service;
 
-import fr.cdamassy2021.dao.QuestionDaoImpl;
+import fr.cdamassy2021.dao.DaoFactory;
+import fr.cdamassy2021.dao.QuestionDao;
 import fr.cdamassy2021.model.Proposition;
 import fr.cdamassy2021.model.Question;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Ce service se charge de traiter les informations recus dans les servlet,
+ * Traites les informations recues dans les servlet,
  * construire les modeles 'Question' et 'Proposition'
  * et utiliser la dao pour toute opération d'insertio ou d'updates.
  * @author thoma
@@ -58,7 +59,7 @@ public class QuestionService {
                     operationResult = false;
             }
         }
-        QuestionDaoImpl dao = new QuestionDaoImpl();
+        QuestionDao dao = DaoFactory.getInstance().getQuestionDao();
         //create Question bean:
         Question newQuestion = new Question(Question.TypeQuestion.QCM, 1, 1, libelleQuestion, null);
         //creates List<Proposition>:

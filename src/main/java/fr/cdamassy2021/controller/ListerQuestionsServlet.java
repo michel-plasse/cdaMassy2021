@@ -4,7 +4,7 @@ package fr.cdamassy2021.controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-import fr.cdamassy2021.dao.QuestionDaoImpl;
+import fr.cdamassy2021.dao.DaoFactory;
 import fr.cdamassy2021.model.Question;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -14,7 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import fr.cdamassy2021.dao.IDao;
+import fr.cdamassy2021.dao.QuestionDao;
 
 /**
  *
@@ -39,7 +39,7 @@ public class ListerQuestionsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        IDao dao = new QuestionDaoImpl();
+        QuestionDao dao = DaoFactory.getInstance().getQuestionDao();
         String vue = VUE_OK;
         int pageRequest =1;
         String page = request.getParameter("noPage");

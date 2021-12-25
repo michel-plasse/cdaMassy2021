@@ -26,12 +26,15 @@ import java.util.List;
  * extraire<br>
  * les beans 'Question' initialisés avec leur liste de Propositions
  * respectives.<br>
- * Pour ce faire, elle assure aussi ces opérations avec avec les beans <br>
+ * Pour ce faire, elle assure aussi ces opérations avec avec les beans
+ * <br>
  * 'Proposition'.
  *
  * @author Kamal, Thomas
  */
 public class QuestionDaoImpl implements QuestionDao {
+
+    private DaoFactory daoFactory;
 
     protected static final String INSERT_QUESTION
             = "INSERT INTO question ("
@@ -94,7 +97,8 @@ public class QuestionDaoImpl implements QuestionDao {
     /**
      * class default constructor
      */
-    public QuestionDaoImpl() {
+    public QuestionDaoImpl(DaoFactory daoFactory) {
+         this.daoFactory = daoFactory;
     }
 
     /**
@@ -108,7 +112,7 @@ public class QuestionDaoImpl implements QuestionDao {
     @Override
     public boolean insert(Question newQuestion) throws SQLException {
         Boolean result = false;
-        Connection connection = Database.getConnection();
+        Connection connection = daoFactory.getConnection();
         //compile la requete
         PreparedStatement stmt = connection.prepareStatement(
                 INSERT_QUESTION, Statement.RETURN_GENERATED_KEYS);
@@ -131,7 +135,8 @@ public class QuestionDaoImpl implements QuestionDao {
     /**
      * Insertion des 'Question' et de sa liste de 'Proposition' sur le modèle
      * transactionnel.<br>
-     * Si l'insertion de la question ou de chacune des proposition de la <br>
+     * Si l'insertion de la question ou de chacune des proposition de la
+     * <br>
      * liste échoue la transaction est annulée avec un connection.rollback()<br>
      * <br>
      *
@@ -140,10 +145,11 @@ public class QuestionDaoImpl implements QuestionDao {
      * @return isCommit: true si l'insertion s'est passée comme prévu.<br>
      * @throws SQLException <br>
      */
+    @Override
     public boolean insert(Question inserted, List<Proposition> propositions)
             throws SQLException {
         Boolean isCommit = false;
-        Connection connection = Database.getConnection();
+        Connection connection = daoFactory.getConnection();
         try {
             connection.setAutoCommit(false);
             // Inserer Question: //
@@ -203,7 +209,7 @@ public class QuestionDaoImpl implements QuestionDao {
      */
     @Override
     public Question findById(long searchedId) throws SQLException {
-        Connection connection = Database.getConnection();
+        Connection connection = daoFactory.getConnection();
         PreparedStatement preparedStatement = null;
         Question found = null;
 
@@ -252,13 +258,13 @@ public class QuestionDaoImpl implements QuestionDao {
 
     /**
      * Renvoit la 'Proposition' qui a pour id searchedId.
-     * 
+     *
      * @param searchedId est la clef à trouver dans la base de données.
      * @return le bean 'Question' recherché.
      * @throws SQLException
      */
     public Proposition findPropositionById(long searchedId) throws SQLException {
-        Connection connection = Database.getConnection();
+        Connection connection = daoFactory.getConnection();
         PreparedStatement preparedStatement = null;
         Proposition found = null;
 
@@ -300,7 +306,7 @@ public class QuestionDaoImpl implements QuestionDao {
      */
     public ArrayList<Question> getAllPaging(
             int noPage, int nbElementsParPage) throws SQLException {
-        Connection connection = Database.getConnection();
+        Connection connection = daoFactory.getConnection();
         ArrayList<Question> result = new ArrayList();
         // prepare questions selection
         PreparedStatement selectQuestionStmt
@@ -368,7 +374,7 @@ public class QuestionDaoImpl implements QuestionDao {
      */
     @Override
     public ArrayList<Question> getAllByCanalPaging(int idCanal, int noPage, int nbElementsParPage) throws SQLException {
-        Connection connection = Database.getConnection();
+        Connection connection = daoFactory.getConnection();
         ArrayList<Question> result = new ArrayList();
         // prepare questions selection
         PreparedStatement selectQuestionStmt
