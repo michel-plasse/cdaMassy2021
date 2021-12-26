@@ -1,0 +1,51 @@
+     ┌──────────┐                       ┌───┐          ┌──────────┐            ┌───┐                               ┌────┐
+     │Navigateur│                       │Vue│          │Controleur│            │Dao│                               │SGBD│
+     └────┬─────┘                       └─┬─┘          └────┬─────┘            └─┬─┘                               └─┬──┘
+          │         POST /CreationQuestion?                 │                    │                                   │   
+          │         libelle=...?          │                 │                    │                                   │   
+          │         proposition=...?estCorrecte=...?        │                    │                                   │   
+          │         proposition=...?estCorrecte=...         │                    │                                   │   
+          │ ────────────────────────────────────────────────>                    │                                   │   
+          │                               │                 │                    │                                   │   
+          │                               │                 │ QuestionDao.       │                                   │   
+          │                               │                 │   insert(question, │                                   │   
+          │                               │                 │  propositionList)  │                                   │   
+          │                               │                 │ ──────────────────>│                                   │   
+          │                               │                 │                    │                                   │   
+          │                               │                 │                    │(transaction) INSERT INTO question │   
+          │                               │                 │                    │ (id_canal,id_createur,libelle,    │   
+          │                               │                 │                    │ id_type_question)                 │   
+          │                               │                 │                    │ VALUES ( ?, ?, ?, ?)              │   
+          │                               │                 │                    │ INSERT into proposition(          │   
+          │                               │                 │                    │id_question, libelle, est_correcte)│   
+          │                               │                 │                    │ VALUES (?,?,?)                    │   
+          │                               │                 │                    │───────────────────────────────────>   
+          │                               │                 │                    │                                   │   
+          │                               │                 │                    │            id_question            │   
+          │                               │                 │                    │<───────────────────────────────────   
+          │                               │                 │                    │                                   │   
+          │                               │                 │    boolean         │                                   │   
+          │                               │                 │     insertionOk    │                                   │   
+          │                               │                 │ <──────────────────│                                   │   
+          │                               │                 │                    │                                   │   
+          │                               │ confirmQuestion │                    │                                   │   
+          │                               │ Enregistree.jsp │                    │                                   │   
+          │                               │ <────────────────                    │                                   │   
+          │                               │                 │                    │                                   │   
+          │ Utilisateur informe           │                 │                    │                                   │   
+          │  de la creation de sa question│                 │                    │                                   │   
+          │ <──────────────────────────────                 │                    │                                   │   
+     ┌────┴─────┐                       ┌─┴─┐          ┌────┴─────┐            ┌─┴─┐                               ┌─┴──┐
+     │Navigateur│                       │Vue│          │Controleur│            │Dao│                               │SGBD│
+     └──────────┘                       └───┘          └──────────┘            └───┘                               └────┘                           └────┘
+@startuml
+participant Navigateur
+participant Vue
+Navigateur -> Controleur : POST /CreationQuestion?\nlibelle=...?\nproposition=...?estCorrecte=...?\nproposition=...?estCorrecte=...
+Controleur -> Dao: QuestionDao.\n  insert(question,\n propositionList)
+Dao -> SGBD: (transaction) INSERT INTO question\n (id_canal,id_createur,libelle,\n id_type_question)\n VALUES ( ?, ?, ?, ?) \n INSERT into proposition(\nid_question, libelle, est_correcte)\n VALUES (?,?,?)
+SGBD -> Dao: id_question
+Dao -> Controleur: boolean\n insertionOk
+Controleur -> Vue: confirmQuestion\nEnregistree.jsp
+Vue -> Navigateur: Utilisateur informe\n de la creation de sa question
+@enduml

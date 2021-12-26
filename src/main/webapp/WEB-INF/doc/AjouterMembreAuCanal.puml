@@ -1,0 +1,28 @@
+@startuml
+
+participant Navigateur
+participant Vue
+
+== Lister ==
+Navigateur -> Controleur: GET membresCanal?idCanal=...
+Controleur -> Controleur: vérifie que idCanal est entier
+Controleur -> Dao: CanalDao.getMembresByIdCanal(idCanal)
+Dao -> SGBD: SELECT etc
+SGBD -> Dao: lignes
+Dao -> Controleur: List<Personne>
+Controleur -> Vue: membresCanal.jsp
+Vue -> Navigateur: liste en tableau,\navec formulaire pour\najouter un membre\net un bouton de suppression\nface a chaque membre
+== Ajouter ==
+Navigateur -> Controleur : POST /ajouterMembreCanal\navec idPersonne, idCanal
+Controleur -> Controleur: vérifier droit de faire l'opération
+Controleur -> Controleur: vérifier idPersonne et idCanal entiers
+Controleur -> Dao: CanalDao.\najouterMembreAuCanal(idMembre, idCanal) 
+Dao -> SGBD: INSERT INTO \n membreCanal ...
+SGBD -> Dao: true or sql exception
+Dao -> Controleur: true or sql exception
+== Si ok ==
+Controleur -> Navigateur: redirect vers membresCanal?idCanal=...
+== Si pb (doublon par exemple) ==
+Controleur -> Vue: membresCanal.jsp
+Vue -> Navigateur: liste des membres\navec message d'erreur
+@enduml

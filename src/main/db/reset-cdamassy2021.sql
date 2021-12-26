@@ -87,29 +87,31 @@ BEGIN
 
 		INSERT INTO groupe_efg(id_efg, id_createur) VALUES
 			-- 2 groupes par efg, avec 2 membres dans chaque (voir plus loin)
-      (1, 3),
-      (1, 4),
-      (2, 3),
-      (2, 5);
+			(1, 3),
+			(1, 4),
+			(2, 3),
+			(2, 5);
 
 		INSERT INTO proposition(id_proposition, id_question, libelle, est_correcte) VALUES
 			-- 2 questions dans les 2 questionnaires (1= Java, 2=fruits et légumes)
-      (1, 1, 'private', 0), -- portée
-      (2, 1, 'protege', 1),
-      (3, 1, 'public', 0),
-      (4, 2, '1', 0), -- Que vaut s, avec String s = "0" + 1 ?'
-      (5, 2, '01', 1),
-      (6, 2, 'erreur', 0),
-      (7, 3, 'kaki', 1), -- Quel fruit est un fruit d'hiver ?
-      (8, 3, 'melon', 0),
-      (9, 3, 'orange', 1),
-      (10, 4, 'chou', 1), -- Quel légume est le plus riche en vitamine C ?
-      (11, 4, 'carotte', 0),
-      (12, 4, 'epinard', 0),
+			(1, 4, 'private', 0), -- portée
+			(2, 4, 'protege', 1),
+			(3, 4, 'public', 0),
+			(4, 5, '1', 0), -- Que vaut s, avec String s = "0" + 1 ?'
+			(5, 5, '01', 1),
+			(6, 5, 'erreur', 0),
+			(7, 6, 'kaki', 1), -- Quel fruit est un fruit d'hiver ?
+			(8, 6, 'melon', 0),
+			(9, 6, 'orange', 1),
+			(10, 7, 'chou', 1), -- Quel légume est le plus riche en vitamine C ?
+			(11, 7, 'carotte', 0),
+			(12, 7, 'epinard', 0),
+            (13, 1, 'oui', 0),
+            (14, 1, 'non', 0),
 			-- sondages
-      (13, 2, '1/2h', null),
-      (14, 2, '1h', null),
-      (15, 2, '1h30', null);
+			(15, 2, '1/2h', null),
+			(16, 2, '1h', null),
+			(17, 2, '1h30', null);
         
 		INSERT INTO reponse(id_question, id_personne, libelle) VALUES
 			-- question 1 avez-vous fini

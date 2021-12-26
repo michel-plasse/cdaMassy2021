@@ -1,129 +1,226 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package fr.cdamassy2021.model;
 
+import java.util.ArrayList;
+
 /**
- * @author Groupe2 23/12/2021
+ * class 'IQuestion'  <br>
+ * Java Bean implementation  <br>
+ *  <br>
+ Une 'IQuestion' peut être posée sur un canal (tel un sondage) <br>
+ * et/ou appartenir à questionnaire. <br>
+ * Lors de son edition par un 'Membre' et si besoin est (hors réponses libres) <br>
+ * il devra aussi définir des options de réponses ('Propositions') et les <br>
+ * qualifier de 'correct'/'inccorect'/'non-renseigné' <br>
+ *  <br>
+ * @author thoma
  */
 public class Question {
+    
+    public enum modeQuestion {
+        SONDAGECANAL, QUESTIONNAIRE;
+    }
+    public enum TypeQuestion {
+        CHECK, OUINON, QCM, LIBRE, SMILEY, POURCENTAGE;
+    }
+    
+    private int id;
+    private int idCreateur;
+    private String nomAuteur;
+    private String libelle;
+    private TypeQuestion type;
+    private ArrayList<Proposition> propositions = null;
 
-	private int idQuestion, idQuestionnaire, idCanal, idCreateur, idTypeQuestion;
-	private String Libelle;
+    private boolean appartientQuestionaire;
+    private int idQuestionnaire;
 
-	public Question() {
-		super();
+    private boolean estSondage;
+    private int idCanal;
 
-	}
+    /**
+     * CTOR: This provides an identified and fully constructed Question bean
+     *
+     * @param id
+     * @param canalId
+     * @param auteurId
+     * @param nomAuteur
+     * @param typeDeQuestion
+     * @param statement
+     * @param propositions
+     */
+    public Question(int id, TypeQuestion typeDeQuestion,int canalId, int auteurId, String nomAuteur,
+            String statement, ArrayList<Proposition> propositions) {
+        this.id = id;
+        this.idCanal = canalId;
+        this.idCreateur = auteurId;
+        this.nomAuteur = nomAuteur;
+        this.libelle = statement;
+        this.type = typeDeQuestion;
+        this.propositions = propositions;
+    }
 
-	public Question(int idQuestion, int idQuestionnaire, int idCanal, int idCreateur, int id_type_question,
-			String libelle) {
-		super();
-		this.idQuestion = idQuestion;
-		this.idQuestionnaire = idQuestionnaire;
-		this.idCanal = idCanal;
-		this.idCreateur = idCreateur;
-		this.idTypeQuestion = id_type_question;
-		Libelle = libelle;
-	}
+    /**
+     * CTOR: (unidentified Bean) <br>
+     * ! - This constructer should only be used before first insertion in <br>
+     * the database (when no id has never been assigned <br>
+     * to it yet).<br>
+     * <br>
+     *
+     * @param canalId
+     * @param auteurId
+     * @param statement
+     * @param propositions
+     */
+    public Question(TypeQuestion typeDeLaQuestion,int canalId, int auteurId,
+        String statement, ArrayList<Proposition> propositions) {
+        this.idCanal = canalId;
+        this.idCreateur = auteurId;
+        this.nomAuteur = "undefined";
+        this.libelle = statement;
+        this.type = typeDeLaQuestion;
+        this.propositions = propositions;
+    }
 
-	public Question(int idQuestionnaire, int idCanal, int idCreateur, int id_type_question, String libelle) {
-		super();
-		this.idQuestionnaire = idQuestionnaire;
-		this.idCanal = idCanal;
-		this.idCreateur = idCreateur;
-		this.idTypeQuestion = id_type_question;
-		Libelle = libelle;
-	}
+    /**
+     * CTOR:(default)
+     */
+    public Question() {
+        propositions = new ArrayList<>();
+    }
 
-	/**
-	 * @return the idCanal
-	 */
-	public int getIdCanal() {
-		return idCanal;
-	}
+    /*POJO*/
+    public int getId() {
+        return id;
+    }
 
-	/**
-	 * @return the idCreateur
-	 */
-	public int getIdCreateur() {
-		return idCreateur;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	/**
-	 * @return the idQuestion
-	 */
-	public int getIdQuestion() {
-		return idQuestion;
-	}
+    public int getCanalId() {
+        return idCanal;
+    }
 
-	/**
-	 * @return the idQuestionnaire
-	 */
-	public int getIdQuestionnaire() {
-		return idQuestionnaire;
-	}
+    public void setCanalId(int canalId) {
+        this.idCanal = canalId;
+    }
 
-	/**
-	 * @return the id_type_question
-	 */
-	public int getIdTypeQuestion() {
-		return idTypeQuestion;
-	}
+    public int getIdCreateur() {
+        return idCreateur;
+    }
 
-	/**
-	 * @return the libelle
-	 */
-	public String getLibelle() {
-		return Libelle;
-	}
+    public void setIdCreateur(int auteurId) {
+        this.idCreateur = auteurId;
+    }
 
-	/**
-	 * @param idCanal the idCanal to set
-	 */
-	public void setIdCanal(int idCanal) {
-		this.idCanal = idCanal;
-	}
+    public String getNomAuteur() {
+        return nomAuteur;
+    }
 
-	/**
-	 * @param idCreateur the idCreateur to set
-	 */
-	public void setIdCreateur(int idCreateur) {
-		this.idCreateur = idCreateur;
-	}
+    public void setNomAuteur(String nomAuteur) {
+        this.nomAuteur = nomAuteur;
+    }
 
-	/**
-	 * @param idQuestion the idQuestion to set
-	 */
-	public void setIdQuestion(int idQuestion) {
-		this.idQuestion = idQuestion;
-	}
+    public TypeQuestion getType() {
+        return type;
+    }
 
-	/**
-	 * @param idQuestionnaire the idQuestionnaire to set
-	 */
-	public void setIdQuestionnaire(int idQuestionnaire) {
-		this.idQuestionnaire = idQuestionnaire;
-	}
+    public void setType(TypeQuestion type) {
+        this.type = type;
+    }
 
-	/**
-	 * @param id_type_question the id_type_question to set
-	 */
-	public void setIdTypeQuestion(int id_type_question) {
-		this.idTypeQuestion = id_type_question;
-	}
+    public String getLibelle() {
+        return libelle;
+    }
 
-	/**
-	 * @param libelle the libelle to set
-	 */
-	public void setLibelle(String libelle) {
-		Libelle = libelle;
-	}
+    public void setLibelle(String enonceQuestion) {
+        this.libelle = enonceQuestion;
+    }
 
-	/**
-	 * @author Groupe2 23/12/2021
-	 */
-	@Override
-	public String toString() {
-		return "Question [idQuestion=" + idQuestion + ", idQuestionnaire=" + idQuestionnaire + ", idCanal=" + idCanal
-				+ ", idCreateur=" + idCreateur + ", idTypeQuestion=" + idTypeQuestion + ", Libelle=" + Libelle + "]";
-	}
+    public ArrayList<Proposition> getPropositions() {
+        return propositions;
+    }
 
+    public void setPropositions(ArrayList<Proposition> propositionsIds) {
+        this.propositions = propositionsIds;
+    }
+
+    public boolean isAppartientQuestionaire() {
+        return appartientQuestionaire;
+    }
+
+    public void setAppartientQuestionaire(boolean appartientQuestionaire) {
+        this.appartientQuestionaire = appartientQuestionaire;
+    }
+
+    public int getIdQuestionaire() {
+        return idQuestionnaire;
+    }
+
+    public void setIdQuestionaire(int questionaireId) {
+        this.idQuestionnaire = questionaireId;
+    }
+
+    public boolean isSondage() {
+        return estSondage;
+    }
+
+    public void setEstSondage(boolean estSondage) {
+        this.estSondage = estSondage;
+    }
+
+    public boolean getEstSondage() {
+        return estSondage;
+    }
+
+    public boolean getappartientQuestionaire() {
+        return appartientQuestionaire;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Question other = (Question) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.idCreateur != other.idCreateur) {
+            return false;
+        }
+        if (this.idQuestionnaire != other.idQuestionnaire) {
+            return false;
+        }
+        if (this.idCanal != other.idCanal) {
+            return false;
+        }
+        if (this.type != other.type) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" + "id=" + id + ", auteurId=" + idCreateur + ", statement=" + libelle + ", type=" + type + ", propositions=" + propositions + ", appartientQuestionaire=" + appartientQuestionaire + ", questionaireId=" + idQuestionnaire + ", estSondage=" + estSondage + ", canalId=" + idCanal + '}';
+    }
+
+    
 }
+

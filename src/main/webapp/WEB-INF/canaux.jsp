@@ -4,8 +4,11 @@
 <p:header title="Canaux"/>
 <h1>Canaux</h1>
 <nav>
+<c:if test="${empty canaux}">
+	<p> <c:out value="La liste est vide"></c:out></p>
+</c:if>
   <c:forEach items="${canaux}" var="canal">
-    <a href="canal?idCanal=${canal.id}">${canal.nom}</a>
+    <a href="membrescanal?idCanal=${canal.idCanal}">${canal.nomCanal}</a>
     ${message}
   </c:forEach>
 </nav>
