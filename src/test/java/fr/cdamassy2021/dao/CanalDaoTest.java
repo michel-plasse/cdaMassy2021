@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-/**
+/**commentaire test
  * @author Groupe2 23/12/2021
  */
 class CanalDaoTest {
