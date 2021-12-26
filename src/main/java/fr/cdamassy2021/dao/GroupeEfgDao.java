@@ -151,14 +151,42 @@ public class GroupeEfgDao implements DaoGroupeEfg {
 			}
 			if (membres.size() > 0)
 				return membres;
-			else return null;
-				
+			else
+				return null;
+
 		} catch (SQLException e) {
 
 			System.out.println(e.getMessage());
 			return null;
 		}
-		
-	
+
+	}
+
+	/**
+	 * Groupe2 23/12/2021
+	 * 
+	 * @param idMembre
+	 * @return le groupe dont est membre la personne dont le id est idMembre, s'il
+	 *         existe. Va servir à interdir à une personne de créer un groupe si
+	 *         elle est déjà membre d'un groupe.
+	 */
+	@Override
+	public GroupeEfg findGroupeByIdEfgIdMembre(int idEfg, int idMembre) {
+		String sql = "SELECT * FROM groupe_efg WHERE id_efg=? and id_personne IN (SELECT id_personne FROM membre_groupe_efg WHERE id_efg=?)";
+		GroupeEfg g = null;
+		ResultSet rs = null;
+		try (Connection con = factory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setLong(1, idEfg);
+			ps.setLong(2, idMembre);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				g = new GroupeEfg();
+				g.setIdCreateur(rs.getInt("id_createur"));
+				g.setIdEfg(rs.getInt("id_efg"));
+			}
+		} catch (SQLException e1) {
+			System.out.println(e1.getMessage());
+		}
+		return g;
 	}
 }

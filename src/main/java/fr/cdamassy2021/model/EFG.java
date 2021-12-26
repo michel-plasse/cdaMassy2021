@@ -14,34 +14,54 @@ import fr.cdamassy2021.dao.DaoGroupeEfg;
  */
 public class EFG {
 
-	int idEFG;
-	int idCreateur;
-	int idCanal;
-	String intitule;
-	Date dateCreation;
-	int tailleMinGroupe;
+	private int idEFG;
+	private int idCreateur;
+	private int idCanal;
+	private String intitule;
+	private Date dateCreation;
+	private int tailleMinGroupe;
 
-	ArrayList<GroupeEfg> groupes;
 
-	public EFG(int idEFG, int idCreateur, int idCanal, String intitule, Date dateCreation) {
+	/**
+	 * 
+	 */
+	public EFG() {
+		super();
+
+	}
+
+	/**
+	 * @param idEFG
+	 * @param idCreateur
+	 * @param idCanal
+	 * @param intitule
+	 * @param dateCreation
+	 * @param tailleMinGroupe
+	 */
+	public EFG(int idEFG, int idCreateur, int idCanal, String intitule, Date dateCreation, int tailleMinGroupe) {
 		super();
 		this.idEFG = idEFG;
 		this.idCreateur = idCreateur;
 		this.idCanal = idCanal;
 		this.intitule = intitule;
 		this.dateCreation = dateCreation;
+		this.tailleMinGroupe = tailleMinGroupe;
 	}
 
-	public EFG() {
-		super();
-
-	}
-
-	public EFG(int idCreateur, int idCanal, String intitule) {
+	/**
+	 * @param idCreateur
+	 * @param idCanal
+	 * @param intitule
+	 * @param dateCreation
+	 * @param tailleMinGroupe
+	 */
+	public EFG(int idCreateur, int idCanal, String intitule, Date dateCreation, int tailleMinGroupe) {
 		super();
 		this.idCreateur = idCreateur;
 		this.idCanal = idCanal;
 		this.intitule = intitule;
+		this.dateCreation = dateCreation;
+		this.tailleMinGroupe = tailleMinGroupe;
 	}
 
 	/**
@@ -129,33 +149,43 @@ public class EFG {
 	}
 
 	/**
-	 * @author Groupe2 23/12/2021
+	 * Groupe2 23/12/2021
 	 * 
-	 *         On fixe un nombre minium (tailleMinGroupe) d'eleves dans un groupe.
-	 *         on obtient le nombre de groupe_efgs comme resultat de la division
-	 *         eucludienne du nombre de membres du canal par tailleMinGroupe.
-	 *         tailleMaxGroupe=tailleMinGroupe + partie entiere de
-	 *         (tailleCanal/nombre de groupes)+1 l'eleve s'inscrit au groupe de son
-	 *         choix tant que la tailleMaxGroupe n'est pas atteinte. le nombre de
-	 *         groupes sera alors nombre de membres du canal/min. le reste de la
-	 *         division sera reparti sur les groupes tel qu'aucun groupe ne depasse
-	 *         la tailleMaximale qu'on calcal comme suit: Quand un eleve essaie de
-	 *         s'inscrire à un groupe d'un exercice efg il faudra la precondition
-	 *         efg.tailleGroupe<efg.taillemaxgroupe (à calculer comme indiqué)
+	 * REGLES DE CREATION ET DE REMPLISSAGE DES GROUPES D'UN EXERCICE EFG.
+	 * 
+	 * On fixe un nombre minium (tailleMinGroupe) d'eleves dans un groupe. Une
+	 * colonne taille_minimale_groupe (necessairement non nulle) sera ajoutée à la
+	 * table efg.
+	 * 
+	 * On obtient le nombre de groupe_efgs souhaité comme resultat de la division
+	 * eucludienne du nombre de membres du canal par tailleMinGroupe :
+	 * nbGroupes=(int)tailleCanal/tailleMinGroupe. Un groupe peut être créé tant que
+	 * nbGroupes n'est pas atteint.
+	 * 
+	 * La taille maximale d'un groupe sera déduite des calculs précédents:
+	 * tailleMaxGroupe=(int) (tailleCanal/nbGroupes)+1
+	 * 
+	 * 
+	 * La fixation de tailleMinGroupe conduit de fait à un état final où nbGroupes
+	 * est necessairement atteint.
+	 * 
+	 * l'eleve s'inscrit au groupe de son choix tant que la tailleMaxGroupe n'y est
+	 * pas atteinte.
 	 */
 
 	public int getTailleMaxGroupe() {
 		DaoCanal daoCanal = DaoFactory.getInstance().getCanalDao();
 		int tailleCanal = daoCanal.getAllMembresByIdCanal(idCanal).size();
 		int nbGroupes = getNbGroupes();
-		return tailleMinGroupe + (int) (tailleCanal / nbGroupes) + 1;
+		return (int) (tailleCanal / nbGroupes) + 1;
 	}
 
 	/**
 	 * @author Groupe2 23/12/2021
 	 * 
-	 *         Utilise la Dao pour obtenir le nombre de groupes déjà créés de
-	 *         l'exercice EFG.
+	 *         Utilise la Dao pour obtenir le nombre des membre dans le canal afin
+	 *         de calculer le nombre de groupes à partir du nombre de membres du
+	 *         canal et de la taille minimale des groupes de l'exercice EFG.
 	 */
 	public int getNbGroupes() {
 
@@ -178,21 +208,16 @@ public class EFG {
 	}
 
 	/**
-	 * @return the groupes
-	 */
-	public ArrayList<GroupeEfg> getGroupes() {
-		return groupes;
-	}
-
-	/**
 	 * @author Groupe2 23/12/2021
 	 * 
-	 * @param groupes the groupes to set Utilise la Dao pour attribuer la liste de
-	 *                ses groupes à un efg de EFG.
+	 *         Utilise la Dao pour retourner la liste de ses groupes à un efg de
+	 *         EFG.
 	 */
-	public void setGroupes(ArrayList<GroupeEfg> groupes) {
+	public ArrayList<GroupeEfg> getGroupes() {
+
 		DaoEFG daoEfg = DaoFactory.getInstance().getEfgDao();
-		this.groupes = daoEfg.getAllGroupesByIdEfg(idEFG);
+		ArrayList<GroupeEfg> grpes = daoEfg.getAllGroupesByIdEfg(idEFG);
+		return grpes;
 	}
 
 	/**
@@ -202,65 +227,34 @@ public class EFG {
 	 *         associe au groupe crée ci-dessus en y mettant un premier élément, son
 	 *         créateur. Utilise la Dao pour inserer le groupe créé.
 	 */
-	public GroupeEfg creerGroupe(int idCreateur) {
+	public Boolean creerGroupe(int idCreateur) {
 
 		GroupeEfg groupe = new GroupeEfg();
-		groupe.setIdEfg(idEFG);
-		groupe.setIdCreateur(idCreateur);
-		ArrayList<Personne> liste = new ArrayList<Personne>();
-		Personne personne = new Personne();
-		personne.setId(idCreateur);
-		liste.add(personne);
-		groupe.setMembres(liste);
 		DaoGroupeEfg daoGroupeEfg = DaoFactory.getInstance().getGroupeEfgDao();
-		daoGroupeEfg.insert(groupe);
-		return groupe;
+		boolean bool = false;
+
+		if (daoGroupeEfg.findGroupeByIdEfgIdMembre(idEFG, idCreateur) != null) {
+			groupe.setIdEfg(idEFG);
+			groupe.setIdCreateur(idCreateur);
+			ArrayList<Personne> liste = new ArrayList<Personne>();
+			Personne personne = new Personne();
+			personne.setId(idCreateur);
+			liste.add(personne);
+			groupe.setMembres(liste);
+			daoGroupeEfg.insert(groupe);
+			bool = true;
+		}
+		return bool;
+	}
+
+	@Override
+	public String toString() {
+		return "EFG [idEFG=" + idEFG + ", idCreateur=" + idCreateur + ", idCanal=" + idCanal + ", intitule=" + intitule
+				+ ", dateCreation=" + dateCreation + ", tailleMinGroupe=" + tailleMinGroupe + "]";
 	}
 
 	/**
 	 * @author Groupe2 23/12/2021
 	 */
-	@Override
-	public String toString() {
-		return "EFG [idEFG=" + idEFG + ", idCreateur=" + idCreateur + ", idCanal=" + idCanal + ", intitule=" + intitule
-				+ ", dateCreation=" + dateCreation + ", tailleMinGroupe=" + tailleMinGroupe + ", groupes=" + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		int hash = 5;
-		hash = 89 * hash + this.id;
-		hash = 89 * hash + this.idCreateur;
-		hash = 89 * hash + this.idCanal;
-		hash = 89 * hash + Objects.hashCode(this.intitule);
-		return hash;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final EFG other = (EFG) obj;
-		if (this.id != other.id) {
-			return false;
-		}
-		if (this.idCreateur != other.idCreateur) {
-			return false;
-		}
-		if (this.idCanal != other.idCanal) {
-			return false;
-		}
-		if (!Objects.equals(this.intitule, other.intitule)) {
-			return false;
-		}
-		return true;
-	}
 
 }
