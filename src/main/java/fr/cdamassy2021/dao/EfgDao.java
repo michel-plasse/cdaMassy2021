@@ -1,80 +1,42 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package fr.cdamassy2021.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import fr.cdamassy2021.model.EFG;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import fr.cdamassy2021.model.EFG;
-import fr.cdamassy2021.model.GroupeEfg;
-import fr.cdamassy2021.model.Personne;
-
 /**
- * Groupe2 23/12/2021
+ *
+ * @author scdel
  */
-public class EfgDao implements DaoEFG {
+public class EFGDao implements IDao<EFG> {
 
-	protected DaoFactory factory;
+    @Override
+    public boolean insert(EFG inserted) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-	public EfgDao(DaoFactory factory) {
-		super();
-		this.factory = factory;
-	}
+    @Override
+    public void delete(EFG deleted) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-	@Override
-	public EFG findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public EFG findById(long id) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-	@Override
-	public ArrayList<EFG> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public ArrayList<EFG> findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-	@Override
-	public int insert(EFG t) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean update(EFG t) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean delete(EFG t) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/**
-	 * get all groupes by idEfg.
-	 */
-	@Override
-	public ArrayList<GroupeEfg> getAllGroupesByIdEfg(int idEfg) {
-
-		String sql = "SELECT * FROM groupe_efg where id_efg=?";
-
-		ArrayList<GroupeEfg> groupes = new ArrayList<>();
-
-		try (Connection con = factory.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setInt(1, idEfg);
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				GroupeEfg g = new GroupeEfg();
-				g.setIdCreateur(rs.getInt("id_createur"));
-				g.setIdEfg(rs.getInt("id_efg"));
-
-				groupes.add(g);
-			}
-		} catch (SQLException e) {
-			e.getMessage();
-		}
-		return groupes;
-	}
+    @Override
+    public ArrayList<EFG> getAllPaging(int noPage, int nbElementsParPage) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }
