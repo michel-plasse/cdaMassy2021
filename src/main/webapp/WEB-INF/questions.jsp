@@ -10,8 +10,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <p:header title="CDA Massy 2021"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/questionaire_style.css" />
-<h1>Questionnaire</h1>
-<h3>Répondre aux questions</h3>
+<h1>affichage questions:</h1>
 <form>
     <div class="questionLayout">
             <c:forEach items="${questions}" var="question">
@@ -37,7 +36,6 @@
                     </c:if>
                 </div>
             </c:forEach>
-            <button class="btn">Envoyer</button>
             <br>
     </div>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/questionaire_style.css" />
