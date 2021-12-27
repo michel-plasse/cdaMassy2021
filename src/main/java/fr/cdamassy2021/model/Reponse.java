@@ -11,17 +11,17 @@ import java.util.Objects;
  * @author thoma
  */
 public class Reponse {
-    
+
     private int idPersonne;
     private int idQuestion;
     private int idProposition;
     private String libelle;
     private String dateRendu;
 
-    public Reponse(){
-        
+    public Reponse() {
+
     }
-    
+
     public Reponse(int idPersonne, int idQuestion, int idProposition,
             String libelle, String dateRendu) {
         this.idPersonne = idPersonne;

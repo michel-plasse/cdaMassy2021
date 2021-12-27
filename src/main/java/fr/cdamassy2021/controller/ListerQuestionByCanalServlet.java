@@ -5,7 +5,6 @@
 package fr.cdamassy2021.controller;
 
 import fr.cdamassy2021.dao.DaoFactory;
-import fr.cdamassy2021.dao.QuestionDaoImpl;
 import fr.cdamassy2021.model.Question;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,7 +18,7 @@ import fr.cdamassy2021.dao.QuestionDao;
 
 /**
  *
- * @author chang
+ * @author thoma 26/12/21
  */
 @WebServlet(name = "ListeQuestionByCanalServlet", urlPatterns = {"/ListeQuestionByCanalServlet"})
 public class ListerQuestionByCanalServlet extends HttpServlet {
@@ -34,12 +33,9 @@ public class ListerQuestionByCanalServlet extends HttpServlet {
         String vue = VUE_OK;
         try {
             // Les paramètres encore en dur
-            System.out.println("TRY");
             ArrayList<Question> questions = dao.getAllByCanalPaging(1, 1, 10);
-            System.out.println("OK1");
             // Mettre en post-it les questions
             request.setAttribute("questions", questions);
-            System.out.println("OK2");
         } catch (SQLException exc) {
             vue = VUE_ERREUR;
             request.setAttribute("message", "Pb avec la BD");

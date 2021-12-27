@@ -12,9 +12,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Traites les informations recues dans les servlet,
- * construire les modeles 'Question' et 'Proposition'
- * et utiliser la dao pour toute opération d'insertio ou d'updates.
+ * Traites les informations recues dans les servlet, construire les modeles
+ * 'Question' et 'Proposition' et utiliser la dao pour toute opération
+ * d'insertio ou d'updates.
+ *
  * @author thoma
  */
 public class QuestionService {
@@ -26,12 +27,12 @@ public class QuestionService {
     /**
      * traite les informations recus dans la servlet pour construire et inserer
      * les modeles Question et Propositions dans la BDD.
-     * 
+     *
      * @param libelleQuestion
      * @param allPropositionsLibelles
      * @param allPropositionsCorrectnesses
      * @return
-     * @throws SQLException 
+     * @throws SQLException
      */
     public boolean creerQuestion(
             String libelleQuestion,

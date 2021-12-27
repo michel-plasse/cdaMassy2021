@@ -7,32 +7,32 @@ package fr.cdamassy2021.model;
 import java.util.ArrayList;
 
 /**
- * class 'IQuestion'  <br>
+ * class 'Question'  <br>
  * Java Bean implementation  <br>
- *  <br>
- Une 'IQuestion' peut être posée sur un canal (tel un sondage) <br>
+ * <br>
+ * Une 'Question' peut être posée sur un canal (tel un sondage) <br>
  * et/ou appartenir à questionnaire. <br>
- * Lors de son edition par un 'Membre' et si besoin est (hors réponses libres) <br>
+ * Lors de son edition par un 'Membre' et si besoin est (hors réponses libres)
+ * <br>
  * il devra aussi définir des options de réponses ('Propositions') et les <br>
  * qualifier de 'correct'/'inccorect'/'non-renseigné' <br>
- *  <br>
+ * <br>
+ *
  * @author thoma
  */
 public class Question {
-    
-    public enum modeQuestion {
-        SONDAGECANAL, QUESTIONNAIRE;
-    }
+
     public enum TypeQuestion {
-        CHECK, OUINON, QCM, LIBRE, SMILEY, POURCENTAGE;
+        CHECK, OUINON, QCM, LIBRE/*, SMILEY, POURCENTAGE*/;
     }
-    
+
     private int id;
     private int idCreateur;
     private String nomAuteur;
     private String libelle;
     private TypeQuestion type;
     private ArrayList<Proposition> propositions = null;
+    private ArrayList<Reponse> reponses = null;
 
     private boolean appartientQuestionaire;
     private int idQuestionnaire;
@@ -41,7 +41,8 @@ public class Question {
     private int idCanal;
 
     /**
-     * CTOR: This provides an identified and fully constructed Question bean
+     * CTOR: Ce constructeur renvoi un bean Question initialisé avec la liste de
+     * propositions de réponse renseignées par son auteur.
      *
      * @param id
      * @param canalId
@@ -51,7 +52,7 @@ public class Question {
      * @param statement
      * @param propositions
      */
-    public Question(int id, TypeQuestion typeDeQuestion,int canalId, int auteurId, String nomAuteur,
+    public Question(int id, TypeQuestion typeDeQuestion, int canalId, int auteurId, String nomAuteur,
             String statement, ArrayList<Proposition> propositions) {
         this.id = id;
         this.idCanal = canalId;
@@ -65,21 +66,20 @@ public class Question {
     /**
      * CTOR: (unidentified Bean) <br>
      * ! - This constructer should only be used before first insertion in <br>
-     * the database (when no id has never been assigned <br>
-     * to it yet).<br>
+     * the database (when no id has never been assigned to it).<br>
      * <br>
      *
      * @param canalId
      * @param auteurId
-     * @param statement
+     * @param libelle
      * @param propositions
      */
-    public Question(TypeQuestion typeDeLaQuestion,int canalId, int auteurId,
-        String statement, ArrayList<Proposition> propositions) {
+    public Question(TypeQuestion typeDeLaQuestion, int canalId, int auteurId,
+            String libelle, ArrayList<Proposition> propositions) {
         this.idCanal = canalId;
         this.idCreateur = auteurId;
         this.nomAuteur = "undefined";
-        this.libelle = statement;
+        this.libelle = libelle;
         this.type = typeDeLaQuestion;
         this.propositions = propositions;
     }
@@ -148,7 +148,7 @@ public class Question {
         this.propositions = propositionsIds;
     }
 
-    public boolean isAppartientQuestionaire() {
+    public boolean isAppartientAQuestionaire() {
         return appartientQuestionaire;
     }
 
@@ -162,10 +162,6 @@ public class Question {
 
     public void setIdQuestionaire(int questionaireId) {
         this.idQuestionnaire = questionaireId;
-    }
-
-    public boolean isSondage() {
-        return estSondage;
     }
 
     public void setEstSondage(boolean estSondage) {
@@ -221,6 +217,4 @@ public class Question {
         return "Question{" + "id=" + id + ", auteurId=" + idCreateur + ", statement=" + libelle + ", type=" + type + ", propositions=" + propositions + ", appartientQuestionaire=" + appartientQuestionaire + ", questionaireId=" + idQuestionnaire + ", estSondage=" + estSondage + ", canalId=" + idCanal + '}';
     }
 
-    
 }
-

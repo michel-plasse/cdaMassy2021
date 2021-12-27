@@ -41,10 +41,10 @@ public interface QuestionDao extends IDao<Question> {
     @Override
     public int insert(Question newQuestion)
             throws SQLException;
-    
+
     public boolean insert(Question inserted, List<Proposition> propositions)
             throws SQLException;
-    
+
     @Override
     public Question findById(long searchedId)
             throws SQLException;
@@ -88,6 +88,6 @@ public interface QuestionDao extends IDao<Question> {
 
     @Override
     public ArrayList<Question> findAll() throws SQLException;
-    
+
     public Proposition findPropositionById(long searchedId) throws SQLException;
 }

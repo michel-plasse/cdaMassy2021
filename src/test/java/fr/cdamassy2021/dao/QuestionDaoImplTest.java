@@ -33,7 +33,7 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         dao.insert(inserted);
         //then:
         assertEquals(8, inserted.getId());
-        assertEquals(enonceQuestion,inserted.getLibelle());
+        assertEquals(enonceQuestion, inserted.getLibelle());
     }
 
     @Test

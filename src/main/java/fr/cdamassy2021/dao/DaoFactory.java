@@ -10,7 +10,7 @@ import java.sql.SQLException;
  *
  */
 public class DaoFactory {
-    
+
     String url, username, password;
 
     private DaoFactory(String url, String username, String password) {
@@ -21,8 +21,8 @@ public class DaoFactory {
     }
 
     /**
-     * 
-     * 
+     *
+     *
      */
     public static DaoFactory getInstance() {
 
