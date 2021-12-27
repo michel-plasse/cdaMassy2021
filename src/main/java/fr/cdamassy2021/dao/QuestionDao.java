@@ -90,4 +90,6 @@ public interface QuestionDao extends IDao<Question> {
     public ArrayList<Question> findAll() throws SQLException;
 
     public Proposition findPropositionById(long searchedId) throws SQLException;
+    
+    public ArrayList<Question> getAllByIdMembrePaging(int idMembre, int noPage, int nbElementsParPage) throws SQLException;
 }

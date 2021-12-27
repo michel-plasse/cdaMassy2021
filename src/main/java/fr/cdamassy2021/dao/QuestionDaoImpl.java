@@ -93,6 +93,16 @@ public class QuestionDaoImpl implements QuestionDao {
             + " VALUES ( ?, ?, ?);";
     private static final String SELECT_PROPOSITIONS_WITH_QUESTION_ID
             = "SELECT * FROM proposition WHERE id_question=?;";
+    
+    private static final String SELECT_ALL_QUESTIONS_BY_PERSONNE_ID
+            = "SELECT q.*, p.prenom, p.nom\n"
+            + "FROM question q\n"
+            + "	INNER JOIN\n"
+            + "		personne p\n"
+            + "			ON q.id_createur = p.id_personne\n"
+            + "WHERE id_personne=?\n"
+            + "LIMIT ?, ?;";
+
 
     /**
      * class default constructor
@@ -442,5 +452,61 @@ public class QuestionDaoImpl implements QuestionDao {
     @Override
     public ArrayList<Question> findAll() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+    @Override
+    public ArrayList<Question> getAllByIdMembrePaging(
+            int idMembre, int noPage, int nbElementsParPage)
+            throws SQLException{
+                Connection connection = daoFactory.getConnection();
+        ArrayList<Question> result = new ArrayList();
+        // prepare questions selection
+        PreparedStatement selectQuestionStmt
+                = connection.prepareStatement(SELECT_ALL_QUESTIONS_BY_PERSONNE_ID);
+        selectQuestionStmt.setInt(1, idMembre);
+        selectQuestionStmt.setInt(2, nbElementsParPage * (noPage - 1));
+        selectQuestionStmt.setInt(3, nbElementsParPage);
+        ResultSet rs = selectQuestionStmt.executeQuery();
+        // Pour chaque question trouvée:
+        while (rs.next()) {
+            // convert int to enum of TypeQuestion
+            Question.TypeQuestion type
+                    = Question.TypeQuestion.values()[rs.getInt("id_type_question")];
+            ArrayList<Proposition> propsList = new ArrayList<Proposition>();
+            // Initialise un nouveeau bean Question
+            Question found = new Question(
+                    rs.getInt("id_question"),
+                    type,
+                    rs.getInt("id_canal"),
+                    rs.getInt("id_createur"),
+                    rs.getString("prenom") + " " + rs.getString("nom"),
+                    rs.getString("libelle"),
+                    propsList);
+            result.add(found);
+            // Recupère sa liste de propositions
+            // prepare propositions selection
+            PreparedStatement selectPropsStmt
+                    = connection.prepareStatement(
+                            SELECT_PROPOSITIONS_WITH_QUESTION_ID);
+            // Chercher les propositions
+            selectPropsStmt.setLong(1, found.getId());
+            ResultSet resProps = selectPropsStmt.executeQuery();
+            // Pour chaque propositions trouvée:
+            while (resProps.next()) {
+                Proposition pFound = new Proposition();
+                // Initialiser le bean
+                pFound.setIdProposition(resProps.getInt("id_proposition"));
+                Proposition.Correctness correctness
+                        = Proposition.Correctness.values()[resProps.getInt(
+                        "est_correcte")];
+                pFound.setCorrectness(correctness);
+                pFound.setIdQuestion(resProps.getInt("id_question"));
+                pFound.setLibelle(resProps.getString("libelle"));
+                // L'ajouter à la liste de propositions
+                propsList.add(pFound);
+            }
+            System.out.println(result.toString());
+        }
+        //retourner la liste de beans Questions fournit par la BDD.
+        return result;
     }
 }
