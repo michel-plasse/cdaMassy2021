@@ -14,8 +14,14 @@ import java.util.ArrayList;
  */
 public class EFGDao implements IDao<EFG> {
 
+    /**
+     * @param inserted 
+     * @return id atribué
+     * @throws SQLException 
+     * @author: thoma
+     */
     @Override
-    public boolean insert(EFG inserted) throws SQLException {
+    public int insert(EFG inserted) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

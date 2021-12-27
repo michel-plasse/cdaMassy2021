@@ -39,7 +39,7 @@ public interface QuestionDao extends IDao<Question> {
      * @throws SQLException
      */
     @Override
-    public boolean insert(Question newQuestion)
+    public int insert(Question newQuestion)
             throws SQLException;
     
     public boolean insert(Question inserted, List<Proposition> propositions)

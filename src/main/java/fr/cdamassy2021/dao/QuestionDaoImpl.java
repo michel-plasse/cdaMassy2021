@@ -110,8 +110,7 @@ public class QuestionDaoImpl implements QuestionDao {
      * @throws SQLException
      */
     @Override
-    public boolean insert(Question newQuestion) throws SQLException {
-        Boolean result = false;
+    public int insert(Question newQuestion) throws SQLException {
         Connection connection = daoFactory.getConnection();
         //compile la requete
         PreparedStatement stmt = connection.prepareStatement(
@@ -124,12 +123,13 @@ public class QuestionDaoImpl implements QuestionDao {
         stmt.execute();
         // Récupérer le id auto-incrémenté
         ResultSet rs = stmt.getGeneratedKeys();
+        int idAttribue = -1;
         if (rs.next()) {
             // Le id est dans la 1ere colonne trouvee
-            newQuestion.setId(rs.getInt(1));
+            idAttribue = rs.getInt(1);
+            newQuestion.setId(idAttribue);
         }
-        result = true;
-        return result;
+        return idAttribue;
     }
 
     /**

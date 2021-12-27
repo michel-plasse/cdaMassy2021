@@ -29,12 +29,11 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         int idAuteurTest = 2;
         Question inserted = new Question(Question.TypeQuestion.QCM,
                 idAuteurTest, idCanalTest, enonceQuestion, null);
-        boolean expResult = true;
         //when:
-        boolean result = dao.insert(inserted);
+        dao.insert(inserted);
         //then:
         assertEquals(8, inserted.getId());
-        assertEquals(expResult, result);
+        assertEquals(enonceQuestion,inserted.getLibelle());
     }
 
     @Test
