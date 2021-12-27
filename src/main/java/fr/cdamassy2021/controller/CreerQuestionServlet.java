@@ -4,6 +4,7 @@
  */
 package fr.cdamassy2021.controller;
 
+import fr.cdamassy2021.model.Personne;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import fr.cdamassy2021.service.QuestionService;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -89,13 +91,17 @@ public class CreerQuestionServlet extends HttpServlet {
             for (int i = 2; i < allPropositions.length + 1; i++) {
                 allCorrectnesses.add(request.getParameter("correctness" + i));
             }
-            
+            // Recupere l'utilisateur dans la session
+            final HttpServletRequest req = (HttpServletRequest) request;
+            final HttpSession session = req.getSession();
+            Personne auteur = (Personne)session.getAttribute("user");
             QuestionService qService = new QuestionService();
             try {
                 operationOk = qService.creerQuestion(
                         libelleQuestion,
                         allPropositions,
-                        allCorrectnesses);
+                        allCorrectnesses,
+                        auteur.getId());
             } catch (SQLException ex) {
                 if (ex.getErrorCode() == 1062) {
                     request.setAttribute("message", "Cette question existe dejà !");

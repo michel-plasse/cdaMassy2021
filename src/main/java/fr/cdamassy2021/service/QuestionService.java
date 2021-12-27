@@ -37,7 +37,8 @@ public class QuestionService {
     public boolean creerQuestion(
             String libelleQuestion,
             String[] allPropositionsLibelles,
-            ArrayList<String> allPropositionsCorrectnesses)
+            ArrayList<String> allPropositionsCorrectnesses,
+            int idAuteur)
             throws SQLException {
         boolean operationResult = false;
 
@@ -62,7 +63,7 @@ public class QuestionService {
         }
         QuestionDao dao = DaoFactory.getInstance().getQuestionDao();
         //create Question bean:
-        Question newQuestion = new Question(Question.TypeQuestion.QCM, 1, 1, libelleQuestion, null);
+        Question newQuestion = new Question(Question.TypeQuestion.QCM, 1, idAuteur, libelleQuestion, null);
         //creates List<Proposition>:
         ArrayList<Proposition> newPropositions = new ArrayList();
         if (allPropositionsLibelles != null) {
