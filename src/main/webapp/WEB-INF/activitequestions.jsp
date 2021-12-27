@@ -20,9 +20,9 @@ ${msg}
     <article>
         <h3>Afficher vos questions</h3>
         <p>Affiche la liste des questions que vous avez déjà posées.</p>
-       <form action="ListerQuestionsUtilisateurCourant"class="boutonActivite" >
-         <button type="submit">Afficher Questions</button>
-       </form>
+        <form action="ListerQuestionsUtilisateurCourant"class="boutonActivite" >
+            <button type="submit">Afficher Questions</button>
+        </form>
 
 
     </article>
@@ -31,7 +31,7 @@ ${msg}
         <h3>Poser une question</h3>
         <p>Proposez une nouvelle question sur un canal.</p>
         <form action="creationQuestion"class="boutonActivite" >
-         <button type="submit">Nouvelle Question</button>
+            <button type="submit">Nouvelle Question</button>
         </form>
 
     </article>

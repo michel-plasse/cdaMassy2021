@@ -4,6 +4,8 @@
  */
 package fr.cdamassy2021.controller;
 
+import fr.cdamassy2021.dao.CanalDao;
+import fr.cdamassy2021.model.Canal;
 import fr.cdamassy2021.model.Personne;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import fr.cdamassy2021.service.QuestionService;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -25,15 +28,34 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "CreerQuestionServlet", urlPatterns = {"/creationQuestion"})
 public class CreerQuestionServlet extends HttpServlet {
 
-    private final String VUE = "WEB-INF/creationQuestion.jsp";
-
+    private final String VUE_OK = "WEB-INF/creationQuestion.jsp";
+    private final String VUE_ERREUR = "WEB-INF/erreur.jsp";
+    
     /**
      * Redirige l'utilisateur vers un formulaire d'edition de nouvelle question
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher(VUE).forward(request, response);
+        String vue = VUE_OK;
+        try {
+            final HttpServletRequest req = (HttpServletRequest) request;
+            final HttpSession session = req.getSession();
+            Personne auteur = (Personne)session.getAttribute("user");
+            CanalDao cDao = new CanalDao();
+            // Les paramètres encore en dur
+            List<Canal> canaux = cDao.getAllByIdPersonne(auteur.getId());
+            // Mettre en post-it les questions
+            session.setAttribute("canauxMembre", canaux);
+        } catch (SQLException exc) {
+            vue = VUE_ERREUR;
+            request.setAttribute("message", "Pb avec la BD");
+
+            // Journaliser l'exception dans le log de tomcat
+            exc.printStackTrace();
+        }
+        // Passer la main à la vue
+        request.getRequestDispatcher(vue).forward(request, response);
 
     }
 
@@ -50,7 +72,7 @@ public class CreerQuestionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String vue = VUE;
+        String vue = VUE_OK;
         boolean valideForm = true;
 
         //recuperation et test d'acceptation des données
@@ -71,6 +93,7 @@ public class CreerQuestionServlet extends HttpServlet {
                 }
             }
         }
+        int canalSelectionne = Integer.parseInt(request.getParameter("canalChoisi"));
         //test de validité du formulaire
         boolean valide = true;
 
@@ -101,7 +124,8 @@ public class CreerQuestionServlet extends HttpServlet {
                         libelleQuestion,
                         allPropositions,
                         allCorrectnesses,
-                        auteur.getId());
+                        auteur.getId(),
+                        canalSelectionne);
             } catch (SQLException ex) {
                 if (ex.getErrorCode() == 1062) {
                     request.setAttribute("message", "Cette question existe dejà !");

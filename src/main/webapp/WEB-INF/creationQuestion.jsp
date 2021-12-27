@@ -37,17 +37,34 @@
                     <textarea id="libelle" placeholder="Ecrivez votre question" autofocus=""  name="libelleQuestion"></textarea><br>
                 </fieldset>
             </b>
-            <div class="reponseEdit">
-                <div class="blocAllPropositions">
-                    Ajouter une proposition:<button type="button" id="addProposition">+</button>
-                    <div id="blocProposition">
-                        <input type="textarea" id="proposition" placeholder="Ecrivez votre proposition" name="proposition"></textarea><br>
-                        <input type="radio" id="correctness" name="correctness" value="Undefined" checked="true">Undefined
-                        <input type="radio" id="correctness" name="correctness" value="Correct">Correct
-                        <input type="radio" id="correctness" name="correctness" value="Incorrect">Incorrect               
+            <b>
+                <label for="libelleQuestion"> Propositions <em>*</em></label><h4 class="erreur">${erreur_libelle}</h4>
+                <fieldset>
+                    <textarea id="libelle" placeholder="Ecrivez une ou plusieurs propositions" autofocus=""  name="libelleQuestion"></textarea><br>
+                    <div class="reponseEdit">
+                        <div class="blocAllPropositions">
+                            Ajouter une proposition:<button type="button" id="addProposition">+</button>
+                            <div id="blocProposition">
+                                <input type="textarea" id="proposition" placeholder="Ecrivez votre proposition" name="proposition"></textarea><br>
+                                <input type="radio" id="correctness" name="correctness" value="Undefined" checked="true">Undefined
+                                <input type="radio" id="correctness" name="correctness" value="Correct">Correct
+                                <input type="radio" id="correctness" name="correctness" value="Incorrect">Incorrect               
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </fieldset>
+            </b>
+            <b>
+                <label for="canalChoisi">Canal<em>*</em></label><h4 class="erreur">${erreur_canal}</h4>
+                <fieldset>
+                    <label for="Situation-select">Choisissez un canal:</label>
+                    <select name="canalChoisi" id="canal-select">
+                        <c:forEach items="${canauxMembre}" var="canal">
+                        <option value="${canal.idCanal}">${canal.nomCanal}</option>
+                        </c:forEach>
+                    </select>
+                </fieldset>
+            </b>
         </div>
     </div>
     <br/>
@@ -75,3 +92,5 @@
 </div>
 </body>
 </html>
+
+
