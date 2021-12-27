@@ -69,14 +69,6 @@ public class CreerQuestionServlet extends HttpServlet {
                 }
             }
         }
-
-        //recupere la value de est_correct des propositions dans un tableau
-        ArrayList<String> allCorrectnesses = new ArrayList<>();
-        allCorrectnesses.add(request.getParameter("correctness"));
-        for (int i = 2; i < allPropositions.length + 1; i++) {
-            allCorrectnesses.add(request.getParameter("correctness" + i));
-        }
-        
         //test de validité du formulaire
         boolean valide = true;
 
@@ -89,11 +81,18 @@ public class CreerQuestionServlet extends HttpServlet {
             valide = false;
         }
         boolean operationOk = false;
+
         if (valide) {
-            // callService:
+            //recupere la valeur de estCorrecte dans une liste.
+            ArrayList<String> allCorrectnesses = new ArrayList<>();
+            allCorrectnesses.add(request.getParameter("correctness"));
+            for (int i = 2; i < allPropositions.length + 1; i++) {
+                allCorrectnesses.add(request.getParameter("correctness" + i));
+            }
+            
             QuestionService qService = new QuestionService();
             try {
-                operationOk = qService.insererNouvelleQuestion(
+                operationOk = qService.creerQuestion(
                         libelleQuestion,
                         allPropositions,
                         allCorrectnesses);
@@ -105,6 +104,7 @@ public class CreerQuestionServlet extends HttpServlet {
                     request.setAttribute("message", "Problème interne !");
                     valideForm = false;
                 }
+                ex.printStackTrace();
                 Logger.getLogger(CreerQuestionServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

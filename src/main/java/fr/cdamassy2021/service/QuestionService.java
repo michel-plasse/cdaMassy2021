@@ -33,7 +33,7 @@ public class QuestionService {
      * @return
      * @throws SQLException 
      */
-    public boolean insererNouvelleQuestion(
+    public boolean creerQuestion(
             String libelleQuestion,
             String[] allPropositionsLibelles,
             ArrayList<String> allPropositionsCorrectnesses)
