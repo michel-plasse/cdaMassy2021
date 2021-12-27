@@ -21,6 +21,7 @@
         <a href="javascript: document.getElementById('resetDbForm').submit()">Réinitialiser
           la BD</a>
         <a href="${context}/canaux">Canaux</a>
+        <a href="${context}/activitequestions">Mes Questions</a>
       </nav>
       <nav>
         <c:if test="${sessionScope['user'] != null}">
@@ -37,4 +38,4 @@
         <br/>
         ${applicationScope["nbIdentifies"]} identifiés
       </nav>
-    </nav>
+    </nav>      
