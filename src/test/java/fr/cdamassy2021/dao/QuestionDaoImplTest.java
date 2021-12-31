@@ -6,6 +6,7 @@ package fr.cdamassy2021.dao;
 
 import fr.cdamassy2021.model.Proposition;
 import fr.cdamassy2021.model.Question;
+import fr.cdamassy2021.model.Sondage;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -163,5 +164,17 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         // then:
         int actual = questions.size();
         assertEquals(7, actual);
+    }
+    
+    @Test
+    public void testgetAllSondages() throws SQLException {
+        System.out.println("test getAllSondages()");
+        //given:
+        QuestionDao dao = DaoFactory.getInstance().getQuestionDao();
+        ArrayList<Sondage> sondages = dao.getAllSondagesPaging(1, 10);
+        assertEquals(7, sondages.size()); 
+        assertEquals(2, sondages.get(0).getResults().size());
+        assertEquals(3, sondages.get(1).getResults().size());
+        System.out.println(sondages.get(0).getResults().get(0).NomsPersonnes);
     }
 }

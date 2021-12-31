@@ -7,6 +7,7 @@ package fr.cdamassy2021.dao;
 import fr.cdamassy2021.model.Question;
 import fr.cdamassy2021.model.Proposition;
 import fr.cdamassy2021.model.Reponse;
+import fr.cdamassy2021.model.Sondage;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -95,7 +96,12 @@ public class QuestionDaoImpl implements QuestionDao {
     private static final String SELECT_PROPOSITIONS_WITH_QUESTION_ID
             = "SELECT * FROM proposition WHERE id_question=?;";
     private static final String SELECT_REPONSES_WITH_QUESTION_ID
-            = "SELECT * FROM reponse WHERE id_question=?;";
+            = "SELECT r.*, p.prenom, p.nom\n"
+            + "FROM reponse r\n"
+            + "	INNER JOIN\n"
+            + "		personne p\n"
+            + "			ON r.id_personne = p.id_personne\n"
+            + "WHERE id_question=?\n;";
     private static final String SELECT_ALL_QUESTIONS_BY_PERSONNE_ID
             = "SELECT q.*, p.prenom, p.nom\n"
             + "FROM question q\n"
@@ -464,11 +470,45 @@ public class QuestionDaoImpl implements QuestionDao {
                 rFound.setIdPersonne(rsReponses.getInt("id_personne"));
                 rFound.setIdQuestion(rsReponses.getInt("id_question"));
                 rFound.setLibelle(rsReponses.getString("libelle"));
+                rFound.setNomPersonne(rsReponses.getString("prenom")+" "+rsReponses.getString("nom"));
                 // L'ajouter à la liste de reponses de l'objet Question
                 resultList.add(rFound);
             }
         } catch (Exception e) {
 
         }
+    }
+
+    @Override
+    public ArrayList<Sondage> getAllSondagesPaging(int noPage, int nbElementsParPage)
+            throws SQLException {
+        Connection connection = daoFactory.getConnection();
+        ArrayList<Sondage> result = new ArrayList();
+        // prepare questions selection
+        PreparedStatement selectQuestionStmt
+                = connection.prepareStatement(
+                        SELECT_ALL_QUESTIONS_IN_LIMIT);
+        selectQuestionStmt.setInt(1, nbElementsParPage * (noPage - 1));
+        selectQuestionStmt.setInt(2, nbElementsParPage);
+        ResultSet rs = selectQuestionStmt.executeQuery();
+        // Pour chaque question trouvée:
+        while (rs.next()) {
+            // convert int to enum of TypeQuestion
+            Question.TypeQuestion type
+                    = Question.TypeQuestion.values()[rs.getInt("id_type_question")];
+            // Initialiser le bean 
+            Sondage sondageFound = new Sondage(
+                    rs.getInt("id_question"),
+                    type,
+                    rs.getInt("id_canal"),
+                    rs.getInt("id_createur"),
+                    rs.getString("prenom") + " " + rs.getString("nom"),
+                    rs.getString("libelle"));
+            assignerPropositions(connection, sondageFound);
+            assignerReponses(connection, sondageFound);
+            sondageFound.setResults();
+            result.add(sondageFound);
+        }
+        return result;
     }
 }

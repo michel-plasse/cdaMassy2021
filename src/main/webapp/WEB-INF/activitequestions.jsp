@@ -23,8 +23,6 @@ ${msg}
         <form action="ListerQuestionsUtilisateurCourant"class="boutonActivite" >
             <button type="submit">Afficher Questions</button>
         </form>
-
-
     </article>
 
     <article>
@@ -33,7 +31,14 @@ ${msg}
         <form action="creationQuestion"class="boutonActivite" >
             <button type="submit">Nouvelle Question</button>
         </form>
+    </article>
 
+    <article>
+        <h3>Afficher les sondages</h3>
+        <p>Affiche la liste des sondages.</p>
+        <form action="listesondages"class="boutonActivite" >
+            <button type="submit">Afficher Sondages</button>
+        </form>
     </article>
 
     <article style="clear:left;">

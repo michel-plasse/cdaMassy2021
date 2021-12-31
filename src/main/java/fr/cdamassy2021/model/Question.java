@@ -32,7 +32,7 @@ public class Question {
     private String libelle;
     private TypeQuestion type;
     private ArrayList<Proposition> propositions = new ArrayList<Proposition>();
-    private ArrayList<Reponse> reponses = new ArrayList<Reponse>();
+    protected ArrayList<Reponse> reponses = new ArrayList<Reponse>();
 
     private boolean appartientQuestionaire;
     private int idQuestionnaire;
@@ -54,6 +54,7 @@ public class Question {
      */
     public Question(int id, TypeQuestion typeDeQuestion, int canalId, int auteurId, String nomAuteur,
             String statement) {
+        super();
         this.id = id;
         this.idCanal = canalId;
         this.idCreateur = auteurId;
@@ -75,6 +76,7 @@ public class Question {
      */
     public Question(TypeQuestion typeDeLaQuestion, int canalId, int auteurId,
             String libelle) {
+        super();
         this.idCanal = canalId;
         this.idCreateur = auteurId;
         this.nomAuteur = "undefined";
@@ -86,7 +88,7 @@ public class Question {
      * CTOR:(default)
      */
     public Question() {
-        propositions = new ArrayList<>();
+        super();
     }
 
     /*POJO*/

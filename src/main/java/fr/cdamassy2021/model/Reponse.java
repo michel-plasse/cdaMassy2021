@@ -16,6 +16,7 @@ public class Reponse {
     private int idQuestion;
     private int idReponse;
     private String libelle;
+    private String nomPersonne;
     private String dateRendu;
 
     public Reponse() {
@@ -23,11 +24,12 @@ public class Reponse {
     }
 
     public Reponse(int idPersonne, int idQuestion, int idReponse,
-            String libelle, String dateRendu) {
+            String libelle,String nomPersonne, String dateRendu) {
         this.idPersonne = idPersonne;
         this.idQuestion = idQuestion;
         this.idReponse = idReponse;
         this.libelle = libelle;
+        this.nomPersonne = nomPersonne;
         this.dateRendu = dateRendu;
     }
 
@@ -55,11 +57,23 @@ public class Reponse {
         this.idReponse = idReponse;
     }
     
+    
+    public String getLibelle() {
+        return this.libelle;
+    }
 
     public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
 
+    public String getNomPersonne() {
+        return nomPersonne;
+    }
+
+    public void setNomPersonne(String nomPersonne) {
+        this.nomPersonne = nomPersonne;
+    }
+    
     public String getDateRendu() {
         return dateRendu;
     }

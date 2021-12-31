@@ -43,3 +43,11 @@ FROM question q
 			ON q.id_createur = p.id_personne
 WHERE id_questionnaire=1
 LIMIT 0, 10;
+
+/*SELECT_REPONSES_WITH_QUESTION_ID*/
+SELECT r.*, p.prenom, p.nom
+FROM reponse r
+	INNER JOIN
+		personne p
+			ON r.id_personne = p.id_personne
+WHERE id_question=1;

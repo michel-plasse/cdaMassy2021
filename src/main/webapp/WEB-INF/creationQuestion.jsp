@@ -40,16 +40,13 @@
             <b>
                 <label for="libelleQuestion"> Propositions <em>*</em></label><h4 class="erreur">${erreur_libelle}</h4>
                 <fieldset>
-                    <textarea id="libelle" placeholder="Ecrivez une ou plusieurs propositions" autofocus=""  name="libelleQuestion"></textarea><br>
-                    <div class="reponseEdit">
-                        <div class="blocAllPropositions">
-                            Ajouter une proposition:<button type="button" id="addProposition">+</button>
-                            <div id="blocProposition">
-                                <input type="textarea" id="proposition" placeholder="Ecrivez votre proposition" name="proposition"></textarea><br>
-                                <input type="radio" id="correctness" name="correctness" value="Undefined" checked="true">Undefined
-                                <input type="radio" id="correctness" name="correctness" value="Correct">Correct
-                                <input type="radio" id="correctness" name="correctness" value="Incorrect">Incorrect               
-                            </div>
+                    <div class="blocAllPropositions">
+                        Ajouter une proposition:<button type="button" id="addProposition">+</button>
+                        <div id="blocProposition">
+                            <textarea type="text"  id="proposition" placeholder="Ecrivez votre proposition" name="proposition"></textarea>
+                            <input type="radio" id="correctness" name="correctness" value="Undefined" checked="true">Indéfinie
+                            <input type="radio" id="correctness" name="correctness" value="Correct">Correcte
+                            <input type="radio" id="correctness" name="correctness" value="Incorrect">Incorrecte             
                         </div>
                     </div>
                 </fieldset>
@@ -60,7 +57,7 @@
                     <label for="Situation-select">Choisissez un canal:</label>
                     <select name="canalChoisi" id="canal-select">
                         <c:forEach items="${canauxMembre}" var="canal">
-                        <option value="${canal.idCanal}">${canal.nomCanal}</option>
+                            <option value="${canal.idCanal}">${canal.nomCanal}</option>
                         </c:forEach>
                     </select>
                 </fieldset>
@@ -70,27 +67,26 @@
     <br/>
 </div>
 <button type="submit">Valider</button>
-
+</form>
+</div>
+</body>
 <script>
     document.getElementById("addProposition").onclick = function (event) {
         let ele = document.getElementById("blocProposition");
         let copie = ele.cloneNode(true);
         let rank = ele.parentNode.childElementCount;
         copie.id = ele.id + rank;
+        copie.getElementsByTagName('input')[0].name = "correctness" + rank;
+        copie.getElementsByTagName('input')[0].id = "correctness" + rank;
+        copie.getElementsByTagName('input')[0].checked = "checked";
         copie.getElementsByTagName('input')[1].name = "correctness" + rank;
         copie.getElementsByTagName('input')[1].id = "correctness" + rank;
-        copie.getElementsByTagName('input')[1].checked = "checked";
         copie.getElementsByTagName('input')[2].name = "correctness" + rank;
         copie.getElementsByTagName('input')[2].id = "correctness" + rank;
-        copie.getElementsByTagName('input')[3].name = "correctness" + rank;
-        copie.getElementsByTagName('input')[3].id = "correctness" + rank;
         ele.parentNode.appendChild(copie);
     };
 
 </script>
-</form>
-</div>
-</body>
 </html>
 
 
