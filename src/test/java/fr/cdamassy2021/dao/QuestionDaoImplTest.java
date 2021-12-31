@@ -171,10 +171,24 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         System.out.println("test getAllSondages()");
         //given:
         QuestionDao dao = DaoFactory.getInstance().getQuestionDao();
+        //when:
         ArrayList<Sondage> sondages = dao.getAllSondagesPaging(1, 10);
+        //then:
         assertEquals(7, sondages.size()); 
         assertEquals(2, sondages.get(0).getResults().size());
         assertEquals(3, sondages.get(1).getResults().size());
         System.out.println(sondages.get(0).getResults().get(0).NomsPersonnes);
+    }
+    
+    @Test
+    public void testgetAllPendingQuestions() throws SQLException{
+        System.out.println("test getAllSondages()");
+        //given:
+        QuestionDao dao = DaoFactory.getInstance().getQuestionDao();
+        //when:
+        ArrayList<Question> pending1 = dao.getAllPendingQuestions(1, 1);
+        ArrayList<Question> pending2 = dao.getAllPendingQuestions(1, 2);
+        assertEquals(7, pending1.size()); 
+        assertEquals(0, pending2.size()); 
     }
 }

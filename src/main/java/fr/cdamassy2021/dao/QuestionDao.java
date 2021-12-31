@@ -96,4 +96,5 @@ public interface QuestionDao extends IDao<Question> {
     
     public ArrayList<Sondage> getAllSondagesPaging(int noPage, int nbElements) throws SQLException;
 
+    public ArrayList<Question> getAllPendingQuestions(int idPersonne, int id_canal) throws SQLException;
 }

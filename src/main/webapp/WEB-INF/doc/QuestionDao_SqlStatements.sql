@@ -51,3 +51,15 @@ FROM reponse r
 		personne p
 			ON r.id_personne = p.id_personne
 WHERE id_question=1;
+
+/*SELECT ALL PENDING QUESTION BY PERSONNE ID AND CANAL ID*/
+SELECT q.*, p.prenom, p.nom
+FROM question q
+	INNER JOIN 
+		personne p
+			ON p.id_personne = q.id_createur
+WHERE NOT EXISTS(
+	SELECT* 
+    FROM reponse r
+    WHERE r.id_personne = 1
+) AND id_canal = 1;
