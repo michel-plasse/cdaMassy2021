@@ -52,6 +52,6 @@ public class DaoFactory {
     }
 
     public QuestionDao getQuestionDao() {
-        return new QuestionDaoImpl(this);
+        return new QuestionDaoImpl2(this);
     }
 }

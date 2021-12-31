@@ -4,6 +4,8 @@
  */
 package fr.cdamassy2021.dao;
 
+package fr.cdamassy2021.dao;
+
 import fr.cdamassy2021.model.Question;
 import fr.cdamassy2021.model.Proposition;
 import fr.cdamassy2021.model.Reponse;
@@ -34,7 +36,7 @@ import java.util.List;
  *
  * @author Kamal, Thomas
  */
-public class QuestionDaoImpl implements QuestionDao {
+public class QuestionDaoImpl2 implements QuestionDao {
 
     private DaoFactory daoFactory;
 
@@ -114,7 +116,7 @@ public class QuestionDaoImpl implements QuestionDao {
     /**
      * class default constructor
      */
-    public QuestionDaoImpl(DaoFactory daoFactory) {
+    public QuestionDaoImpl2(DaoFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
 
