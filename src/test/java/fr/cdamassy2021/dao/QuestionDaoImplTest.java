@@ -28,7 +28,7 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         int idCanalTest = 1;
         int idAuteurTest = 2;
         Question inserted = new Question(Question.TypeQuestion.QCM,
-                idAuteurTest, idCanalTest, enonceQuestion, null);
+                idAuteurTest, idCanalTest, enonceQuestion);
         //when:
         dao.insert(inserted);
         //then:
@@ -48,8 +48,7 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         Question insertedQuestion = new Question(
                 Question.TypeQuestion.QCM,
                 idAuteurTest, idCanalTest,
-                enonceQuestion,
-                null);
+                enonceQuestion);
 
         // Une List<Proposition>
         List<Proposition> testedPropositions = new ArrayList<Proposition>();
@@ -73,24 +72,17 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         assertEquals(18, prop1.getIdProposition());
         assertEquals(19, prop2.getIdProposition());
         assertEquals(20, prop3.getIdProposition());
-
-        Proposition.Correctness exected1
-                = Proposition.Correctness.CORRECT;
-        Proposition.Correctness exected2
-                = Proposition.Correctness.INCORRECT;
-        Proposition.Correctness exected3
-                = Proposition.Correctness.UNDEFINED;
-        assertEquals(exected1,
+        assertEquals(Proposition.Correctness.CORRECT,
                 dao.findPropositionById(18).getCorrectness());
-        assertEquals(exected2,
+        assertEquals(Proposition.Correctness.INCORRECT,
                 dao.findPropositionById(19).getCorrectness());
-        assertEquals(exected3,
+        assertEquals(Proposition.Correctness.UNDEFINED,
                 dao.findPropositionById(20).getCorrectness());
 
     }
 
     @Test
-    public void testFindByIdTrouve() throws Exception {
+    public void testFindById() throws Exception {
         //given:
         System.out.println("try findById");
         QuestionDao dao = DaoFactory.getInstance().getQuestionDao();
@@ -106,16 +98,17 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         int expectedId = 2;
         int expectedCanal = 1;
         int expectedAuteur = 1;
+        int expectedNbReponses = 5;
         Question.TypeQuestion expectedType
                 = Question.TypeQuestion.values()[3];
 
         Question expResult = new Question(
                 expectedId, expectedType,
                 expectedAuteur, expectedCanal, "Tryphon Tournesol",
-                "Combien de temps voulez-vous pour ce TP ?",
-                null);
+                "Combien de temps voulez-vous pour ce TP ?");
         assertEquals(expResult, result);
         assertEquals(3, result.getPropositions().size());
+        assertEquals(expectedNbReponses, result.getReponses().size());
     }
 
     @Test
@@ -140,18 +133,20 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         //when : la methode que je test 
         questions = dao.getAllPaging(1, 10);
         //then: 
-        int expected = 7;
-        assertEquals(expected, questions.size());
-        int expectedNbPropositions = 17;
-        int actualNbProposition = 0;
+        int actualNbPropositions = 0;
         System.out.println("nbQuestion" + questions.size());
         for (Question q : questions) {
             for (Proposition p : q.getPropositions()) {
-                actualNbProposition++;
+                actualNbPropositions++;
             }
         }
-        System.out.println("props count=" + actualNbProposition);
-        assertEquals(expectedNbPropositions, actualNbProposition);
+        int actualNbReponses = 0;
+        for (Question q : questions) {
+            actualNbReponses += q.getReponses().size();
+        }
+        assertEquals(7,  questions.size()); 
+        assertEquals(17, actualNbPropositions);
+        assertEquals(14, actualNbReponses); 
     }
 
     @Test
@@ -166,8 +161,7 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         // when:
         questions = dao.getAllByCanalPaging(idCanal, noPage, nbElementsParPage);
         // then:
-        int expected = 7;
         int actual = questions.size();
-        assertEquals(expected, actual);
+        assertEquals(7, actual);
     }
 }

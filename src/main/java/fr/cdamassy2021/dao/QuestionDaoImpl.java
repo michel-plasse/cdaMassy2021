@@ -6,6 +6,7 @@ package fr.cdamassy2021.dao;
 
 import fr.cdamassy2021.model.Question;
 import fr.cdamassy2021.model.Proposition;
+import fr.cdamassy2021.model.Reponse;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -93,7 +94,8 @@ public class QuestionDaoImpl implements QuestionDao {
             + " VALUES ( ?, ?, ?);";
     private static final String SELECT_PROPOSITIONS_WITH_QUESTION_ID
             = "SELECT * FROM proposition WHERE id_question=?;";
-    
+    private static final String SELECT_REPONSES_WITH_QUESTION_ID
+            = "SELECT * FROM reponse WHERE id_question=?;";
     private static final String SELECT_ALL_QUESTIONS_BY_PERSONNE_ID
             = "SELECT q.*, p.prenom, p.nom\n"
             + "FROM question q\n"
@@ -103,12 +105,11 @@ public class QuestionDaoImpl implements QuestionDao {
             + "WHERE id_personne=?\n"
             + "LIMIT ?, ?;";
 
-
     /**
      * class default constructor
      */
     public QuestionDaoImpl(DaoFactory daoFactory) {
-         this.daoFactory = daoFactory;
+        this.daoFactory = daoFactory;
     }
 
     /**
@@ -240,26 +241,10 @@ public class QuestionDaoImpl implements QuestionDao {
                 found.setCanalId(res.getInt("id_canal"));
                 found.setIdCreateur(res.getInt("id_createur"));
                 found.setLibelle(res.getString("libelle"));
-
-                // Chercher les proposition associées à found,
-                preparedStatement = connection.prepareStatement(
-                        SELECT_PROPOSITIONS_WITH_QUESTION_ID);
-                preparedStatement.setLong(1, searchedId);
-                ResultSet resProps = preparedStatement.executeQuery();
-                ArrayList<Proposition> resList = found.getPropositions();
-                // et pour chacune d'elles, l'ajouter à sa liste.
-                while (resProps.next()) {
-                    Proposition pFound = new Proposition();
-                    pFound.setIdProposition(resProps.getInt("id_proposition"));
-                    Proposition.Correctness correctness
-                            = Proposition.Correctness
-                                    .values()[resProps.getInt("est_correcte")];
-                    pFound.setCorrectness(correctness);
-                    pFound.setIdQuestion(resProps.getInt("id_question"));
-                    pFound.setLibelle(resProps.getString("libelle"));
-                    resList.add(pFound);
-                }
+                assignerPropositions(connection, found);
+                assignerReponses(connection, found);
             }
+
         } catch (SQLException e) {
         }
         // retourne un bean initialisé.
@@ -330,41 +315,18 @@ public class QuestionDaoImpl implements QuestionDao {
             // convert int to enum of TypeQuestion
             Question.TypeQuestion type
                     = Question.TypeQuestion.values()[rs.getInt("id_type_question")];
-            ArrayList<Proposition> propsList = new ArrayList<Proposition>();
             // Initialiser le bean 
-            Question found = new Question(
+            Question questionFound = new Question(
                     rs.getInt("id_question"),
                     type,
                     rs.getInt("id_canal"),
                     rs.getInt("id_createur"),
                     rs.getString("prenom") + " " + rs.getString("nom"),
-                    rs.getString("libelle"),
-                    propsList);
-            result.add(found);
-            // prepare propositions selection
-            PreparedStatement selectPropsStmt
-                    = connection.prepareStatement(
-                            SELECT_PROPOSITIONS_WITH_QUESTION_ID);
-            // Chercher les propositions
-            selectPropsStmt.setLong(1, found.getId());
-            ResultSet resProps = selectPropsStmt.executeQuery();
-            // Pour chaque propositions trouvée:
-            while (resProps.next()) {
-                Proposition pFound = new Proposition();
-                // Initialiser le bean
-                pFound.setIdProposition(resProps.getInt("id_proposition"));
-                Proposition.Correctness correctness
-                        = Proposition.Correctness.values()[resProps.getInt(
-                        "est_correcte")];
-                pFound.setCorrectness(correctness);
-                pFound.setIdQuestion(resProps.getInt("id_question"));
-                pFound.setLibelle(resProps.getString("libelle"));
-                // L'ajouter à la liste de propositions
-                propsList.add(pFound);
-            }
-            System.out.println(result.toString());
+                    rs.getString("libelle"));
+            assignerPropositions(connection, questionFound);
+            assignerReponses(connection, questionFound);
+            result.add(questionFound);
         }
-        //retourner la liste de beans Questions fournit par la BDD.
         return result;
     }
 
@@ -399,7 +361,6 @@ public class QuestionDaoImpl implements QuestionDao {
             // convert int to enum of TypeQuestion
             Question.TypeQuestion type
                     = Question.TypeQuestion.values()[rs.getInt("id_type_question")];
-            ArrayList<Proposition> propsList = new ArrayList<Proposition>();
             // Initialise un nouveeau bean Question
             Question found = new Question(
                     rs.getInt("id_question"),
@@ -407,34 +368,11 @@ public class QuestionDaoImpl implements QuestionDao {
                     rs.getInt("id_canal"),
                     rs.getInt("id_createur"),
                     rs.getString("prenom") + " " + rs.getString("nom"),
-                    rs.getString("libelle"),
-                    propsList);
+                    rs.getString("libelle"));
+            assignerPropositions(connection, found);
+            assignerReponses(connection, found);
             result.add(found);
-            // Recupère sa liste de propositions
-            // prepare propositions selection
-            PreparedStatement selectPropsStmt
-                    = connection.prepareStatement(
-                            SELECT_PROPOSITIONS_WITH_QUESTION_ID);
-            // Chercher les propositions
-            selectPropsStmt.setLong(1, found.getId());
-            ResultSet resProps = selectPropsStmt.executeQuery();
-            // Pour chaque propositions trouvée:
-            while (resProps.next()) {
-                Proposition pFound = new Proposition();
-                // Initialiser le bean
-                pFound.setIdProposition(resProps.getInt("id_proposition"));
-                Proposition.Correctness correctness
-                        = Proposition.Correctness.values()[resProps.getInt(
-                        "est_correcte")];
-                pFound.setCorrectness(correctness);
-                pFound.setIdQuestion(resProps.getInt("id_question"));
-                pFound.setLibelle(resProps.getString("libelle"));
-                // L'ajouter à la liste de propositions
-                propsList.add(pFound);
-            }
-            System.out.println(result.toString());
         }
-        //retourner la liste de beans Questions fournit par la BDD.
         return result;
     }
 
@@ -453,11 +391,12 @@ public class QuestionDaoImpl implements QuestionDao {
     public ArrayList<Question> findAll() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
     @Override
     public ArrayList<Question> getAllByIdMembrePaging(
             int idMembre, int noPage, int nbElementsParPage)
-            throws SQLException{
-                Connection connection = daoFactory.getConnection();
+            throws SQLException {
+        Connection connection = daoFactory.getConnection();
         ArrayList<Question> result = new ArrayList();
         // prepare questions selection
         PreparedStatement selectQuestionStmt
@@ -471,7 +410,6 @@ public class QuestionDaoImpl implements QuestionDao {
             // convert int to enum of TypeQuestion
             Question.TypeQuestion type
                     = Question.TypeQuestion.values()[rs.getInt("id_type_question")];
-            ArrayList<Proposition> propsList = new ArrayList<Proposition>();
             // Initialise un nouveeau bean Question
             Question found = new Question(
                     rs.getInt("id_question"),
@@ -479,17 +417,23 @@ public class QuestionDaoImpl implements QuestionDao {
                     rs.getInt("id_canal"),
                     rs.getInt("id_createur"),
                     rs.getString("prenom") + " " + rs.getString("nom"),
-                    rs.getString("libelle"),
-                    propsList);
+                    rs.getString("libelle"));
+            assignerPropositions(connection, found);
+            assignerReponses(connection, found);
             result.add(found);
-            // Recupère sa liste de propositions
-            // prepare propositions selection
+            System.out.println(result.toString());
+        }
+        //retourner la liste de beans Questions fournit par la BDD.
+        return result;
+    }
+
+    private void assignerPropositions(Connection con, Question q) throws SQLException {
+        try {
             PreparedStatement selectPropsStmt
-                    = connection.prepareStatement(
-                            SELECT_PROPOSITIONS_WITH_QUESTION_ID);
-            // Chercher les propositions
-            selectPropsStmt.setLong(1, found.getId());
+                    = con.prepareStatement(SELECT_PROPOSITIONS_WITH_QUESTION_ID);
+            selectPropsStmt.setLong(1, q.getId());
             ResultSet resProps = selectPropsStmt.executeQuery();
+            ArrayList<Proposition> propsList = q.getPropositions();
             // Pour chaque propositions trouvée:
             while (resProps.next()) {
                 Proposition pFound = new Proposition();
@@ -501,12 +445,30 @@ public class QuestionDaoImpl implements QuestionDao {
                 pFound.setCorrectness(correctness);
                 pFound.setIdQuestion(resProps.getInt("id_question"));
                 pFound.setLibelle(resProps.getString("libelle"));
-                // L'ajouter à la liste de propositions
+                // L'ajouter à la liste de propositions de l'objet Question
                 propsList.add(pFound);
             }
-            System.out.println(result.toString());
+        } catch (Exception e) {
         }
-        //retourner la liste de beans Questions fournit par la BDD.
-        return result;
+    }
+
+    private void assignerReponses(Connection con, Question q) throws SQLException {
+        try {
+            PreparedStatement preparedStatement2 = con.prepareStatement(
+                    SELECT_REPONSES_WITH_QUESTION_ID);
+            preparedStatement2.setLong(1, q.getId());
+            ResultSet rsReponses = preparedStatement2.executeQuery();
+            ArrayList<Reponse> resultList = q.getReponses();
+            while (rsReponses.next()) {
+                Reponse rFound = new Reponse();
+                rFound.setIdPersonne(rsReponses.getInt("id_personne"));
+                rFound.setIdQuestion(rsReponses.getInt("id_question"));
+                rFound.setLibelle(rsReponses.getString("libelle"));
+                // L'ajouter à la liste de reponses de l'objet Question
+                resultList.add(rFound);
+            }
+        } catch (Exception e) {
+
+        }
     }
 }

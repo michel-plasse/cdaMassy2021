@@ -14,7 +14,7 @@ public class Reponse {
 
     private int idPersonne;
     private int idQuestion;
-    private int idProposition;
+    private int idReponse;
     private String libelle;
     private String dateRendu;
 
@@ -22,11 +22,11 @@ public class Reponse {
 
     }
 
-    public Reponse(int idPersonne, int idQuestion, int idProposition,
+    public Reponse(int idPersonne, int idQuestion, int idReponse,
             String libelle, String dateRendu) {
         this.idPersonne = idPersonne;
         this.idQuestion = idQuestion;
-        this.idProposition = idProposition;
+        this.idReponse = idReponse;
         this.libelle = libelle;
         this.dateRendu = dateRendu;
     }
@@ -46,18 +46,15 @@ public class Reponse {
     public void setIdQuestion(int idQuestion) {
         this.idQuestion = idQuestion;
     }
-
-    public int getIdProposition() {
-        return idProposition;
+    
+    public int getIdReponse() {
+        return idReponse;
     }
 
-    public void setIdProposition(int idProposition) {
-        this.idProposition = idProposition;
+    public void setIdReponse(int idReponse) {
+        this.idReponse = idReponse;
     }
-
-    public String getLibelle() {
-        return libelle;
-    }
+    
 
     public void setLibelle(String libelle) {
         this.libelle = libelle;
@@ -76,7 +73,7 @@ public class Reponse {
         int hash = 7;
         hash = 17 * hash + this.idPersonne;
         hash = 17 * hash + this.idQuestion;
-        hash = 17 * hash + this.idProposition;
+        hash = 17 * hash + this.idReponse;
         hash = 17 * hash + Objects.hashCode(this.libelle);
         hash = 17 * hash + Objects.hashCode(this.dateRendu);
         return hash;
@@ -100,7 +97,7 @@ public class Reponse {
         if (this.idQuestion != other.idQuestion) {
             return false;
         }
-        if (this.idProposition != other.idProposition) {
+        if (this.idReponse != other.idReponse) {
             return false;
         }
         if (!Objects.equals(this.libelle, other.libelle)) {

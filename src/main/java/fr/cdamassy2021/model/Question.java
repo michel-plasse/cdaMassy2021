@@ -31,8 +31,8 @@ public class Question {
     private String nomAuteur;
     private String libelle;
     private TypeQuestion type;
-    private ArrayList<Proposition> propositions = null;
-    private ArrayList<Reponse> reponses = null;
+    private ArrayList<Proposition> propositions = new ArrayList<Proposition>();
+    private ArrayList<Reponse> reponses = new ArrayList<Reponse>();
 
     private boolean appartientQuestionaire;
     private int idQuestionnaire;
@@ -53,14 +53,13 @@ public class Question {
      * @param propositions
      */
     public Question(int id, TypeQuestion typeDeQuestion, int canalId, int auteurId, String nomAuteur,
-            String statement, ArrayList<Proposition> propositions) {
+            String statement) {
         this.id = id;
         this.idCanal = canalId;
         this.idCreateur = auteurId;
         this.nomAuteur = nomAuteur;
         this.libelle = statement;
         this.type = typeDeQuestion;
-        this.propositions = propositions;
     }
 
     /**
@@ -75,13 +74,12 @@ public class Question {
      * @param propositions
      */
     public Question(TypeQuestion typeDeLaQuestion, int canalId, int auteurId,
-            String libelle, ArrayList<Proposition> propositions) {
+            String libelle) {
         this.idCanal = canalId;
         this.idCreateur = auteurId;
         this.nomAuteur = "undefined";
         this.libelle = libelle;
         this.type = typeDeLaQuestion;
-        this.propositions = propositions;
     }
 
     /**
@@ -146,6 +144,14 @@ public class Question {
 
     public void setPropositions(ArrayList<Proposition> propositionsIds) {
         this.propositions = propositionsIds;
+    }
+
+    public ArrayList<Reponse> getReponses() {
+        return reponses;
+    }
+
+    public void setReponses(ArrayList<Reponse> reponses) {
+        this.reponses = reponses;
     }
 
     public boolean isAppartientAQuestionaire() {
