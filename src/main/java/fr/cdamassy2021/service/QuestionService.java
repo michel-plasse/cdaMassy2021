@@ -64,7 +64,7 @@ public class QuestionService {
         }
         QuestionDao dao = DaoFactory.getInstance().getQuestionDao();
         //create Question bean:
-        Question newQuestion = new Question(Question.TypeQuestion.QCM, canal, idAuteur, libelleQuestion, null);
+        Question newQuestion = new Question(Question.TypeQuestion.QCM, canal, idAuteur, libelleQuestion);
         //creates List<Proposition>:
         ArrayList<Proposition> newPropositions = new ArrayList();
         if (allPropositionsLibelles != null) {
