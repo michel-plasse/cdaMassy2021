@@ -24,6 +24,8 @@ public class EFGDao implements IDao<EFG> {
     protected final static String SELECT_BY_ID
         = "SELECT * FROM efg WHERE id_efg = ?";
     
+    protected final static String SELECT_GROUPES
+        = "SELECT * FROM groupe_efg WHERE id_efg = ?";
     
     @Override
     public boolean insert(EFG inserted) throws SQLException {
@@ -54,19 +56,27 @@ public class EFGDao implements IDao<EFG> {
         Connection connection = Database.getConnection();
         PreparedStatement statement = connection.prepareStatement(INSERT_EFG);
         statement.setLong(1, id);
-        boolean executeOk = statement.execute();
-        ResultSet EFGSet = statement.getResultSet();
+        ResultSet setEFG = statement.executeQuery();
+            while(setEFG.next()){
+                result.setId(setEFG.getInt("id_efg"));
+                result.setIdCanal(setEFG.getInt("id_canal"));
+                result.setIdCreateur(setEFG.getInt("id_createur"));
+                result.setIntitule(setEFG.getString("intitule"));
+            }
+        /* Traitement des groupes, en attente de la classe groupe
+        statement = connection.prepareStatement("");
+        statement.setLong(1, id);
+        executeOk = statement.execute();
+        ResultSet lesGroupes = statement.getResultSet();
+        
         if(executeOk){
-            while(EFGSet.next()){
-                result.setId(EFGSet.getInt("id_efg"));
-                result.setIdCanal(EFGSet.getInt("id_canal"));
-                result.setIdCreateur(EFGSet.getInt("id_createur"));
-                result.setIntitule(EFGSet.getString("intitule"));
+            while(lesGroupes.next()){
+                //
             }
         }
-        
-        // faire la gestion des groupes de l'exo
+        */
         return result;
+        
     }
 
     @Override
