@@ -59,7 +59,7 @@ FROM question q
 		personne p
 			ON p.id_personne = q.id_createur
 WHERE NOT EXISTS(
-	SELECT* 
+	SELECT r.id_question
     FROM reponse r
-    WHERE r.id_personne = 1
+    WHERE r.id_question = q.id_question AND r.id_personne = 7
 ) AND id_canal = 1;

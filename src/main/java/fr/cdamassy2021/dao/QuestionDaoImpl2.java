@@ -120,16 +120,15 @@ public class QuestionDaoImpl2 implements QuestionDao {
             + "LIMIT ?, ?;";
 
     private static final String SELECT_ALL_PENDING_QUESTIONS_BY_PERSONNE_ID_AND_CANAL_ID
-            = "/*SELECT ALL PENDING QUESTION BY PERSONNE ID*/\n"
-            + "SELECT q.*, p.prenom, p.nom\n"
+            = "SELECT q.*, p.prenom, p.nom\n"
             + "FROM question q\n"
             + "	INNER JOIN \n"
             + "		personne p\n"
             + "			ON p.id_personne = q.id_createur\n"
             + "WHERE NOT EXISTS(\n"
-            + "	SELECT* \n"
+            + "	SELECT r.id_question\n"
             + "    FROM reponse r\n"
-            + "    WHERE r.id_personne = ?\n"
+            + "    WHERE r.id_question = q.id_question AND r.id_personne = ?\n" 
             + ") AND id_canal = ?;";
 
     /**
@@ -578,7 +577,7 @@ public class QuestionDaoImpl2 implements QuestionDao {
 
         stmt.execute();
     }
-    
+
     @Override
     public ArrayList<Reponse> getAllReponses()
             throws SQLException {

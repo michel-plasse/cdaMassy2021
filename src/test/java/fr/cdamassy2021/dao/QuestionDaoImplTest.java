@@ -187,10 +187,8 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         //given:
         QuestionDao dao = DaoFactory.getInstance().getQuestionDao();
         //when:
-        ArrayList<Question> pending1 = dao.getAllPendingQuestions(1, 1);
-        ArrayList<Question> pending2 = dao.getAllPendingQuestions(1, 2);
-        assertEquals(7, pending1.size());
-        assertEquals(0, pending2.size());
+        ArrayList<Question> pending = dao.getAllPendingQuestions(7, 1);
+        assertEquals(5, pending.size());
     }
 
     @Test
