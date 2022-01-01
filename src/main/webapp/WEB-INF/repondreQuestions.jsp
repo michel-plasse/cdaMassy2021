@@ -23,8 +23,8 @@
                 </c:if>
                 <c:forEach items="${question.getPropositions()}" var="proposition">
                     <div>
-                        <input id="01" type="radio" name="reponse" value="1" checked>
                         <label for="01">${proposition.libelle}</label>
+                        <input id="01" type="radio" name="reponse" value="${proposition.libelle}">
                     </div>
                 </c:forEach>
                 <c:if test="${question.propositions.size() lt 1}">
