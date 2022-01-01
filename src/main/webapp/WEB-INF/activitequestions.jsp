@@ -3,6 +3,7 @@
     Created on : 27 déc. 2021, 03:31:56
     Author     : thoma
 --%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="p" tagdir="/WEB-INF/tags" %>
 <p:header title="Activité: Mes questions."/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/questionaire_style.css"/>
@@ -38,6 +39,20 @@ ${msg}
         <p>Affiche la liste des sondages.</p>
         <form action="listesondages"class="boutonActivite" >
             <button type="submit">Afficher Sondages</button>
+        </form>
+    </article>
+
+    <article>
+        <h3>Repondre aux questions</h3>
+        <p>Affiche la liste des question qui vous ont été posées.</p>
+        <form action="repondreQuestions"class="boutonActivite" >
+                <label for="canalChoisi">Choisissez un canal:</label>
+                <select name="canalChoisi" id="canal-select">
+                    <c:forEach items="${canauxMembre}" var="canal">
+                        <option value="${canal.idCanal}">${canal.nomCanal}</option>
+                    </c:forEach>
+                </select>
+            <button type="submit">Repondre aux questions</button>
         </form>
     </article>
 
