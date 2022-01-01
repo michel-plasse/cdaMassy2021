@@ -78,9 +78,9 @@ public class EFGDao implements IDao<EFG> {
         SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
-    public ArrayList<EFG> findAllByCanal() throws SQLException {
+    public ArrayList<EFG> findAllByCanal(int idCanal) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

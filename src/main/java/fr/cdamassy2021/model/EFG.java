@@ -17,6 +17,7 @@ public class EFG {
 
     public EFG() {
     }
+    
     /**
      * Constructeur avec tous les paramètres, par exemple pourr récupérer depuis la BDD
      * @param id
@@ -32,6 +33,7 @@ public class EFG {
         this.intitule = intitule;
         this.groupes = desgroupes;
     }
+    
     /**
      * Constructeur sans groupes, pour l'initialisation
      * @param id
