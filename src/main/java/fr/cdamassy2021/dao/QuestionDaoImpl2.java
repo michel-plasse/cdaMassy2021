@@ -38,6 +38,11 @@ public class QuestionDaoImpl2 implements QuestionDao {
 
     private DaoFactory daoFactory;
 
+    protected static final String INSERT_REPONSE
+            = "INSERT INTO reponse ("
+            + "id_question,id_personne,libelle) "
+            + "VALUES ( ?, ?, ?);";
+
     protected static final String INSERT_QUESTION
             = "INSERT INTO question ("
             + "id_canal,id_createur,libelle,id_type_question) "
@@ -93,10 +98,10 @@ public class QuestionDaoImpl2 implements QuestionDao {
     private static final String INSERT_PROPOSITION = "INSERT INTO proposition ("
             + "id_question,libelle,est_correcte)"
             + " VALUES ( ?, ?, ?);";
-    
+
     private static final String SELECT_PROPOSITIONS_WITH_QUESTION_ID
             = "SELECT * FROM proposition WHERE id_question=?;";
-    
+
     private static final String SELECT_REPONSES_WITH_QUESTION_ID
             = "SELECT r.*, p.prenom, p.nom\n"
             + "FROM reponse r\n"
@@ -104,7 +109,7 @@ public class QuestionDaoImpl2 implements QuestionDao {
             + "		personne p\n"
             + "			ON r.id_personne = p.id_personne\n"
             + "WHERE id_question=?\n;";
-    
+
     private static final String SELECT_ALL_QUESTIONS_BY_PERSONNE_ID
             = "SELECT q.*, p.prenom, p.nom\n"
             + "FROM question q\n"
@@ -113,7 +118,7 @@ public class QuestionDaoImpl2 implements QuestionDao {
             + "			ON q.id_createur = p.id_personne\n"
             + "WHERE id_personne=?\n"
             + "LIMIT ?, ?;";
-    
+
     private static final String SELECT_ALL_PENDING_QUESTIONS_BY_PERSONNE_ID_AND_CANAL_ID
             = "/*SELECT ALL PENDING QUESTION BY PERSONNE ID*/\n"
             + "SELECT q.*, p.prenom, p.nom\n"
@@ -527,7 +532,7 @@ public class QuestionDaoImpl2 implements QuestionDao {
         }
         return result;
     }
-    
+
     @Override
     public ArrayList<Question> getAllPendingQuestions(int idPersonne, int idCanal)
             throws SQLException {
@@ -537,8 +542,8 @@ public class QuestionDaoImpl2 implements QuestionDao {
         PreparedStatement selectQuestionStmt
                 = connection.prepareStatement(
                         SELECT_ALL_PENDING_QUESTIONS_BY_PERSONNE_ID_AND_CANAL_ID);
-        selectQuestionStmt.setInt(1,idPersonne);
-        selectQuestionStmt.setInt(2,idCanal);
+        selectQuestionStmt.setInt(1, idPersonne);
+        selectQuestionStmt.setInt(2, idCanal);
         ResultSet rs = selectQuestionStmt.executeQuery();
         // Pour chaque question trouvée:
         while (rs.next()) {
@@ -556,6 +561,42 @@ public class QuestionDaoImpl2 implements QuestionDao {
             assignerPropositions(connection, questionFound);
             assignerReponses(connection, questionFound);
             result.add(questionFound);
+        }
+        return result;
+    }
+
+    @Override
+    public void insertReponse(Reponse reponse)
+            throws SQLException {
+        Connection connection = daoFactory.getConnection();
+        //compile la requete
+        PreparedStatement stmt = connection.prepareStatement(
+                INSERT_REPONSE);
+        stmt.setLong(1, reponse.getIdQuestion());
+        stmt.setLong(2, reponse.getIdPersonne());
+        stmt.setString(3, reponse.getLibelle());
+
+        stmt.execute();
+    }
+    
+    @Override
+    public ArrayList<Reponse> getAllReponses()
+            throws SQLException {
+        Connection connection = daoFactory.getConnection();
+        ArrayList<Reponse> result = new ArrayList();
+        // prepare questions selection
+        PreparedStatement selectQuestionStmt
+                = connection.prepareStatement(
+                        "SELECT* FROM reponse");
+        ResultSet rs = selectQuestionStmt.executeQuery();
+        // Pour chaque question trouvée:
+        while (rs.next()) {
+            // Initialiser le bean 
+            Reponse found = new Reponse();
+            found.setIdPersonne(rs.getInt("id_personne"));
+            found.setIdQuestion(rs.getInt("id_question"));
+            found.setLibelle("libelle");
+            result.add(found);
         }
         return result;
     }

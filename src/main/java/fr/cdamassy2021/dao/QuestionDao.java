@@ -6,6 +6,7 @@ package fr.cdamassy2021.dao;
 
 import fr.cdamassy2021.model.Proposition;
 import fr.cdamassy2021.model.Question;
+import fr.cdamassy2021.model.Reponse;
 import fr.cdamassy2021.model.Sondage;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -97,4 +98,8 @@ public interface QuestionDao extends IDao<Question> {
     public ArrayList<Sondage> getAllSondagesPaging(int noPage, int nbElements) throws SQLException;
 
     public ArrayList<Question> getAllPendingQuestions(int idPersonne, int id_canal) throws SQLException;
+
+    public void insertReponse(Reponse reponse) throws SQLException;
+    
+    public ArrayList<Reponse> getAllReponses() throws SQLException;
 }

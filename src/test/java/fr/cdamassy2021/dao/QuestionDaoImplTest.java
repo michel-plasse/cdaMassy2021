@@ -6,6 +6,7 @@ package fr.cdamassy2021.dao;
 
 import fr.cdamassy2021.model.Proposition;
 import fr.cdamassy2021.model.Question;
+import fr.cdamassy2021.model.Reponse;
 import fr.cdamassy2021.model.Sondage;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -145,9 +146,9 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         for (Question q : questions) {
             actualNbReponses += q.getReponses().size();
         }
-        assertEquals(7,  questions.size()); 
+        assertEquals(7, questions.size());
         assertEquals(17, actualNbPropositions);
-        assertEquals(14, actualNbReponses); 
+        assertEquals(14, actualNbReponses);
     }
 
     @Test
@@ -165,7 +166,7 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         int actual = questions.size();
         assertEquals(7, actual);
     }
-    
+
     @Test
     public void testgetAllSondages() throws SQLException {
         System.out.println("test getAllSondages()");
@@ -174,21 +175,47 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
         //when:
         ArrayList<Sondage> sondages = dao.getAllSondagesPaging(1, 10);
         //then:
-        assertEquals(7, sondages.size()); 
+        assertEquals(7, sondages.size());
         assertEquals(2, sondages.get(0).getResults().size());
         assertEquals(3, sondages.get(1).getResults().size());
         System.out.println(sondages.get(0).getResults().get(0).NomsPersonnes);
     }
-    
+
     @Test
-    public void testgetAllPendingQuestions() throws SQLException{
+    public void testgetAllPendingQuestions() throws SQLException {
         System.out.println("test getAllSondages()");
         //given:
         QuestionDao dao = DaoFactory.getInstance().getQuestionDao();
         //when:
         ArrayList<Question> pending1 = dao.getAllPendingQuestions(1, 1);
         ArrayList<Question> pending2 = dao.getAllPendingQuestions(1, 2);
-        assertEquals(7, pending1.size()); 
-        assertEquals(0, pending2.size()); 
+        assertEquals(7, pending1.size());
+        assertEquals(0, pending2.size());
+    }
+
+    @Test
+    public void testinsertReponse() throws SQLException {
+        System.out.println("test insertReponse()");
+        //given:
+        QuestionDao dao = DaoFactory.getInstance().getQuestionDao();
+        Reponse newReponse = new Reponse();
+        newReponse.setIdPersonne(2);
+        newReponse.setIdQuestion(6);
+        newReponse.setLibelle("TEST insertion reponse");
+        //when:
+        dao.insertReponse(newReponse);
+        //then:
+        assertEquals(15, dao.getAllReponses().size());
+    }
+    
+        @Test
+    public void testgetAllReponse() throws SQLException {
+        System.out.println("test getAllReponse()");
+        //given:
+        QuestionDao dao = DaoFactory.getInstance().getQuestionDao();
+        //when:
+        ArrayList<Reponse> result = dao.getAllReponses();
+        //then
+        assertEquals(14,result.size());
     }
 }
