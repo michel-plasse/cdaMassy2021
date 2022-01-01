@@ -21,6 +21,10 @@ public class EFGDao implements IDao<EFG> {
     protected static final String INSERT_EFG
         = "INSERT INTO `efg` (`intitule`, `id_createur`, `id_canal`) VALUES (?, ?, ?);";
 
+    protected final static String SELECT_BY_ID
+        = "SELECT * FROM efg WHERE id_efg = ?";
+    
+    
     @Override
     public boolean insert(EFG inserted) throws SQLException {
         Boolean result = false;
@@ -46,7 +50,23 @@ public class EFGDao implements IDao<EFG> {
 
     @Override
     public EFG findById(long id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EFG result = new EFG();
+        Connection connection = Database.getConnection();
+        PreparedStatement statement = connection.prepareStatement(INSERT_EFG);
+        statement.setLong(1, id);
+        boolean executeOk = statement.execute();
+        ResultSet EFGSet = statement.getResultSet();
+        if(executeOk){
+            while(EFGSet.next()){
+                result.setId(EFGSet.getInt("id_efg"));
+                result.setIdCanal(EFGSet.getInt("id_canal"));
+                result.setIdCreateur(EFGSet.getInt("id_createur"));
+                result.setIntitule(EFGSet.getString("intitule"));
+            }
+        }
+        
+        // faire la gestion des groupes de l'exo
+        return result;
     }
 
     @Override
