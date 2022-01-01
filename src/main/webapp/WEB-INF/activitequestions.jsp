@@ -3,6 +3,8 @@
     Created on : 27 déc. 2021, 03:31:56
     Author     : thoma
 --%>
+<%-- Message d'erreur ou pas, au cas où --%>
+${msg}
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="p" tagdir="/WEB-INF/tags" %>
 <p:header title="Activité: Mes questions."/>
@@ -10,6 +12,8 @@
 <%-- Message d'erreur ou pas, au cas où --%>
 ${msg}
 <h1>Activité: Mes questions.</h1>
+<h2 class="erreur">${message}</h2>
+<h2 class="success">${messageSuccess}</h2>
 <section class="flexh">
     <p>Ceci est votre espace de travail depuis lequel vous pouvez editer, 
         gerer, afficher ou reproposer des questions que vous avez déja posé
