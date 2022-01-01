@@ -42,10 +42,10 @@ public class EFGDaoTest {
      * Test de la méthode insert de EFGDAO, on insere un EFG dans la base et
      * execute un SELECT pour vérifier qu'on le retouve bien dans le tableau efg
      *
-     * @throws Exception
+     * @throws SQLException
      */
     @Test
-    public void testInsert() throws Exception {
+    public void testInsert() throws SQLException {
         EFGDao instance = new EFGDao();
         Connection connection = Database.getConnection();
         EFG exercice = new EFG(1, 1, 1, "Enoncé");
@@ -65,4 +65,17 @@ public class EFGDaoTest {
 
     }
 
+    /**
+     * Test de la méthode findById On vérifie que l'EFG retourné est identique à
+     * celui attendu
+     *
+     * @throws SQLException
+     */
+    @Test
+    public void testFindByID() throws SQLException {
+        EFGDao instance = new EFGDao();
+        EFG result = instance.findById(2);
+        EFG expected = new EFG(2, 1, 1, "TP cadrage");
+        assertEquals(expected, result);
+    }
 }

@@ -54,7 +54,7 @@ public class EFGDao implements IDao<EFG> {
     public EFG findById(long id) throws SQLException {
         EFG result = new EFG();
         Connection connection = Database.getConnection();
-        PreparedStatement statement = connection.prepareStatement(INSERT_EFG);
+        PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
         statement.setLong(1, id);
         ResultSet setEFG = statement.executeQuery();
             while(setEFG.next()){
@@ -63,18 +63,7 @@ public class EFGDao implements IDao<EFG> {
                 result.setIdCreateur(setEFG.getInt("id_createur"));
                 result.setIntitule(setEFG.getString("intitule"));
             }
-        /* Traitement des groupes, en attente de la classe groupe
-        statement = connection.prepareStatement("");
-        statement.setLong(1, id);
-        executeOk = statement.execute();
-        ResultSet lesGroupes = statement.getResultSet();
-        
-        if(executeOk){
-            while(lesGroupes.next()){
-                //
-            }
-        }
-        */
+            
         return result;
         
     }
@@ -87,6 +76,11 @@ public class EFGDao implements IDao<EFG> {
     @Override
     public ArrayList<EFG> getAllPaging(int noPage, int nbElementsParPage) throws
         SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<EFG> findAllByCanal() throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
