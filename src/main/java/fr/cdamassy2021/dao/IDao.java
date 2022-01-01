@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package fr.cdamassy2021.dao;
 
 import fr.cdamassy2021.model.Question;
@@ -25,7 +22,7 @@ public interface IDao<T> { // method CRUD: Create/Read/Update/Delete
 
     public ArrayList<T> findAll() throws SQLException;
 
-    public ArrayList<T> findAllByCanal() throws SQLException;
+    public ArrayList<T> findAllByCanal(int idCanal) throws SQLException;
 
     public ArrayList<T> getAllPaging(int noPage, int nbElementsParPage) throws
         SQLException;
