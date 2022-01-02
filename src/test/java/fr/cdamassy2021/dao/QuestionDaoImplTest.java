@@ -55,7 +55,7 @@ public class QuestionDaoImplTest extends Cdamassy2021Test {
                 null);
 
         // Une List<Proposition>
-        List<Proposition> testedPropositions = new ArrayList<Proposition>();
+        ArrayList<Proposition> testedPropositions = new ArrayList<Proposition>();
         Proposition prop1 = new Proposition(Proposition.Correctness.CORRECT,
                 "Je suis un TEST insertion proposition est_correct 1");
         Proposition prop2 = new Proposition(Proposition.Correctness.INCORRECT,
