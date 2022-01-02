@@ -6,8 +6,7 @@ import java.util.Objects;
 
 /**
  *
- * @author scdel
- * Exercices en groupe
+ * @author scdel Exercices en groupe
  */
 public class EFG {
 
@@ -17,14 +16,16 @@ public class EFG {
 
     public EFG() {
     }
-    
+
     /**
-     * Constructeur avec tous les paramètres, par exemple pourr récupérer depuis la BDD
+     * Constructeur avec tous les paramètres, par exemple pourr récupérer depuis
+     * la BDD
+     *
      * @param id
      * @param idCreateur
      * @param idCanal
      * @param intitule
-     * @param desgroupes 
+     * @param desgroupes
      */
     public EFG(int id, int idCreateur, int idCanal, String intitule, List<Groupe> desgroupes) {
         this.id = id;
@@ -33,13 +34,14 @@ public class EFG {
         this.intitule = intitule;
         this.groupes = desgroupes;
     }
-    
+
     /**
      * Constructeur sans groupes, pour l'initialisation
+     *
      * @param id
      * @param idCreateur
      * @param idCanal
-     * @param intitule 
+     * @param intitule
      */
     public EFG(int id, int idCreateur, int idCanal, String intitule) {
         this.id = id;
@@ -127,6 +129,11 @@ public class EFG {
         }
         if (!Objects.equals(this.intitule, other.intitule)) {
             return false;
+        }
+        for (int i = 0; i > this.groupes.size(); i++) {
+            if (!Objects.equals(this.groupes.get(i), other.getGroupes().get(i))) {
+                return false;
+            }
         }
         return true;
     }

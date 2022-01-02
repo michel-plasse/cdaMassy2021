@@ -1,4 +1,3 @@
-
 package fr.cdamassy2021.model;
 
 import java.util.List;
@@ -8,10 +7,11 @@ import java.util.Objects;
  *
  * @author Florian
  */
-class Groupe {
+public class Groupe {
+
     private List<Personne> membres;
     private int idCreateur;
-    
+
     public Groupe() {
     }
 
@@ -38,7 +38,7 @@ class Groupe {
 
     @Override
     public String toString() {
-        return "Groupe crée par "+ idCreateur;
+        return "Groupe crée par " + idCreateur;
     }
 
     @Override
@@ -64,12 +64,12 @@ class Groupe {
         if (this.idCreateur != other.idCreateur) {
             return false;
         }
-        for(int i = 0;i<membres.size();i++){
-            if (!membres.get(i).equals(other.getMembres().get(i))){
+        for (int i = 0; i < membres.size(); i++) {
+            if (!membres.get(i).equals(other.getMembres().get(i))) {
                 return false;
             }
         }
         return true;
     }
-    
+
 }
