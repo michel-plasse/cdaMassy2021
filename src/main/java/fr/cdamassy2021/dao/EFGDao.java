@@ -21,11 +21,11 @@ import java.util.ArrayList;
 public class EFGDao implements IDao<EFG> {
 
     protected static final String INSERT_EFG
-        = "INSERT INTO `efg` (`intitule`, `id_createur`, `id_canal`) VALUES (?, ?, ?);";
+            = "INSERT INTO `efg` (`intitule`, `id_createur`, `id_canal`) VALUES (?, ?, ?);";
 
     protected final static String SELECT_BY_ID
-        = "SELECT * FROM efg WHERE id_efg = ?";
-    
+            = "SELECT * FROM efg WHERE id_efg = ?";
+
     protected final static String SELECT_GROUPES
             = "SELECT mefg.id_personne, personne.prenom, personne.nom,"
             + "personne.email, personne.tel, personne.pwd, mefg.id_createur "
@@ -34,20 +34,20 @@ public class EFGDao implements IDao<EFG> {
             + "INNER JOIN groupe_efg AS gefg "
             + "ON mefg.id_createur = gefg.id_createur AND mefg.id_efg = gefg.id_efg "
             + "WHERE gefg.id_efg = ? ORDER BY mefg.id_createur;";
-    
+
     protected final static String SELECT_BY_CANAL
-        = "SELECT * FROM efg WHERE id_canal = ?";
-    
+            = "SELECT * FROM efg WHERE id_canal = ?";
+
     @Override
     public boolean insert(EFG inserted) throws SQLException {
         Boolean result = false;
         Connection connection = Database.getConnection();
         PreparedStatement statement = connection.prepareStatement(INSERT_EFG,
-            Statement.RETURN_GENERATED_KEYS);
+                Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, inserted.getIntitule());
         statement.setInt(2, inserted.getIdCreateur());
         statement.setInt(3, inserted.getIdCanal());
-                statement.execute();
+        statement.execute();
         ResultSet res = statement.getGeneratedKeys();
         if (res.next()) {
             inserted.setId(res.getInt(1));
@@ -61,6 +61,15 @@ public class EFGDao implements IDao<EFG> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Retourne l'EFG de la BDD possédant l'id fournit en argument. L'EFG
+     * retourné possède également en attribut la liste des groupes associé à
+     * l'efg de la BDD.
+     *
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     @Override
     public EFG findById(long id) throws SQLException {
         EFG result = new EFG();
@@ -68,12 +77,12 @@ public class EFGDao implements IDao<EFG> {
         PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
         statement.setLong(1, id);
         ResultSet setEFG = statement.executeQuery();
-            while(setEFG.next()){
-                result.setId(setEFG.getInt("id_efg"));
-                result.setIdCanal(setEFG.getInt("id_canal"));
-                result.setIdCreateur(setEFG.getInt("id_createur"));
-                result.setIntitule(setEFG.getString("intitule"));
-            }
+        while (setEFG.next()) {
+            result.setId(setEFG.getInt("id_efg"));
+            result.setIdCanal(setEFG.getInt("id_canal"));
+            result.setIdCreateur(setEFG.getInt("id_createur"));
+            result.setIntitule(setEFG.getString("intitule"));
+        }
         //A partir d'ici commence la gestion des groupes
         ArrayList<Groupe> resultGroupes = new ArrayList<>();
         statement = connection.prepareStatement(SELECT_GROUPES);
@@ -82,35 +91,35 @@ public class EFGDao implements IDao<EFG> {
         ResultSet setGroupes = statement.executeQuery();
         int numgroupePrecedent = 0;
         Groupe groupeActuel = new Groupe();
-            while(setGroupes.next()){
-                int numgroupeActuel = setGroupes.getInt("id_createur");
+        while (setGroupes.next()) {
+            int numgroupeActuel = setGroupes.getInt("id_createur");
 //Si le groupe de ce membre est nouveau, on doit le créer, y mettre le membre
 //et l'ajouter à la liste des groupes de l'exercice
-                if(numgroupeActuel!=numgroupePrecedent){ 
-                    numgroupePrecedent = numgroupeActuel;
-                    groupeActuel.setIdCreateur(numgroupeActuel);
-                    groupeActuel.setMembres(new ArrayList<Personne>());
-                    groupeActuel.getMembres().add(new Personne(
+            if (numgroupeActuel != numgroupePrecedent) {
+                numgroupePrecedent = numgroupeActuel;
+                groupeActuel.setIdCreateur(numgroupeActuel);
+                groupeActuel.setMembres(new ArrayList<Personne>());
+                groupeActuel.getMembres().add(new Personne(
                         setGroupes.getInt("id_personne"),
                         setGroupes.getString("prenom"),
                         setGroupes.getString("nom"),
                         setGroupes.getString("email"),
                         setGroupes.getString("tel"),
                         setGroupes.getString("pwd")));
-                    resultGroupes.add(groupeActuel);
+                resultGroupes.add(groupeActuel);
 //Si on déjà crée le groupe de ce membre, il suffit d'y ajouter ce membre
-                }else{
-                    groupeActuel.getMembres().add(new Personne(
+            } else {
+                groupeActuel.getMembres().add(new Personne(
                         setGroupes.getInt("id_personne"),
                         setGroupes.getString("prenom"),
                         setGroupes.getString("nom"),
                         setGroupes.getString("email"),
                         setGroupes.getString("tel"),
                         setGroupes.getString("pwd")));
-                }
             }
+        }
         result.setGroupes(resultGroupes);
-        return result;        
+        return result;
     }
 
     @Override
@@ -120,24 +129,24 @@ public class EFGDao implements IDao<EFG> {
 
     @Override
     public ArrayList<EFG> getAllPaging(int noPage, int nbElementsParPage) throws
-        SQLException {
+            SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public ArrayList<EFG> findAllByCanal(int idCanal) throws SQLException {
         ArrayList<EFG> result = new ArrayList<>();
         Connection connection = Database.getConnection();
         PreparedStatement statement = connection.prepareStatement(
-            SELECT_BY_CANAL);
+                SELECT_BY_CANAL);
         statement.setLong(1, idCanal);
         ResultSet res = statement.executeQuery();
         while (res.next()) {
             result.add(new EFG(
-                1,
-                res.getInt("id_createur"),
-                res.getInt("id_canal"),
-                res.getString("intitule")
+                    1,
+                    res.getInt("id_createur"),
+                    res.getInt("id_canal"),
+                    res.getString("intitule")
             ));
         }
         return result;
