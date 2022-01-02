@@ -31,10 +31,8 @@ public class CreerEFGServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int idCanal = Integer.parseInt(request.getParameter("idCanal"));
-        /*HttpSession session = request.getSession();
-        session.setAttribute("Canal", idCanal);*/
-        System.out.println(idCanal);
+        /*int idCanal = id canal a recuperer sur la session
+        System.out.println(idCanal);*/
         request.getRequestDispatcher("WEB-INF/formulaireEFG.jsp").forward(request, response);
     }
 

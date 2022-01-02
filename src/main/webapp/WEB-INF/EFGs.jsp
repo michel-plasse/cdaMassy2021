@@ -9,7 +9,6 @@
 <p:header title="Erreur"/>
 <h1>Liste d'EFGs</h1>
 
-coucou
 <table>
     <thead> <!-- En-tête du tableau -->
         <tr>
@@ -29,7 +28,7 @@ coucou
 
         </c:forEach>
     </tbody>
-</table>
+</table> //id canal a recuperer sur la session
 <a href="CreationEFG?idCanal=${canal.idCanal}">Créer un Exercice en groupe</a>
 </body>
 </html>

@@ -17,12 +17,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Florian
  */
-@WebServlet(name = "ListeEfgCanal", urlPatterns = {"/Truc"})
+@WebServlet(name = "ListeEfgCanal", urlPatterns = {"/ListeEFGs"})
 public class ListeEfgCanal extends HttpServlet {
 
     /**
@@ -37,13 +38,15 @@ public class ListeEfgCanal extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         EFGDao instance = new EFGDao();
+        int idCanal = Integer.parseInt(request.getParameter("idCanal"));
         try {
-            ArrayList<EFG> lesExos = instance.findAllByCanal(Integer.parseInt(request.getParameter("idCanal")));
+            ArrayList<EFG> lesExos = instance.findAllByCanal(idCanal);
             request.setAttribute("EFGs",lesExos);
         } catch (SQLException ex) {
             System.out.println("oopsie");
         }
-        // BESOIN DE TRANSMETTRE L ID CANAL
+        HttpSession session = request.getSession();
+        session.setAttribute("Canal", idCanal);
         request.getRequestDispatcher("WEB-INF/EFGs.jsp").forward(request, response);
     }
 
