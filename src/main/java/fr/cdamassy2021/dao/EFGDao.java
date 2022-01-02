@@ -5,6 +5,8 @@
 package fr.cdamassy2021.dao;
 
 import fr.cdamassy2021.model.EFG;
+import fr.cdamassy2021.model.Groupe;
+import fr.cdamassy2021.model.Personne;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +27,13 @@ public class EFGDao implements IDao<EFG> {
         = "SELECT * FROM efg WHERE id_efg = ?";
     
     protected final static String SELECT_GROUPES
-        = "SELECT * FROM groupe_efg WHERE id_efg = ?";
+            = "SELECT mefg.id_personne, personne.prenom, personne.nom,"
+            + "personne.email, personne.tel, personne.pwd, mefg.id_createur "
+            + "FROM personne INNER JOIN "
+            + "membre_groupe_efg AS mefg ON mefg.id_personne = personne.id_personne "
+            + "INNER JOIN groupe_efg AS gefg "
+            + "ON mefg.id_createur = gefg.id_createur AND mefg.id_efg = gefg.id_efg "
+            + "WHERE gefg.id_efg = ? ORDER BY mefg.id_createur;";
     
     protected final static String SELECT_BY_CANAL
         = "SELECT * FROM efg WHERE id_canal = ?";
@@ -66,9 +74,43 @@ public class EFGDao implements IDao<EFG> {
                 result.setIdCreateur(setEFG.getInt("id_createur"));
                 result.setIntitule(setEFG.getString("intitule"));
             }
-            
-        return result;
-        
+        //A partir d'ici commence la gestion des groupes
+        ArrayList<Groupe> resultGroupes = new ArrayList<>();
+        statement = connection.prepareStatement(SELECT_GROUPES);
+//SELECT GROUPES Retourne la liste des membres de chaque groupes de l'EFG avec leurs infos
+        statement.setLong(1, id);
+        ResultSet setGroupes = statement.executeQuery();
+        int numgroupePrecedent = 0;
+        Groupe groupeActuel = new Groupe();
+            while(setGroupes.next()){
+                int numgroupeActuel = setGroupes.getInt("id_createur");
+//Si le groupe de ce membre est nouveau, on doit le créer, y mettre le membre
+//et l'ajouter à la liste des groupes de l'exercice
+                if(numgroupeActuel!=numgroupePrecedent){ 
+                    numgroupePrecedent = numgroupeActuel;
+                    groupeActuel.setIdCreateur(numgroupeActuel);
+                    groupeActuel.setMembres(new ArrayList<Personne>());
+                    groupeActuel.getMembres().add(new Personne(
+                        setGroupes.getInt("id_personne"),
+                        setGroupes.getString("prenom"),
+                        setGroupes.getString("nom"),
+                        setGroupes.getString("email"),
+                        setGroupes.getString("tel"),
+                        setGroupes.getString("pwd")));
+                    resultGroupes.add(groupeActuel);
+//Si on déjà crée le groupe de ce membre, il suffit d'y ajouter ce membre
+                }else{
+                    groupeActuel.getMembres().add(new Personne(
+                        setGroupes.getInt("id_personne"),
+                        setGroupes.getString("prenom"),
+                        setGroupes.getString("nom"),
+                        setGroupes.getString("email"),
+                        setGroupes.getString("tel"),
+                        setGroupes.getString("pwd")));
+                }
+            }
+        result.setGroupes(resultGroupes);
+        return result;        
     }
 
     @Override

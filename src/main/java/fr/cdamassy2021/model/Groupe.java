@@ -8,7 +8,7 @@ import java.util.Objects;
  *
  * @author Florian
  */
-class Groupe {
+public class Groupe {
     private List<Personne> membres;
     private int idCreateur;
     
