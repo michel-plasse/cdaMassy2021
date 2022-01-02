@@ -27,6 +27,9 @@ public class EFGDao implements IDao<EFG> {
     protected final static String SELECT_GROUPES
         = "SELECT * FROM groupe_efg WHERE id_efg = ?";
     
+    protected final static String SELECT_BY_CANAL
+        = "SELECT * FROM efg WHERE id_canal = ?";
+    
     @Override
     public boolean insert(EFG inserted) throws SQLException {
         Boolean result = false;
@@ -81,7 +84,21 @@ public class EFGDao implements IDao<EFG> {
     
     @Override
     public ArrayList<EFG> findAllByCanal(int idCanal) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<EFG> result = new ArrayList<>();
+        Connection connection = Database.getConnection();
+        PreparedStatement statement = connection.prepareStatement(
+            SELECT_BY_CANAL);
+        statement.setLong(1, idCanal);
+        ResultSet res = statement.executeQuery();
+        while (res.next()) {
+            result.add(new EFG(
+                1,
+                res.getInt("id_createur"),
+                res.getInt("id_canal"),
+                res.getString("intitule")
+            ));
+        }
+        return result;
     }
 
 }
