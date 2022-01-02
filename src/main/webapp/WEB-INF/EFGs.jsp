@@ -9,7 +9,7 @@
 <p:header title="Erreur"/>
 <h1>Liste d'EFGs</h1>
 
-
+coucou
 <table>
     <thead> <!-- En-tête du tableau -->
         <tr>
@@ -22,9 +22,9 @@
         <c:forEach items="${EFGs}" var="efg">
 
             <tr>
-                <td>${efg.idEFG}</td>
+                <td>${efg.id}</td>
                 <td>${efg.intitule}</td>
-                <td><a href="listerGroupesEfg?idEfg=${efg.idEFG}"><button type="button" class="btn-efg">Accéder aux groupes de l'EFG</button></a></td>
+                <td><a href="listerGroupesEfg?idEfg=${efg.id}"><button type="button" class="btn-efg">Accéder aux groupes de l'EFG</button></a></td>
             </tr>
 
         </c:forEach>
