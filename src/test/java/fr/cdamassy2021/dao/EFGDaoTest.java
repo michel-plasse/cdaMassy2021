@@ -78,4 +78,13 @@ public class EFGDaoTest {
         EFG expected = new EFG(2, 1, 1, "TP cadrage");
         assertEquals(expected, result);
     }
+    
+    @Test
+    public void testFindAllByCanal() throws SQLException {
+       EFGDao instance = new EFGDao();
+       ArrayList<EFG> efg = instance.findAllByCanal(2);
+       int expected = 1;
+       
+       assertEquals(expected, efg.size());
+    }
 }

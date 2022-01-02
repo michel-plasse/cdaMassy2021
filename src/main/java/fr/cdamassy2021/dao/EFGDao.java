@@ -23,10 +23,13 @@ public class EFGDao implements IDao<EFG> {
 
     protected final static String SELECT_BY_ID
         = "SELECT * FROM efg WHERE id_efg = ?";
-    
+
     protected final static String SELECT_GROUPES
         = "SELECT * FROM groupe_efg WHERE id_efg = ?";
-    
+
+    protected final static String SELECT_BY_CANAL
+        = "SELECT * FROM efg WHERE id_canal = ?";
+
     @Override
     public boolean insert(EFG inserted) throws SQLException {
         Boolean result = false;
@@ -36,7 +39,7 @@ public class EFGDao implements IDao<EFG> {
         statement.setString(1, inserted.getIntitule());
         statement.setInt(2, inserted.getIdCreateur());
         statement.setInt(3, inserted.getIdCanal());
-                statement.execute();
+        statement.execute();
         ResultSet res = statement.getGeneratedKeys();
         if (res.next()) {
             inserted.setId(res.getInt(1));
@@ -57,15 +60,14 @@ public class EFGDao implements IDao<EFG> {
         PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
         statement.setLong(1, id);
         ResultSet setEFG = statement.executeQuery();
-            while(setEFG.next()){
-                result.setId(setEFG.getInt("id_efg"));
-                result.setIdCanal(setEFG.getInt("id_canal"));
-                result.setIdCreateur(setEFG.getInt("id_createur"));
-                result.setIntitule(setEFG.getString("intitule"));
-            }
-            
+        while (setEFG.next()) {
+            result.setId(setEFG.getInt("id_efg"));
+            result.setIdCanal(setEFG.getInt("id_canal"));
+            result.setIdCreateur(setEFG.getInt("id_createur"));
+            result.setIntitule(setEFG.getString("intitule"));
+        }
         return result;
-        
+
     }
 
     @Override
@@ -78,10 +80,24 @@ public class EFGDao implements IDao<EFG> {
         SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public ArrayList<EFG> findAllByCanal(int idCanal) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<EFG> result = new ArrayList<>();
+        Connection connection = Database.getConnection();
+        PreparedStatement statement = connection.prepareStatement(
+            SELECT_BY_CANAL);
+        statement.setLong(1, idCanal);
+        ResultSet res = statement.executeQuery();
+        while (res.next()) {
+            result.add(new EFG(
+                1,
+                res.getInt("id_createur"),
+                res.getInt("id_canal"),
+                res.getString("intitule")
+            ));
+        }
+        return result;
     }
 
 }
