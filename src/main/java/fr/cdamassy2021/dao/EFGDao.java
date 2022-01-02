@@ -5,6 +5,8 @@
 package fr.cdamassy2021.dao;
 
 import fr.cdamassy2021.model.EFG;
+import fr.cdamassy2021.model.Groupe;
+import fr.cdamassy2021.model.Personne;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 public class EFGDao implements IDao<EFG> {
 
     protected static final String INSERT_EFG
-        = "INSERT INTO `efg` (`intitule`, `id_createur`, `id_canal`) VALUES (?, ?, ?);";
+            = "INSERT INTO `efg` (`intitule`, `id_createur`, `id_canal`) VALUES (?, ?, ?);";
 
     protected final static String SELECT_BY_ID
         = "SELECT * FROM efg WHERE id_efg = ?";
@@ -35,7 +37,7 @@ public class EFGDao implements IDao<EFG> {
         Boolean result = false;
         Connection connection = Database.getConnection();
         PreparedStatement statement = connection.prepareStatement(INSERT_EFG,
-            Statement.RETURN_GENERATED_KEYS);
+                Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, inserted.getIntitule());
         statement.setInt(2, inserted.getIdCreateur());
         statement.setInt(3, inserted.getIdCanal());
@@ -53,6 +55,14 @@ public class EFGDao implements IDao<EFG> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Retourne l'EFG de la BDD possédant l'id fournit en argument.
+     * L'EFG retourné possède également en attribut la liste des groupes associé à 
+     * l'efg de la BDD.
+     * @param id
+     * @return
+     * @throws SQLException 
+     */
     @Override
     public EFG findById(long id) throws SQLException {
         EFG result = new EFG();
@@ -77,7 +87,7 @@ public class EFGDao implements IDao<EFG> {
 
     @Override
     public ArrayList<EFG> getAllPaging(int noPage, int nbElementsParPage) throws
-        SQLException {
+            SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
