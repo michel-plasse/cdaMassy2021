@@ -41,10 +41,10 @@ public interface QuestionDao extends IDao<Question> {
      * @throws SQLException
      */
     @Override
-    public int insert(Question newQuestion)
+    public boolean insert(Question newQuestion)
             throws SQLException;
 
-    public boolean insert(Question inserted, List<Proposition> propositions)
+    public boolean insert(Question inserted, ArrayList<Proposition> propositions)
             throws SQLException;
 
     @Override
@@ -85,27 +85,6 @@ public interface QuestionDao extends IDao<Question> {
     public ArrayList<Question> getAllByCanalPaging(int idCanal, int noPage,
             int nbElementsParPage) throws SQLException;
 
-        /**
-         * Renvoit une liste de toutes les 'Question' en paginant à raison de
-         * nbElementsParPages par pages pour la page n° noPage.
-         *
-         * Chaque 'Question' est initialisée avec la liste de 'Propositions' de
-         * réponses qui lui est associée.
-         *
-         * @param noPage n° de la page à afficher (1ere = 1)
-         * @param nbElementsParPage nombre maximal de questions à retourner
-         * @return
-         * @throws SQLException
-         *
-         */
-        @Override
-        public ArrayList<Question> getAllPaging(int noPage, 
-                int nbElementsParPage) 
-                throws SQLException;
-
-        @Override
-        public void delete(Question deleted) throws SQLException;
-
     @Override
     public void delete(Question deleted) throws SQLException;
 
@@ -113,14 +92,14 @@ public interface QuestionDao extends IDao<Question> {
     public ArrayList<Question> findAll() throws SQLException;
 
     public Proposition findPropositionById(long searchedId) throws SQLException;
-    
+
     public ArrayList<Question> getAllByIdMembrePaging(int idMembre, int noPage, int nbElementsParPage) throws SQLException;
-    
+
     public ArrayList<Sondage> getAllSondagesPaging(int noPage, int nbElements) throws SQLException;
 
     public ArrayList<Question> getAllPendingQuestions(int idPersonne, int id_canal) throws SQLException;
 
     public void insertReponse(Reponse reponse) throws SQLException;
-    
+
     public ArrayList<Reponse> getAllReponses() throws SQLException;
 }

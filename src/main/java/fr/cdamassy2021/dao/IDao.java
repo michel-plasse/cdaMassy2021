@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public interface IDao<T> { // method CRUD: Create/Read/Update/Delete
 
-    public int insert(T inserted) throws SQLException;
+    public boolean insert(T inserted) throws SQLException;
 
     public void delete(T deleted) throws SQLException;
 
