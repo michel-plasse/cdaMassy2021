@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package fr.cdamassy2021.dao;
 
 import fr.cdamassy2021.model.Question;
@@ -325,6 +321,7 @@ public class QuestionDaoImpl2 implements QuestionDao {
      * @throws SQLException
      *
      */
+    @Override
     public ArrayList<Question> getAllPaging(
             int noPage, int nbElementsParPage) throws SQLException {
         Connection connection = daoFactory.getConnection();
@@ -599,4 +596,11 @@ public class QuestionDaoImpl2 implements QuestionDao {
         }
         return result;
     }
+
+
+    @Override
+    public ArrayList<Question> findAllByCanal(int idCanal) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

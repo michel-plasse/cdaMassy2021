@@ -8,9 +8,9 @@ import fr.cdamassy2021.model.Proposition;
 import fr.cdamassy2021.model.Question;
 import fr.cdamassy2021.model.Reponse;
 import fr.cdamassy2021.model.Sondage;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * class QuestionDao<br>
@@ -84,6 +84,27 @@ public interface QuestionDao extends IDao<Question> {
      */
     public ArrayList<Question> getAllByCanalPaging(int idCanal, int noPage,
             int nbElementsParPage) throws SQLException;
+
+        /**
+         * Renvoit une liste de toutes les 'Question' en paginant à raison de
+         * nbElementsParPages par pages pour la page n° noPage.
+         *
+         * Chaque 'Question' est initialisée avec la liste de 'Propositions' de
+         * réponses qui lui est associée.
+         *
+         * @param noPage n° de la page à afficher (1ere = 1)
+         * @param nbElementsParPage nombre maximal de questions à retourner
+         * @return
+         * @throws SQLException
+         *
+         */
+        @Override
+        public ArrayList<Question> getAllPaging(int noPage, 
+                int nbElementsParPage) 
+                throws SQLException;
+
+        @Override
+        public void delete(Question deleted) throws SQLException;
 
     @Override
     public void delete(Question deleted) throws SQLException;
