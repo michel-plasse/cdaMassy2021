@@ -11,12 +11,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Florian
  */
-@WebServlet(name = "CreerEFGServlet", urlPatterns = {"/VersFormulaire"})
+@WebServlet(name = "CreerEFGServlet", urlPatterns = {"/CreationEFG"})
 public class CreerEFGServlet extends HttpServlet {
 
     /**
@@ -30,7 +31,11 @@ public class CreerEFGServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        int idCanal = Integer.parseInt(request.getParameter("idCanal"));
+        /*HttpSession session = request.getSession();
+        session.setAttribute("Canal", idCanal);*/
+        System.out.println(idCanal);
+        request.getRequestDispatcher("WEB-INF/formulaireEFG.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

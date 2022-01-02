@@ -43,6 +43,7 @@ public class ListeEfgCanal extends HttpServlet {
         } catch (SQLException ex) {
             System.out.println("oopsie");
         }
+        // BESOIN DE TRANSMETTRE L ID CANAL
         request.getRequestDispatcher("WEB-INF/EFGs.jsp").forward(request, response);
     }
 

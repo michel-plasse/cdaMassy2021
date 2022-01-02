@@ -30,6 +30,6 @@ coucou
         </c:forEach>
     </tbody>
 </table>
-
+<a href="CreationEFG?idCanal=${canal.idCanal}">Créer un Exercice en groupe</a>
 </body>
 </html>
