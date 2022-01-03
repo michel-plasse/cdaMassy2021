@@ -7,7 +7,10 @@ package fr.cdamassy2021.model;
 import java.util.ArrayList;
 
 /**
- *
+ * Un Sondage est une question posée sur un canal.
+ * Il utilise une clase SondageResult pour enregistrer 
+ * les resultats en groupant les reponses similaires.
+ * 
  * @author thoma
  */
 public class Sondage extends Question {
