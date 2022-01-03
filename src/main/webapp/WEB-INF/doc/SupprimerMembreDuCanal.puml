@@ -9,9 +9,9 @@ Dao -> SGBD: DELETE FROM membre_canal \n WHERE id_personne={idPersonne} AND id_c
 SGBD -> Dao: true or sql exception 
 Dao -> Controleur: true or sql exception 
 == Si ok ==
-Controleur -> Navigateur: redirect vers membresCanal?idCanal=...
+Controleur -> Navigateur: redirect vers membrescanal?idCanal=...
 == Si pb (doublon par exemple) ==
-Controleur -> Vue: membresCanal.jsp
-Vue -> Navigateur: liste des membres\navec message d'erreur
+Controleur -> Vue: VUE_ERREUR
+Vue -> Navigateur: message erreur​
 
 @enduml
