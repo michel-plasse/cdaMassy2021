@@ -62,7 +62,7 @@
                 }
          }
     </script>
-    <form action ="/ma-page-de-traitement" method ="post">
+    <form action ="AfficheEFG" method ="post">
         <p>
             <label for="Intitulé">Intitulé:</label>
             <br>   
@@ -77,7 +77,7 @@
         </textarea> 
             <br />
 
-            <input type="button" value="Click" onclick="alert('Clicked');" />
+            <input type="submit" value="valider" />
             <input type="button" value="Annuler" onclick="alert('Annuler');" />
             <br />
             <br />
