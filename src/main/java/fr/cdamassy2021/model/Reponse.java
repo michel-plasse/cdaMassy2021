@@ -7,7 +7,7 @@ package fr.cdamassy2021.model;
 import java.util.Objects;
 
 /**
- *
+ * Une réponse est la réponse d'un utlisateur a un sondage.
  * @author thoma
  */
 public class Reponse {

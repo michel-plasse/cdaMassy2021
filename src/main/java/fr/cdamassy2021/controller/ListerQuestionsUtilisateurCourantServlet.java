@@ -40,7 +40,7 @@ public class ListerQuestionsUtilisateurCourantServlet extends HttpServlet {
             Personne auteur = (Personne)session.getAttribute("user");
             // Les paramètres encore en dur
             ArrayList<Question> questions = dao.getAllByIdMembrePaging(auteur.getId(), 1, 10);
-            // Mettre en post-it les questions
+            // Mettre en post-it les questions pour les recuperer dans la jsp vers lequel on renvoit l utilisateur
             request.setAttribute("questions", questions);
         } catch (SQLException exc) {
             vue = VUE_ERREUR;
