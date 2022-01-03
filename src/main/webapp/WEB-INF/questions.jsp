@@ -29,7 +29,7 @@
                             <label for="01">${proposition.libelle}</label>
                         </div>
                     </c:forEach>
-                    <-- si une question n a pas de poropostition de reponse: afficher un champs reponse (reponse libre);-->
+                    <!-- si une question n a pas de poropostition de reponse: afficher un champs reponse (reponse libre);-->
                     <c:if test="${question.propositions.size() lt 1}">
                         <br>
                         <p><i> Inscrivez votre réponse: </i></p>
