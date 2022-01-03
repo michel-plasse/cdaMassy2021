@@ -5,7 +5,10 @@
 package fr.cdamassy2021.controller;
 
 import fr.cdamassy2021.dao.CanalDao;
+import fr.cdamassy2021.dao.DaoFactory;
+import fr.cdamassy2021.dao.IDao;
 import fr.cdamassy2021.model.Canal;
+import fr.cdamassy2021.model.Question;
 import fr.cdamassy2021.model.Personne;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -30,7 +33,7 @@ public class CreerQuestionServlet extends HttpServlet {
 
     private final String VUE_OK = "WEB-INF/creationQuestion.jsp";
     private final String VUE_ERREUR = "WEB-INF/erreur.jsp";
-    
+
     /**
      * Redirige l'utilisateur vers un formulaire d'edition de nouvelle question
      */
@@ -41,7 +44,7 @@ public class CreerQuestionServlet extends HttpServlet {
         try {
             final HttpServletRequest req = (HttpServletRequest) request;
             final HttpSession session = req.getSession();
-            Personne auteur = (Personne)session.getAttribute("user");
+            Personne auteur = (Personne) session.getAttribute("user");
             CanalDao cDao = new CanalDao();
             // Les paramètres encore en dur
             List<Canal> canaux = cDao.getAllByIdPersonne(auteur.getId());
@@ -86,12 +89,17 @@ public class CreerQuestionServlet extends HttpServlet {
         String[] allPropositions = request.getParameterValues("proposition");
         //test acceptation
         boolean isLegitPropositions = true;
+        boolean isFreeAnswerTypeOfQuestion= false;
         if (allPropositions != null) {
-            for (String proposition : allPropositions) {
-                if (proposition.length() > 255 || proposition.length() == 0) {
-                    isLegitPropositions = false;
+            if (allPropositions.length > 1) {
+                for (String proposition : allPropositions) {
+                    if (proposition.length() > 255 || proposition.length() == 0) {
+                        isLegitPropositions = false;
+                    }
                 }
             }
+            else{isFreeAnswerTypeOfQuestion = true;}
+
         }
         int canalSelectionne = Integer.parseInt(request.getParameter("canalChoisi"));
         //test de validité du formulaire
@@ -107,7 +115,7 @@ public class CreerQuestionServlet extends HttpServlet {
         }
         boolean operationOk = false;
 
-        if (valide) {
+        if (valide && !isFreeAnswerTypeOfQuestion) {
             //recupere la valeur de estCorrecte dans une liste.
             ArrayList<String> allCorrectnesses = new ArrayList<>();
             allCorrectnesses.add(request.getParameter("correctness"));
@@ -117,7 +125,7 @@ public class CreerQuestionServlet extends HttpServlet {
             // Recupere l'utilisateur dans la session
             final HttpServletRequest req = (HttpServletRequest) request;
             final HttpSession session = req.getSession();
-            Personne auteur = (Personne)session.getAttribute("user");
+            Personne auteur = (Personne) session.getAttribute("user");
             QuestionService qService = new QuestionService();
             try {
                 operationOk = qService.creerQuestion(
@@ -137,6 +145,33 @@ public class CreerQuestionServlet extends HttpServlet {
                 ex.printStackTrace();
                 Logger.getLogger(CreerQuestionServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        else if (valide){
+                
+            // Recupere l'utilisateur dans la session
+            final HttpServletRequest req = (HttpServletRequest) request;
+            final HttpSession session = req.getSession();
+            Personne auteur = (Personne) session.getAttribute("user");
+            QuestionService qService = new QuestionService();
+            try {
+                IDao dao = DaoFactory.getInstance().getQuestionDao();
+                 operationOk = dao.insert(
+                         new Question(Question.TypeQuestion.LIBRE,
+                                 canalSelectionne,
+                                 auteur.getId(),
+                                 libelleQuestion));
+            } catch (SQLException ex) {
+                if (ex.getErrorCode() == 1062) {
+                    request.setAttribute("message", "Cette question existe dejà !");
+                    valideForm = false;
+                } else {
+                    request.setAttribute("message", "Problème interne !");
+                    valideForm = false;
+                }
+                ex.printStackTrace();
+                Logger.getLogger(CreerQuestionServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
         // redirection
         if (valideForm && valide && operationOk) {
