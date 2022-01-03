@@ -14,7 +14,7 @@
                 <input type="hidden" id="idMembreAEffacer" value="${membre.id}"
                        name="idMembreAEffacer" /> 
                 <input type="hidden" value="${idCanal}" name="idCanal" />
-                ${membre.prenom}${membre.nom}
+                ${membre.prenom}  ${membre.nom}
                 <button type="submit">Supprimer</button>
             </form>
         </li>
