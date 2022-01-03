@@ -15,5 +15,6 @@
     </head>
     <body>
         <h1>EFG Crée ici</h1>
+        <c:out value ="${EFGcree}"></c:out>
     </body>
 </html>

@@ -4,13 +4,19 @@
  */
 package fr.cdamassy2021.controller;
 
+import fr.cdamassy2021.dao.EFGDao;
+import fr.cdamassy2021.model.EFG;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,20 +36,7 @@ public class AfficheEFGCree extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AfficheEFGCree</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("coucou");
-            
-            out.println("</body>");
-            out.println("</html>");
-        }
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -72,7 +65,21 @@ public class AfficheEFGCree extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("WEB-INF/afficherEFGCree.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        int idcanal = (int)session.getAttribute("Canal");
+        int idcreateur = 1;
+        String intitule = request.getParameter("Intitulé");
+        EFG nouvelEFG = new EFG(0,idcreateur,idcanal,intitule);
+        EFGDao instance = new EFGDao();
+        try {
+            boolean inseré = instance.insert(nouvelEFG);
+            if(inseré){
+                request.setAttribute("EFGcree", nouvelEFG);
+                request.getRequestDispatcher("WEB-INF/afficherEFGCree.jsp").forward(request, response);
+            }
+        } catch (SQLException ex) {
+            System.out.println("erreur lors de l'insertion");
+        }       
     }
 
     /**

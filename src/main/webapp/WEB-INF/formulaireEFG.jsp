@@ -66,15 +66,14 @@
         <p>
             <label for="Intitulé">Intitulé:</label>
             <br>   
-        <textarea id="Intitulé" name="Intitulé"
-            rows="5" cols="33">
-        </textarea> 
+        <input id="Intitulé" name="Intitulé"
+            rows="5" cols="33"/>
             <br>  
-            <label for="Consignes">Consignes:</label>
+            <!--<label for="Consignes">Consignes:</label>
             <br> 
         <textarea id="Consignes" name="Consignes"
             rows="5" cols="33">
-        </textarea> 
+        </textarea> -->
             <br />
 
             <input type="submit" value="valider" />
