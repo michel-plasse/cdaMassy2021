@@ -4,8 +4,14 @@
  */
 package fr.cdamassy2021.controller;
 
+import fr.cdamassy2021.dao.CanalDao;
+import fr.cdamassy2021.model.Personne;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,9 +37,18 @@ public class CreerEFGServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        /*int idCanal = id canal a recuperer sur la session
-        System.out.println(idCanal);*/
-        request.getRequestDispatcher("WEB-INF/formulaireEFG.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        int idCanal = (int)session.getAttribute("Canal");
+        try {
+            List<Personne> membresCanal = CanalDao.getMembresDuCanal(idCanal);
+            int nbrePersonnes = membresCanal.size();
+            request.setAttribute("nbreMembres", nbrePersonnes);
+            request.getRequestDispatcher("WEB-INF/formulaireEFG.jsp").forward(request, response);
+        } catch (SQLException ex) {
+           request.setAttribute("message", "erreur sql");
+           request.getRequestDispatcher("WEB-INF/erreur.jsp").forward(request, response);
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

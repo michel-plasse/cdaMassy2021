@@ -71,7 +71,7 @@ public class AfficheEFGCree extends HttpServlet {
         HttpSession session = request.getSession();
         int idcanal = (int) session.getAttribute("Canal");
         int idcreateur = 1;
-        String intitule = request.getParameter("Intitulé");
+        String intitule = request.getParameter("intitulé");
         EFG nouvelEFG = new EFG(0, idcreateur, idcanal, intitule);
         EFGDao instance = new EFGDao();
         try {
