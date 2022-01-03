@@ -29,7 +29,6 @@
         </c:forEach>
     </tbody>
 </table>
-<c:out value="idCanal = ${sessionScope.Canal}"></c:out>
 <a href="CreationEFG">Créer un Exercice en groupe</a>
 </body>
 </html>

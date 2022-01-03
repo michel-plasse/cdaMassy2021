@@ -25,6 +25,9 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "AfficheEFGCree", urlPatterns = {"/AfficheEFG"})
 public class AfficheEFGCree extends HttpServlet {
 
+    private final String VUE_OK = "WEB-INF/afficherEFGCree.jsp";
+    private final String VUE_ERREUR = "WEB-INF/erreur.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,7 +39,7 @@ public class AfficheEFGCree extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -66,20 +69,22 @@ public class AfficheEFGCree extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int idcanal = (int)session.getAttribute("Canal");
+        int idcanal = (int) session.getAttribute("Canal");
         int idcreateur = 1;
         String intitule = request.getParameter("Intitulé");
-        EFG nouvelEFG = new EFG(0,idcreateur,idcanal,intitule);
+        EFG nouvelEFG = new EFG(0, idcreateur, idcanal, intitule);
         EFGDao instance = new EFGDao();
         try {
             boolean inseré = instance.insert(nouvelEFG);
-            if(inseré){
+            if (inseré) {
                 request.setAttribute("EFGcree", nouvelEFG);
-                request.getRequestDispatcher("WEB-INF/afficherEFGCree.jsp").forward(request, response);
+                request.getRequestDispatcher(VUE_OK).forward(request, response);
             }
         } catch (SQLException ex) {
-            System.out.println("erreur lors de l'insertion");
-        }       
+            request.setAttribute("message", "erreur sql");
+            request.getRequestDispatcher(VUE_ERREUR).forward(request, response);
+            ex.printStackTrace();
+        }
     }
 
     /**

@@ -26,6 +26,9 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ListeEfgCanal", urlPatterns = {"/ListeEFGs"})
 public class ListeEfgCanal extends HttpServlet {
 
+    private final String VUE_OK = "WEB-INF/EFGs.jsp";
+    private final String VUE_ERREUR = "WEB-INF/erreur.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,12 +44,15 @@ public class ListeEfgCanal extends HttpServlet {
         int idCanal = Integer.parseInt(request.getParameter("idCanal"));
         try {
             ArrayList<EFG> lesExos = instance.findAllByCanal(idCanal);
-            request.setAttribute("EFGs",lesExos);
+            request.setAttribute("EFGs", lesExos);
+            HttpSession session = request.getSession();
+            session.setAttribute("Canal", idCanal);
+            request.getRequestDispatcher(VUE_OK).forward(request, response);
         } catch (SQLException ex) {
-            System.out.println("oopsie");
+            request.setAttribute("message", "Erreur sql ");
+            request.getRequestDispatcher(VUE_ERREUR).forward(request, response);
+            ex.printStackTrace();
         }
-        HttpSession session = request.getSession();
-        session.setAttribute("Canal", idCanal);
         request.getRequestDispatcher("WEB-INF/EFGs.jsp").forward(request, response);
     }
 

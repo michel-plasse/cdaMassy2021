@@ -14,7 +14,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>EFG Crée ici</h1>
+        <p>Exercice crée:<p>
         <c:out value ="${EFGcree}"></c:out>
     </body>
 </html>
