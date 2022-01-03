@@ -6,19 +6,13 @@ package fr.cdamassy2021.dao;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
-
 /**
- *
- *
  * @author thoma
  */
 public class Cdamassy2021Test {
 
     protected LocalDateTime instant;
-        
     public Cdamassy2021Test() {
         instant = LocalDateTime.now();
     }

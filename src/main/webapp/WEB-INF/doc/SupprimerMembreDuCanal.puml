@@ -1,17 +1,17 @@
 @startuml 
 participant Navigateur 
 participant Vue  
+
 Navigateur -> Controleur : POST /enleverMembreCanal\navec idPersonne, idCanal
-Controleur -> Controleur: verifie droit de l'utilisateur
-Controleur -> Controleur: verifie idCanal et idPersonne entier
+Controleur -> Controleur: vérifier droit de l'utilisateur
+Controleur -> Controleur: vérifier idCanal et idPersonne
 Controleur -> Dao: CanalDao.\nsupprimerMembreDuCanal(idPersonne,idCanal)
 Dao -> SGBD: DELETE FROM membre_canal \n WHERE id_personne={idPersonne} AND id_canal={idCanal}
 SGBD -> Dao: true or sql exception 
 Dao -> Controleur: true or sql exception 
 == Si ok ==
-Controleur -> Navigateur: redirect vers membrescanal?idCanal=...
+Controleur -> Navigateur: redirect vers membresCanal?idCanal=...
 == Si pb (doublon par exemple) ==
-Controleur -> Vue: VUE_ERREUR
-Vue -> Navigateur: message erreur​
-
+Controleur -> Vue: membresCanal.jsp
+Vue -> Navigateur: liste des membres\navec message d'erreur
 @enduml

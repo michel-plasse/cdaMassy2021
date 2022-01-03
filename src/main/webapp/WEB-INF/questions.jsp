@@ -1,52 +1,45 @@
-<%-- 
-    Document   : questions
-    Created on : 17 déc. 2021, 02:52:58
-    Author     : thoma
---%>
 
+
+<%-- 
+   Document   : questions
+   Created on : 17 déc. 2021, 02:52:58
+   Author     : thoma
+--%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="p" tagdir="/WEB-INF/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <p:header title="CDA Massy 2021"/>
- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/questionaire_style.css" />
-<h1>Question</h1>
-<ol>
-  <c:forEach items="${questions}" var="question">
-     <li>${question.idCreateur} ${question.libelle}</li>
-    <div class="row"> 
-    <div class="column">
-      <form class="form" action="">
-        <div class="bordered">
-          <p>Veuillez choisir la meilleure option ci-dessous :</p>
-          <div> <br>
-            <div class="reponseQuestion">
-              <input type="radio" name="card" id="option_1" value="option_1">
-              <label for="option_1" aria-label="option_1">
-                <span></span>
-                Option 1
-              </label>
-            </div>
-            <div class="option">
-              <input type="radio" name="card" id="option_2" value="option_2">
-              <label for="option_2" aria-label="option_2">
-                <span></span>
-                Option 2
-              </label>
-            </div>
-            <div class="option">
-              <input type="radio" name="card" id="option_3" value="option_3">
-              <label for="option_3" aria-label="option_3">
-                <span></span>
-                Other
-              </label>
-            </div>
-            <div class="button">
-              <button class="btn">Envoyer</button>
-            </div>
-          </div>
-        </div>
-      </form>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/questionaire_style.css" />
+<h1>affichage questions:</h1>
+<form>
+    <div class="questionLayout">
+            <c:forEach items="${questions}" var="question">
+                <div class="form-question">
+                    <div class="intituleQuestion" id="intituleQuestion">
+                            <b>${question.libelle}</b>
+                            <p> auteur: ${question.nomAuteur}<p>
+                    </div>
+                    <!-- si la question a afficher a au moins une proposition de reponse: l afficher-->
+                    <c:if test="${question.propositions.size() gt 1}">
+                        <br>
+                    </c:if>
+                    <c:forEach items="${question.getPropositions()}" var="proposition">
+                        <div>
+                            <input id="01" type="radio" name="r" value="1" checked>
+                            <label for="01">${proposition.libelle}</label>
+                        </div>
+                    </c:forEach>
+                    <!-- si une question n a pas de poropostition de reponse: afficher un champs reponse (reponse libre);-->
+                    <c:if test="${question.propositions.size() lt 1}">
+                        <br>
+                        <p><i> Inscrivez votre réponse: </i></p>
+                        <textarea type="text" size="80px"  placeholder="..."></textarea>
+                        <br>
+                    </c:if>
+                </div>
+            </c:forEach>
+            <br>
     </div>
-  </div>
-  </c:forEach> 
-</ol>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/questionaire_style.css" />
+</form>
+

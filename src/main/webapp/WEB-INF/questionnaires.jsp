@@ -1,59 +1,36 @@
+
+
 <%-- 
-    Document   : questionnaires
-    Created on : 4 mai 2021, 10:07:51
-    Author     : sandra
---%>
-
+   Document   : questions
+   Created on : 17 déc. 2021, 02:52:58
+   Author     : thoma
+   --%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="p" tagdir="/WEB-INF/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
+<p:header title="CDA Massy 2021"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/questionaire_style.css" />
+<h1>Question</h1>
+<H3>Bienvenu</H3>
+<h4>Répondre aux questions</h4>
+<div class="questionLayout">
+   <ol>
+      <c:forEach items="${questions}" var="question">
+         <form class="form-question">
+            <li><b>${question.idCreateur} ${question.libelle}</b></li>
+            <br>
+            <p><i>Veuillez choisir la meilleure option ci-dessous :</i></p>
+            <br>
+            <label for="01">Option 1</label>
+            <input id="01" type="radio" name="r" value="1" checked>
+            <label for="02">Option 2</label>
+            <input id="02" type="radio" name="r" value="2">
+            <label for="03">Others</label>
+            <input id="03" type="radio" name="r" value="3">
+            <button class="btn">Envoyer</button>
+         </form>
+         <br>
+      </c:forEach>
+   </ol>
+</div>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/questionnaire_style.css">
-  <title>Questionnaires</title>
-</head>
-
-<body>
-  <div class="row">
-    <div class="title">Bienvenu</div>
-    <div class="subtitle">Répondre aux questions</div><br>
-    <div class="column">
-      <form class="form" action="">
-        <div class="bordered">
-          <p>Veuillez choisir la meilleure option ci-dessous :</p>
-          <div> <br>
-            <div class="reponseQuestion">
-              <input type="radio" name="card" id="option_1" value="option_1">
-              <label for="option_1" aria-label="option_1">
-                <span></span>
-                Option 1
-              </label>
-            </div>
-            <div class="option">
-              <input type="radio" name="card" id="option_2" value="option_2">
-              <label for="option_2" aria-label="option_2">
-                <span></span>
-                Option 2
-              </label>
-            </div>
-            <div class="option">
-              <input type="radio" name="card" id="option_3" value="option_3">
-              <label for="option_3" aria-label="option_3">
-                <span></span>
-                Other
-              </label>
-            </div>
-            <div class="button">
-              <button class="btn">Envoyer</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</body>
-
-</html>

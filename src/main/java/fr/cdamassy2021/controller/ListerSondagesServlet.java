@@ -1,11 +1,14 @@
-package fr.cdamassy2021.controller;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+package fr.cdamassy2021.controller;
+
 import fr.cdamassy2021.dao.DaoFactory;
+import fr.cdamassy2021.dao.QuestionDao;
+import fr.cdamassy2021.model.Personne;
 import fr.cdamassy2021.model.Question;
+import fr.cdamassy2021.model.Sondage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,47 +17,34 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import fr.cdamassy2021.dao.QuestionDao;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author thoma
  */
-@WebServlet(name = "ListerMQuestionsServlet", urlPatterns = {"/questions"})
-public class ListerQuestionsServlet extends HttpServlet {
+@WebServlet(name = "ListerSondages", urlPatterns = {"/listesondages"})
+public class ListerSondagesServlet extends HttpServlet {
 
-    private final String VUE_OK = "WEB-INF/questions.jsp";
+    private final String VUE_OK = "WEB-INF/sondages.jsp";
     private final String VUE_ERREUR = "WEB-INF/erreur.jsp";
 
-    /**
-     * Recupere la liste de 10 questions specifiée par l'utilisateur avec noPage
-     * et redirige vers questions.jsp pour les y afficher.
-     *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         QuestionDao dao = DaoFactory.getInstance().getQuestionDao();
         String vue = VUE_OK;
-        int pageRequest =1;
-        String page = request.getParameter("noPage");
-        if (page != null){
-           pageRequest = Integer.parseInt(page);
-        }
-        pageRequest = (pageRequest==0)?1: pageRequest;
         try {
+            final HttpServletRequest req = (HttpServletRequest) request;
+            final HttpSession session = req.getSession();
             // Les paramètres encore en dur
-            ArrayList<Question> questions = dao.getAllPaging(pageRequest, 10);
+            ArrayList<Sondage> sondages = dao.getAllSondagesPaging(1, 10);
             // Mettre en post-it les questions
-            request.setAttribute("questions", questions);
+            request.setAttribute("sondages", sondages);
         } catch (SQLException exc) {
             vue = VUE_ERREUR;
             request.setAttribute("message", "Pb avec la BD");
+
             // Journaliser l'exception dans le log de tomcat
             exc.printStackTrace();
         }

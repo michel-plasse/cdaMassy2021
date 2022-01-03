@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author plasse
  */
-@WebFilter(filterName = "ConnectionFilter", urlPatterns = {"/^\\.*"})
+@WebFilter(filterName = "ConnectionFilter", urlPatterns = {"/^\\.*", "/creationQuestion","/activitequestions"})
 public class ConnectionFilter implements Filter {
 
    /**
