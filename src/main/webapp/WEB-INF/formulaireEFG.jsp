@@ -85,5 +85,6 @@
             <br />
         </p>
     </form>
+    <c:out value="idCanal = ${sessionScope.Canal}"></c:out>
 </body>
 </html>

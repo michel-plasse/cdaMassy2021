@@ -28,7 +28,8 @@
 
         </c:forEach>
     </tbody>
-</table> //id canal a recuperer sur la session
-<a href="CreationEFG?idCanal=${canal.idCanal}">Créer un Exercice en groupe</a>
+</table>
+<c:out value="idCanal = ${sessionScope.Canal}"></c:out>
+<a href="CreationEFG">Créer un Exercice en groupe</a>
 </body>
 </html>
