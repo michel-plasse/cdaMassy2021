@@ -9,7 +9,7 @@ FROM
     FROM 
         question q
             LEFT OUTER JOIN 
-        reponse_question rq ON q.id_question= rq.id_question
+        reponse rq ON q.id_question= rq.id_question
     GROUP BY q.id_canal, q.id_question, q.libelle, reponse
 ) t1
     INNER JOIN
@@ -26,7 +26,7 @@ FROM
 (
     SELECT q.id_canal, rq.id_question, COUNT(DISTINCT rq.id_personne) AS nb_reponses_total
   FROM 
-        reponse_question rq
+        reponse rq
             INNER JOIN
         question q
   GROUP BY q.id_canal, rq.id_question
