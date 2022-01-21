@@ -1,5 +1,7 @@
 DELIMITER $$
 
+-- Il faudrait le dupliquer en before update of id_createur
+DROP TRIGGER IF EXISTS groupe_efg_before_insert$$
 CREATE TRIGGER groupe_efg_before_insert
 BEFORE INSERT ON groupe_efg
 FOR EACH ROW
@@ -23,3 +25,15 @@ BEGIN
 		SET MESSAGE_TEXT=v_msg, MYSQL_ERRNO=3000;
 	END IF;
 END$$
+
+-- Ajoute le createur du groupe dans les membres du groupe
+DROP TRIGGER IF EXISTS groupe_efg_after_insert$$
+CREATE TRIGGER groupe_efg_after_insert
+AFTER INSERT ON groupe_efg
+FOR EACH ROW
+BEGIN
+	INSERT INTO membre_groupe_efg(id_personne, id_createur, id_efg)
+  VALUES(NEW.id_createur, NEW.id_createur, NEW.id_efg)
+  ON DUPLICATE KEY UPDATE id_personne = id_personne;
+END$$
+
