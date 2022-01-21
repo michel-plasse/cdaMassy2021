@@ -11,6 +11,7 @@ public class Database {
    protected static final String PASSWORD = "cdamassy2021_pwd";
    
    public static final int DOUBLON = 1062;
+   public static final int CREATEUR_PAS_DANS_CANAL = 3000;
 
    public enum SortOrder {
       ASC, DESC;
