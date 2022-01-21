@@ -3,7 +3,7 @@ DELIMITER $$
 -- Procédures pour simplifier l'écriture de la procédure réinitialisant les données
 
 DROP PROCEDURE IF EXISTS apply_to_all_tables$$
-CREATE PROCEDURE apply_to_all_tables(p_prefix VARCHAR(45), p_suffix VARCHAR(128))
+CREATE definer='cdamassy2021_user'@localhost PROCEDURE apply_to_all_tables(p_prefix VARCHAR(45), p_suffix VARCHAR(128))
 BEGIN
 	-- to exit the cursor loop
 	DECLARE v_ended BOOLEAN DEFAULT FALSE;
@@ -37,19 +37,19 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS truncate_all_tables$$
-CREATE PROCEDURE truncate_all_tables()
+CREATE definer='cdamassy2021_user'@localhost PROCEDURE truncate_all_tables()
 BEGIN
 	CALL apply_to_all_tables('TRUNCATE TABLE', '');
 END$$
 
 DROP PROCEDURE IF EXISTS drop_all_tables$$
-CREATE PROCEDURE drop_all_tables()
+CREATE definer='cdamassy2021_user'@localhost PROCEDURE drop_all_tables()
 BEGIN
 	CALL apply_to_all_tables('DROP TABLE', '');
 END$$
 
 DROP PROCEDURE IF EXISTS reset_auto_increment_all_tables$$
-CREATE PROCEDURE reset_auto_increment_all_tables()
+CREATE definer='cdamassy2021_user'@localhost PROCEDURE reset_auto_increment_all_tables()
 BEGIN
 	CALL apply_to_all_tables('ALTER TABLE', 'AUTO_INCREMENT 1');
 END$$

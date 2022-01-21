@@ -1,6 +1,6 @@
 DELIMITER $$
 DROP PROCEDURE IF EXISTS reset_cdamassy2021$$
-CREATE PROCEDURE reset_cdamassy2021(date_effet DATETIME)
+CREATE definer='cdamassy2021_user'@localhost PROCEDURE reset_cdamassy2021(date_effet DATETIME)
 BEGIN
 	CALL truncate_all_tables();
   IF date_effet IS NULL THEN
@@ -152,7 +152,7 @@ BEGIN
 END$$
 
 DROP PROCEDURE IF EXISTS reset_to_now$$
-CREATE PROCEDURE reset_to_now()
+CREATE definer='cdamassy2021_user'@localhost PROCEDURE reset_to_now()
 BEGIN
   CALL reset_cdamassy2021(NOW());
 END$$
