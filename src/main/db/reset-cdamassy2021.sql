@@ -158,4 +158,3 @@ BEGIN
 END$$
 
 CALL reset_to_now()$$
-CALL reset_to_now()
