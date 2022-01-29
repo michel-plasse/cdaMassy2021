@@ -47,11 +47,11 @@ public class ListerAllCanauxServlet extends HttpServlet {
         //Recupere l'utilisateur qui a ete ajoute a la session lorsqu'il s'est connecte(voir ConnexionServlet ligne 89)et 
         //on le stocke dans une objet de type personne et 
         
-        Personne personne_en_session = (Personne) session.getAttribute("user");
-        if(personne_en_session !=null){
+        Personne user = (Personne) session.getAttribute("user");
+        if(user !=null){
             //On utilise cet objet pour acceder a l'id de l'utilisateur en session et l'envoyer a notre methode
             // je recupere la liste que me renvoi ma Dao
-            List<Canal> canaux = CanalDao.getAllByIdPersonne(personne_en_session.getId());      
+            List<Canal> canaux = CanalDao.getAllByIdPersonne(user.getId());      
             // Mettre en post-it les canaux afin de les reccuperer dans la jsp 
             request.setAttribute("canaux", canaux);
         }else{
