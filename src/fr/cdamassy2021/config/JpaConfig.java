@@ -10,7 +10,7 @@ import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"fr.cdamassy2021.customer"})
+@EnableJpaRepositories(basePackages = {"fr.cdamassy2021"})
 @EnableTransactionManagement
 public class JpaConfig {
     @Bean
