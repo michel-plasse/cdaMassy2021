@@ -1,4 +1,4 @@
-package fr.cdamassy2021.customer;
+package fr.cdamassy2021.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import fr.cdamassy2021.entity.Customer;
+import fr.cdamassy2021.service.CustomerService;
 
 @Controller
 public class CustomerController {

@@ -1,4 +1,4 @@
-package fr.cdamassy2021.customer;
+package fr.cdamassy2021.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,10 +15,10 @@ public class Customer {
 	private String email;
 	private String address;
 
-	protected Customer() {
+	public Customer() {
 	}
 
-	protected Customer(String name, String email, String address) {
+	public Customer(String name, String email, String address) {
 		this.name = name;
 		this.email = email;
 		this.address = address;
