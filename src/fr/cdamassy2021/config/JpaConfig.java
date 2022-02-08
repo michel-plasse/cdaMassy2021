@@ -16,7 +16,7 @@ public class JpaConfig {
     @Bean
     public LocalEntityManagerFactoryBean entityManagerFactory() {
         LocalEntityManagerFactoryBean factoryBean = new LocalEntityManagerFactoryBean();
-        factoryBean.setPersistenceUnitName("cdamassy2021PU");
+        factoryBean.setPersistenceUnitName("persistUnit");
          
         return factoryBean;
     }
