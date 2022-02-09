@@ -1,11 +1,14 @@
 package fr.cdamassy2021.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import antlr.collections.List;
+import fr.cdamassy2021.entity.Question;
+
 
 /**
  * 
@@ -24,7 +27,7 @@ public class QuestionController {
 		List<Question> listQuestion = questionService.listAll();
 		ModelAndView mav = new ModelAndView("questions");
 		
-		mav.addObject("questions", listQuestions);
+		mav.addObject("questions", listQuestion);
 		return mav;
 	}
 }
