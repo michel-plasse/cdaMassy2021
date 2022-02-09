@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+          http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+	
+    <persistence-unit name="persistUnit">
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+		
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/cdamassy2021?serverTimezone=UTC" />
+            <property name="javax.persistence.jdbc.user" value="cdamassy2021_user" />
+            <property name="javax.persistence.jdbc.password" value="cdamassy2021_pwd" />
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+            <!--<property name="hibernate.hbm2ddl.auto" value = "create"/> -->
+        </properties>
+    </persistence-unit>
+	
+</persistence>
