@@ -33,5 +33,5 @@
             </c:forEach>
             <br>
     </div>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/questionaire_style.css" />
 </form>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/questionaire_style.css" />
