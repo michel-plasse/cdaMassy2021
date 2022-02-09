@@ -13,21 +13,21 @@ import javax.persistence.Id;
  *  
  *  */
 @Entity
-
 public class Question {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String idQuestion;
+	private long idQuestion;
 	@Column
 	private String libelle;
 	@Column
-	private String idCanal;
+	private long idCanal;
 	@Column
-	private String idCreateur;
+	private long idCreateur;
+	private Str
 	@Column
-	private String idTypeQuestion;
+	private long idTypeQuestion;
 	@Column
-	private String idQuestionnaire;
+	private long idQuestionnaire;
 	
 	
 	
@@ -38,8 +38,8 @@ public class Question {
 
 
 
-	public Question(String idQuestion, String libelle, String idCanal, String idCreateur, String idTypeQuestion,
-			String idQuestionnaire) {
+	public Question(long idQuestion, String libelle, long idCanal, long idCreateur, long idTypeQuestion,
+			long idQuestionnaire) {
 		super();
 		this.idQuestion = idQuestion;
 		this.libelle = libelle;
@@ -51,13 +51,13 @@ public class Question {
 
 
 
-	public String getIdQuestion() {
+	public long getIdQuestion() {
 		return idQuestion;
 	}
 
 
 
-	public void setIdQuestion(String idQuestion) {
+	public void setIdQuestion(long idQuestion) {
 		this.idQuestion = idQuestion;
 	}
 
@@ -75,49 +75,49 @@ public class Question {
 
 
 
-	public String getIdCanal() {
+	public long getIdCanal() {
 		return idCanal;
 	}
 
 
 
-	public void setIdCanal(String idCanal) {
+	public void setIdCanal(long idCanal) {
 		this.idCanal = idCanal;
 	}
 
 
 
-	public String getIdCreateur() {
+	public long getIdCreateur() {
 		return idCreateur;
 	}
 
 
 
-	public void setIdCreateur(String idCreateur) {
+	public void setIdCreateur(long idCreateur) {
 		this.idCreateur = idCreateur;
 	}
 
 
 
-	public String getIdTypeQuestion() {
+	public long getIdTypeQuestion() {
 		return idTypeQuestion;
 	}
 
 
 
-	public void setIdTypeQuestion(String idTypeQuestion) {
+	public void setIdTypeQuestion(long idTypeQuestion) {
 		this.idTypeQuestion = idTypeQuestion;
 	}
 
 
 
-	public String getIdQuestionnaire() {
+	public long getIdQuestionnaire() {
 		return idQuestionnaire;
 	}
 
 
 
-	public void setIdQuestionnaire(String idQuestionnaire) {
+	public void setIdQuestionnaire(long idQuestionnaire) {
 		this.idQuestionnaire = idQuestionnaire;
 	}
 
