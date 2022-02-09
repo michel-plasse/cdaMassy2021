@@ -2,13 +2,27 @@ package fr.cdamassy2021.entity;
 
 import java.util.Objects;
 
-public class Personne {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-    private long id;
+
+@Entity
+public class Personne {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long idPersonne;
+	@Column
     private String prenom;
+    @Column
     private String nom;
+    @Column
     private String email;
+    @Column
     private String tel;
+    @Column
     private String pwd;
 
     /**
@@ -22,7 +36,7 @@ public class Personne {
      * @param pwd
      */
     public Personne(int id, String prenom, String nom, String email, String tel, String pwd) {
-        this.id = id;
+        this.idPersonne = id;
         this.prenom = prenom;
         this.nom = nom;
         this.email = email;
@@ -39,7 +53,7 @@ public class Personne {
     }
 
     public Personne(int id, String prenom, String nom) {
-        this.id = id;
+        this.idPersonne = id;
         this.prenom = prenom;
         this.nom = nom;
     }
@@ -48,11 +62,11 @@ public class Personne {
 
     }
     public long getId() {
-        return id;
+        return idPersonne;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.idPersonne = id;
     }
 
     public String getPrenom() {
@@ -98,7 +112,7 @@ public class Personne {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash +(int) this.id;
+        hash = 89 * hash +(int) this.idPersonne;
         hash = 89 * hash + Objects.hashCode(this.prenom);
         hash = 89 * hash + Objects.hashCode(this.nom);
         hash = 89 * hash + Objects.hashCode(this.email);
@@ -119,7 +133,7 @@ public class Personne {
             return false;
         }
         final Personne other = (Personne) obj;
-        if (this.id != other.id) {
+        if (this.idPersonne != other.idPersonne) {
             return false;
         }
         if (!Objects.equals(this.prenom, other.prenom)) {
