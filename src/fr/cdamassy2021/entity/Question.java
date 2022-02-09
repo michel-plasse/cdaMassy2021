@@ -1,10 +1,16 @@
 package fr.cdamassy2021.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
+
 
 /**
  * 
@@ -21,13 +27,14 @@ public class Question {
 	private String libelle;
 	@Column
 	private long idCanal;
-	@Column
-	private long idCreateur;
-	private Str
+	@OneToOne
+    @JoinColumn(name = "id_createur")
+	private Personne idCreateur;
+	
 	@Column
 	private long idTypeQuestion;
-	@Column
-	private long idQuestionnaire;
+	//@Column
+	//private long idQuestionnaire;
 	
 	
 	
@@ -38,15 +45,15 @@ public class Question {
 
 
 
-	public Question(long idQuestion, String libelle, long idCanal, long idCreateur, long idTypeQuestion,
-			long idQuestionnaire) {
+	public Question(long idQuestion, String libelle, long idCanal,Personne idCreateur, long idTypeQuestion
+			/*,long idQuestionnaire*/) {
 		super();
 		this.idQuestion = idQuestion;
 		this.libelle = libelle;
 		this.idCanal = idCanal;
-		this.idCreateur = idCreateur;
 		this.idTypeQuestion = idTypeQuestion;
-		this.idQuestionnaire = idQuestionnaire;
+		//this.idQuestionnaire = idQuestionnaire;
+		this.idCreateur = idCreateur;
 	}
 
 
@@ -85,20 +92,6 @@ public class Question {
 		this.idCanal = idCanal;
 	}
 
-
-
-	public long getIdCreateur() {
-		return idCreateur;
-	}
-
-
-
-	public void setIdCreateur(long idCreateur) {
-		this.idCreateur = idCreateur;
-	}
-
-
-
 	public long getIdTypeQuestion() {
 		return idTypeQuestion;
 	}
@@ -109,8 +102,7 @@ public class Question {
 		this.idTypeQuestion = idTypeQuestion;
 	}
 
-
-
+/*
 	public long getIdQuestionnaire() {
 		return idQuestionnaire;
 	}
@@ -121,8 +113,16 @@ public class Question {
 		this.idQuestionnaire = idQuestionnaire;
 	}
 
+*/
 
-	
+	public Personne getIdCreateur() {
+		return idCreateur;
+	}
 
+
+
+	public void setIdCreateur(Personne idCreateur) {
+		this.idCreateur = idCreateur;
+	}
 	
 }
