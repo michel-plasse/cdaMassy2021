@@ -48,11 +48,11 @@ BEGIN
 		(3, 'options multiples');
       
 		-- Tableaux ne dépendant que du 1er groupe
-		INSERT INTO	efg(id_efg, intitule, date_creation, id_createur, id_canal) VALUES
+		INSERT INTO	efg(id_efg, intitule, date_creation, id_createur, id_canal, groupes) VALUES
     -- 2 dans le canal 1 + 1 dans le canal 2, tous du formateur 1
-			(1, 'TP définir objectif', date_effet - INTERVAL 1 MONTH, 1, 1),
-			(2, 'TP cadrage', date_effet - INTERVAL 1 MONTH, 1, 1),
-			(3, "TP tests d'acceptation", date_effet - INTERVAL 1 MONTH, 1, 2);
+			(1, 'TP définir objectif', date_effet - INTERVAL 1 MONTH, 1, 1,'2,3'),
+			(2, 'TP cadrage', date_effet - INTERVAL 1 MONTH, 1, 1, '2,2'),
+			(3, "TP tests d'acceptation", date_effet - INTERVAL 1 MONTH, 1, 2, NULL);
 		
 		INSERT INTO question(id_question, libelle, id_canal, id_createur, 
     id_type_question, id_questionnaire) VALUES
