@@ -14,7 +14,7 @@
     </thead>
     <tbody> 
         <c:forEach items="${EFGs}" var="efg">
-
+<!--  en cours -->
             <tr>
                 <td>${efg.idEFG}</td>
                 <td>${efg.intitule}</td>
