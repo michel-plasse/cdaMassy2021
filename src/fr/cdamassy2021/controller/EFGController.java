@@ -18,9 +18,9 @@ public class EFGController {
 	private EFGService efgService;
 	
 	@RequestMapping("canaux/{idCanal}/EFGs")
-	public ModelAndView coucou(@PathVariable(value="idCanal") ModelAndView mv) {
+	public ModelAndView coucou(@PathVariable(value="idCanal") int idCanal, ModelAndView mv) {
 		mv.setViewName("EFGs");
-		List<EFG> efgs = efgService.listAll();
+		List<EFG> efgs = efgService.listByCanal(idCanal);
 		mv.addObject("EFGs", efgs);
 		return mv;
 	}
