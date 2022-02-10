@@ -2,6 +2,7 @@ package fr.cdamassy2021.entity;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -13,27 +14,33 @@ import javax.persistence.Id;
 public class EFG {
 	
 	@Id
-	private int id;
-	private int idCreateur, idCanal;
+	private int idEFG;
+	
+	@Column
+	private int idCreateur;
+	@Column
+	private int idCanal;
+	@Column
 	private String intitule;
-	// private List<Groupe> groupes;
+	@Column
+	private String groupes;
 
 	public EFG() {
 	}
 
-	public EFG(int id, int idCreateur, int idCanal, String intitule) {
-		this.id = id;
+	public EFG(int idEFG, int idCreateur, int idCanal, String intitule) {
+		this.idEFG = idEFG;
 		this.idCreateur = idCreateur;
 		this.idCanal = idCanal;
 		this.intitule = intitule;
 	}
 
-	public int getId() {
-		return id;
+	public int getIdEFG() {
+		return idEFG;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdEFG(int idEFG) {
+		this.idEFG = idEFG;
 	}
 
 	public int getIdCreateur() {
@@ -62,13 +69,13 @@ public class EFG {
 
 	@Override
 	public String toString() {
-		return "EFG n°" + id + ", crée par " + idCreateur + " dans " + idCanal + ". Intitule: " + intitule;
+		return "EFG n°" + idEFG + ", crée par " + idCreateur + " dans " + idCanal + ". Intitule: " + intitule;
 	}
 
 	@Override
 	public int hashCode() {
 		int hash = 5;
-		hash = 89 * hash + this.id;
+		hash = 89 * hash + this.idEFG;
 		hash = 89 * hash + this.idCreateur;
 		hash = 89 * hash + this.idCanal;
 		hash = 89 * hash + Objects.hashCode(this.intitule);
@@ -87,7 +94,7 @@ public class EFG {
 			return false;
 		}
 		final EFG other = (EFG) obj;
-		if (this.id != other.id) {
+		if (this.idEFG != other.idEFG) {
 			return false;
 		}
 		if (this.idCreateur != other.idCreateur) {
