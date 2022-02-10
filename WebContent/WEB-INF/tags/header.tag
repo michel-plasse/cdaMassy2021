@@ -26,13 +26,13 @@
         <a href="${context}/activitequestions">Mes Questions</a>
       </nav>
       <nav>
-        <c:if test="${sessionScope['user'] != null}">
+        <c:if test="${currentUser != null}">
           <form action="${context}/connexion" method="post">
-            <button type="submit">Déconnecter ${sessionScope['user'].email}</button>
+            <button type="submit">Déconnecter ${currentUser.email}</button>
             <input type="hidden" name="action" value="deconnecter"/>
           </form>
         </c:if>
-        <c:if test="${sessionScope['user'] == null}">
+        <c:if test="${currentUser == null}">
           <a href="${context}/inscription">Inscription</a>
           <a href="${context}/connexion">Connexion</a>
         </c:if>

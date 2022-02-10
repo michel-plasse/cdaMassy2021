@@ -13,7 +13,7 @@ import fr.cdamassy2021.service.QuestionService;
 
 /**
  * 
- * @autor kamal
+ * @author Kamal, Ben, Vinoth, Thomas
  * 
  * */
 

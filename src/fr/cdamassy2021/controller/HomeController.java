@@ -39,7 +39,7 @@ public class HomeController {
 		Personne currentUser = personneService.exist(email,password);
 		if(currentUser!=null){
 			message = "Welcome " + email + ".";
-			ModelAndView mav = new ModelAndView("welcome", 
+			ModelAndView mav = new ModelAndView("index", 
 					"message", message);
 			mav.addObject("currentUser", currentUser);
 			return mav;  
