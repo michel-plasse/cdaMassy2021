@@ -102,3 +102,15 @@ textarea {
     background-color:#E8EBF3;
     margin: 2em, 1em;
 }
+
+  .bloc {
+        display:flex;
+        flex-grow: true;
+        min-height: 3vh;
+        min-width: 25vh;
+        border: #181a24;
+        border-width: 2px;
+        background-color: lavender;
+        color: darkslateblue;
+        vertical-align: top;
+    }

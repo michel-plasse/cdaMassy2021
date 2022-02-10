@@ -31,4 +31,13 @@ public class QuestionController {
 		mav.addObject("questions", listQuestion);
 		return mav;
 	}
+	
+	@RequestMapping("/questions/creer")
+	public ModelAndView creerQuestion() {
+		List<Question> listQuestion = questionService.listAll();
+		ModelAndView mav = new ModelAndView("creerquestion");
+		
+		/**mav.addObject("questions", listQuestion);*/
+		return mav;
+	}
 }
