@@ -12,3 +12,4 @@
     <a href="ListeEFGs?idCanal=${canal.idCanal}">Exercices en groupe</a>
   </c:forEach>
 </nav>
+<p:footer />
