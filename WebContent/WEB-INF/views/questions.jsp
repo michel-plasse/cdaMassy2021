@@ -1,14 +1,15 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="p" tagdir="/WEB-INF/tags"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%> <!-- @page = directive de compilation (jsp pure) -->
 <p:header title="CDA Massy 2021"/>
+
     <style type="text/css">
-  		<%@include file="../../css/questionaire_style.css" %>
-	</style>
+  		<%@include file="../../css/questionaire_style.css" %>  
+	</style> <!-- @include =  directive de compilation (jsp pure) -->
 <h1>affichage questions:</h1>
 <form>
     <div class="questionLayout">
-            <c:forEach items="${questions}" var="question">
+            <c:forEach items="${questions}" var="question"> <!-- c:foreach = directive de compilation (lib core de jstl) -->
                 <div class="form-question">
                     <div class="intituleQuestion" id="intituleQuestion">
                             <b>${question.libelle}</b>
