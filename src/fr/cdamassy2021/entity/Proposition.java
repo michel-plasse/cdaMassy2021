@@ -2,7 +2,7 @@ package fr.cdamassy2021.entity;
 
 /** 
  * 
- * @author chang
+ * @author Kamal, Ben, Vinoth, Thomas
  * 
  * 
  * */
