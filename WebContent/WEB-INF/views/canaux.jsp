@@ -8,7 +8,7 @@
 	<p> <c:out value="La liste est vide"></c:out></p>
 </c:if>
   <c:forEach items="${canaux}" var="canal">
-    ${canal.nomCanal} : <a href="membrescanal?idCanal=${canal.idCanal}">Membres</a>
+    ${canal.nomCanal} : <a href="${contextPath}/${canal.idCanal}">Membres</a>
     <a href="ListeEFGs?idCanal=${canal.idCanal}">Exercices en groupe</a>
   </c:forEach>
 </nav>
