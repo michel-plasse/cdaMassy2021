@@ -12,3 +12,7 @@
   <a href="canaux/${canal.idCanal}/EFGs">Exercices en groupe</a>
     <a href="ListeEFGs?idCanal=${canal.idCanal}">Exercices en groupe</a>
   </c:forEach>
+
+</nav>
+<p:footer />
+>>>>>>> branch 'main' of https://github.com/michel-plasse/cdaMassy2021.git

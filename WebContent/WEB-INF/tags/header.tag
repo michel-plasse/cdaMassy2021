@@ -7,7 +7,9 @@
 <html>
   <head>
     <title>${title}</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/cdamassy2021.css"/>
+    <style type="text/css">
+  		<%@include file="../../css/cdamassy2021.css" %>
+	</style>
     <meta name="viewport"
           content="width=device-width, initial-scale=1">
   </head>
