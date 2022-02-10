@@ -45,8 +45,8 @@
                 <fieldset>
                     <label for="Situation-select">Choisissez un canal:</label>
                     <select name="canalChoisi" id="canal-select">
-                        <c:forEach items="${canauxMembre}" var="canal">
-                            <option value="${canal.idCanal}">${canal.nomCanal}</option>
+                        <c:forEach items="${allCanauxMembre}" var="canal">
+                            <option value="${canal.idCanal}">${canal.nom} 1</option>
                         </c:forEach>
                     </select>
                 </fieldset>

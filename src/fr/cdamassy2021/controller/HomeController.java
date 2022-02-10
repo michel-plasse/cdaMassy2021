@@ -41,7 +41,7 @@ public class HomeController {
 			message = "Welcome " + email + ".";
 			ModelAndView mav = new ModelAndView("index", 
 					"message", message);
-			mav.addObject("currentUser", currentUser);
+			request.getSession().setAttribute("currentUser",currentUser);
 			return mav;  
 
 		}else{

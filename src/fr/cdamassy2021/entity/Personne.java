@@ -1,13 +1,17 @@
 package fr.cdamassy2021.entity;
 
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Personne {
@@ -24,6 +28,12 @@ public class Personne {
     private String tel;
     @Column
     private String pwd;
+	
+    @ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "membre_canal", 
+	joinColumns = { @JoinColumn(name = "id_personne") },
+	 inverseJoinColumns = { @JoinColumn(name = "id_canal") })
+	private Set<Canal> allCanauxMembre;
 
     /**
      * Constructeur
@@ -60,13 +70,6 @@ public class Personne {
 
     public Personne() {
 
-    }
-    public long getId() {
-        return idPersonne;
-    }
-
-    public void setId(long id) {
-        this.idPersonne = id;
     }
 
     public String getPrenom() {
@@ -109,7 +112,23 @@ public class Personne {
         this.pwd = pwd;
     }
 
-    @Override
+    public long getIdPersonne() {
+		return idPersonne;
+	}
+
+	public void setIdPersonne(long idPersonne) {
+		this.idPersonne = idPersonne;
+	}
+
+	public Set<Canal> getAllCanauxMembre() {
+		return allCanauxMembre;
+	}
+
+	public void setAllCanauxMembre(Set<Canal> allCanauxMembre) {
+		this.allCanauxMembre = allCanauxMembre;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 7;
         hash = 89 * hash +(int) this.idPersonne;

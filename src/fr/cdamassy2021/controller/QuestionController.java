@@ -29,9 +29,6 @@ public class QuestionController {
 	@Autowired
 	private QuestionService questionService;
 	
-	@Autowired
-	private CanalService canalService;
-	
 	@RequestMapping("/questions/afficher")
 	public ModelAndView afficherQuestions() {
 		List<Question> listQuestion = questionService.listAll();
@@ -44,10 +41,9 @@ public class QuestionController {
 	@RequestMapping("/questions/creer")
 	public ModelAndView creerQuestion(HttpServletRequest request,
 			HttpServletResponse response) {
-		List<Canal> canauxMembre = canalService.listByMemberId(((Personne)request.getAttribute("currentUser")).getId());
 		ModelAndView mav = new ModelAndView("creerquestion");
-		
-		/**mav.addObject("questions", listQuestion);*/
+		Personne currentUser = (Personne)request.getSession().getAttribute("currentUser");
+		mav.addObject("allCanauxMembre",currentUser.getAllCanauxMembre());
 		return mav;
 	}
 }

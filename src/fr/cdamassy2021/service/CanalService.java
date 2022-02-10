@@ -41,8 +41,5 @@ public class CanalService {
 	public List<Canal> search(String keyword) {
 		return repo.search(keyword);
 	}
-	
-	public List<Canal> listByMemberId(Long memberId) {
-		return repo.findByMember(memberId);
-	}
+
 }

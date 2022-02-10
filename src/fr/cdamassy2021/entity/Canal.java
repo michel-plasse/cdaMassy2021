@@ -1,10 +1,16 @@
 package fr.cdamassy2021.entity;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 /**
 *
@@ -17,6 +23,12 @@ public class Canal {
 	private Long idCanal;
 	@Column
 	private String nom;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "membre_canal", 
+	joinColumns = { @JoinColumn(name = "id_canal") },
+	 inverseJoinColumns = { @JoinColumn(name = "id_personne") })
+	private Set<Canal> allMembres;
 	
 	public Canal() {
 		// TODO Auto-generated constructor stub
@@ -43,13 +55,19 @@ public class Canal {
 		this.idCanal = idCanal;
 	}
 
-
-	public String getNomCanal() {
+    public String getNom() {
 		return nom;
 	}
-
-
-	public void setNomCanal(String nomCanal) {
-		this.nom = nomCanal;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
+	
+	public Set<Canal> getAllMembres() {
+		return allMembres;
+	}
+	
+	public void setAllMembres(Set<Canal> allMembres) {
+		this.allMembres = allMembres;
+	}
+	
 }
