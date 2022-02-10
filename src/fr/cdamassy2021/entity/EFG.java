@@ -14,7 +14,7 @@ import javax.persistence.Id;
 public class EFG {
 	
 	@Id
-	private int idEFG;
+	private int idEfg;
 	
 	@Column
 	private int idCreateur;
@@ -29,18 +29,18 @@ public class EFG {
 	}
 
 	public EFG(int idEFG, int idCreateur, int idCanal, String intitule) {
-		this.idEFG = idEFG;
+		this.idEfg = idEFG;
 		this.idCreateur = idCreateur;
 		this.idCanal = idCanal;
 		this.intitule = intitule;
 	}
 
 	public int getIdEFG() {
-		return idEFG;
+		return idEfg;
 	}
 
 	public void setIdEFG(int idEFG) {
-		this.idEFG = idEFG;
+		this.idEfg = idEFG;
 	}
 
 	public int getIdCreateur() {
@@ -69,13 +69,13 @@ public class EFG {
 
 	@Override
 	public String toString() {
-		return "EFG n°" + idEFG + ", crée par " + idCreateur + " dans " + idCanal + ". Intitule: " + intitule;
+		return "EFG n°" + idEfg + ", crée par " + idCreateur + " dans " + idCanal + ". Intitule: " + intitule;
 	}
 
 	@Override
 	public int hashCode() {
 		int hash = 5;
-		hash = 89 * hash + this.idEFG;
+		hash = 89 * hash + this.idEfg;
 		hash = 89 * hash + this.idCreateur;
 		hash = 89 * hash + this.idCanal;
 		hash = 89 * hash + Objects.hashCode(this.intitule);
@@ -94,7 +94,7 @@ public class EFG {
 			return false;
 		}
 		final EFG other = (EFG) obj;
-		if (this.idEFG != other.idEFG) {
+		if (this.idEfg != other.idEfg) {
 			return false;
 		}
 		if (this.idCreateur != other.idCreateur) {

@@ -4,8 +4,6 @@
 <p:header title="Exercices de groupe"/>
 <h1>Liste d'EFGs </h1>
 
-Coucou, tu es sur la page des exercices en groupe
-<!-- 
 <table>
     <thead> 
         <tr>
@@ -16,16 +14,16 @@ Coucou, tu es sur la page des exercices en groupe
     </thead>
     <tbody> 
         <c:forEach items="${EFGs}" var="efg">
-
+<!--  en cours -->
             <tr>
-                <td>${efg.id}</td>
+                <td>${efg.idEFG}</td>
                 <td>${efg.intitule}</td>
-                <td><a href="listerGroupesEfg?idEfg=${efg.id}"><button type="button" class="btn-efg">Accéder aux groupes de l'EFG</button></a></td>
+                <td><a href="listerGroupesEfg?idEfg=${efg.idEFG}"><button type="button" class="btn-efg">Accéder aux groupes de l'EFG</button></a></td>
             </tr>
 
         </c:forEach>
     </tbody>
 </table>
-<a href="CreationEFG">Créer un Exercice en groupe</a> -->
+<a href="CreationEFG">Créer un Exercice en groupe</a> 
 </body>
 </html>
