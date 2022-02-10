@@ -46,4 +46,13 @@ public class QuestionController {
 		mav.addObject("allCanauxMembre",currentUser.getAllCanauxMembre());
 		return mav;
 	}
+	
+	@RequestMapping("/questions/activite")
+	public ModelAndView activiteQuestions(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("activitequestions");
+		Personne currentUser = (Personne)request.getSession().getAttribute("currentUser");
+		mav.addObject("allCanauxMembre",currentUser.getAllCanauxMembre());
+		return mav;
+	}
 }

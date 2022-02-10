@@ -23,7 +23,7 @@
         <a href="javascript: document.getElementById('resetDbForm').submit()">Réinitialiser
           la BD</a>
         <a href="${context}/canaux">Canaux</a>
-        <a href="${context}/activitequestions">Mes Questions</a>
+        <a href="${context}/questions/activite">Mes Questions</a>
       </nav>
       <nav>
         <c:if test="${sessionScope['currentUser'] != null}">
