@@ -13,6 +13,7 @@ public class WebMvcConfig {
 	    InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 	    viewResolver.setPrefix("/WEB-INF/views/");
 	    viewResolver.setSuffix(".jsp");
+	    // /WEB-INF/views/(monfichier).jsp
 	    return viewResolver;
 	}
 }
