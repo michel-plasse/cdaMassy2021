@@ -9,6 +9,6 @@
 </c:if>
   <c:forEach items="${canaux}" var="canal">
     ${canal.nomCanal} : <a href="membrescanal?idCanal=${canal.idCanal}">Membres</a>
+  <a href="canaux/1/EFGs">Exercices en groupe</a>
     <a href="ListeEFGs?idCanal=${canal.idCanal}">Exercices en groupe</a>
   </c:forEach>
-</nav>
