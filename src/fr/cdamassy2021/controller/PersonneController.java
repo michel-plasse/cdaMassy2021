@@ -24,4 +24,12 @@ public class PersonneController {
 		return mv;
 	}
 
+	@RequestMapping("/membres")
+	public ModelAndView listMembre() {
+		List<Personne> listPersonne = personneService.listAll();
+		ModelAndView mv = new ModelAndView("membres");
+		mv.addObject("membres", listPersonne);
+		return mv;
+	}
+
 }

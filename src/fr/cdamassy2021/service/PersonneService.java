@@ -19,8 +19,9 @@ public class PersonneService {
 	public void save(Personne personne) {
 		repo.save(personne);
 	}
-	
+
 	public List<Personne> listAll() {
 		return (List<Personne>) repo.findAll();
 	}
+
 }
