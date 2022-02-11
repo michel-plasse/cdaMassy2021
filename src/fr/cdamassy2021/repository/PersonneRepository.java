@@ -15,8 +15,8 @@ public interface PersonneRepository extends CrudRepository<Personne, Long> {
             + "FROM membre_canal mc\n"
             + "		INNER JOIN personne p\n"
             + "			ON mc.id_personne = p.id_personne\n"
-            + "WHERE id_canal=2" 
+            + "WHERE id_canal=?" 
             , nativeQuery = true)
-	public Collection<Personne> findMembreByCanal();
+	public Collection<Personne> findMembreByCanal(int idCanal);
 
 }

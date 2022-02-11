@@ -25,8 +25,8 @@ public class PersonneService {
 		return (List<Personne>) repo.findAll();
 	}
 	
-	public Collection<Personne> listMembreByCanal(){
-		return repo.findMembreByCanal();
+	public Collection<Personne> listMembreByCanal(int idCanal){
+		return repo.findMembreByCanal(idCanal);
 	}
 	
 

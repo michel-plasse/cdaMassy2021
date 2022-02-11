@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,9 +26,9 @@ public class PersonneController {
 		return mv;
 	}
 
-	@RequestMapping("/membres")
-	public ModelAndView listMembre() {
-		Collection<Personne> collectionPersonnes = personneService.listMembreByCanal();
+	@RequestMapping("/canaux/{idCanal}")
+	public ModelAndView listMembre(@PathVariable("idCanal") int IdCanal) {
+		Collection<Personne> collectionPersonnes = personneService.listMembreByCanal(IdCanal);
 		ModelAndView mv = new ModelAndView("membres");
 		mv.addObject("membres", collectionPersonnes);
 		return mv;
