@@ -51,7 +51,8 @@ public class EFGController {
 		efg.setIdCreateur(1);
 		efg.setIdCanal(idCanal);
 		EFG efgSaved = efgService.saveEFG(efg);
-		mv.setViewName("redirect:/canaux/{idCanal}/EFGs");
+		System.out.println(efgSaved);
+		mv.setViewName("redirect:/canaux/{idCanal}/EFGs/"+efgSaved.getIdEfg());
 		return mv;
 	}
 }
