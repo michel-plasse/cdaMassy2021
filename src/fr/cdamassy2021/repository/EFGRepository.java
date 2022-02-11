@@ -9,12 +9,11 @@ import org.springframework.data.repository.query.Param;
 import fr.cdamassy2021.entity.EFG;
 
 
-public interface EFGRepository extends CrudRepository<EFG, Long> {
+public interface EFGRepository extends CrudRepository<EFG, Integer> {
 
-	public List<EFG> findAll();
 	
 	@Query(value = "SELECT e FROM EFG e WHERE e.idCanal=?1")	
 	public List<EFG> findByCanal(int idCanal);
 	
-
+	
 }

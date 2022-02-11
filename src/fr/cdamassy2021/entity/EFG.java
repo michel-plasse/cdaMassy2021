@@ -12,10 +12,10 @@ import javax.persistence.Id;
  */
 @Entity
 public class EFG {
-	
+
 	@Id
 	private int idEfg;
-	
+
 	@Column
 	private int idCreateur;
 	@Column
@@ -28,11 +28,21 @@ public class EFG {
 	public EFG() {
 	}
 
-	public EFG(int idEFG, int idCreateur, int idCanal, String intitule) {
+	public EFG(int idEFG, int idCreateur, int idCanal, String intitule, String groupes) {
 		this.idEfg = idEFG;
 		this.idCreateur = idCreateur;
 		this.idCanal = idCanal;
 		this.intitule = intitule;
+		this.groupes = groupes;
+	}
+
+	
+	public int getIdEfg() {
+		return idEfg;
+	}
+
+	public void setIdEfg(int idEfg) {
+		this.idEfg = idEfg;
 	}
 
 	public int getIdEFG() {
@@ -65,6 +75,16 @@ public class EFG {
 
 	public void setIntitule(String intitule) {
 		this.intitule = intitule;
+	}
+
+	
+
+	public String getGroupes() {
+		return groupes;
+	}
+
+	public void setGroupes(String groupes) {
+		this.groupes = groupes;
 	}
 
 	@Override

@@ -29,6 +29,8 @@ public class EFGController {
 	public ModelAndView oneEFG(@PathVariable(value = "idEFG") int idEFG, @PathVariable(value = "idCanal") int idCanal,
 			ModelAndView mv) {
 		mv.setViewName("EFG");
+		EFG efg = efgService.findById(idEFG);
+		mv.addObject("EFG", efg);
 		return mv;
 	}
 }
