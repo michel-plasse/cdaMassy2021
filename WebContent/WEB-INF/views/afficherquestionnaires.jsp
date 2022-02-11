@@ -17,7 +17,7 @@
                 <div class="form-question">
                     <div class="intituleQuestion" id="intituleQuestion">
                             <b>${question.libelle}</b>
-                            <p> auteur: ${question.idCreateur.nom}<p>
+                            <p> auteur: ${question.auteur.nom}<p>
                     </div>
                     <!-- si la question a afficher a au moins une proposition de reponse: l afficher-->
                     <c:if test="${question.propositions.size() gt 1}">
