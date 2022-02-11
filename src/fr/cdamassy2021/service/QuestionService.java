@@ -30,8 +30,13 @@ public class QuestionService {
 		List<Question> allQuestions = repo.findByCanal(idCanal);
 		System.out.println("QuestionService");
 		System.out.println(allQuestions);
-		
 		return allQuestions;
 	}
 	
+	public List<Question> listPending(long idUser, long idCanal) {
+		List<Question> allQuestions = repo.findPending(idUser,idCanal);
+		System.out.println("QuestionService : list pending questions");
+		System.out.println(allQuestions);
+		return allQuestions;
+	}
 }

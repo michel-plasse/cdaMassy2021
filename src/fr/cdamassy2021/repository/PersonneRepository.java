@@ -12,4 +12,5 @@ public interface PersonneRepository extends CrudRepository<Personne, Long> {
 	@Query(value = "SELECT p FROM Personne p WHERE p.email = ?1 "
 			+ " AND p.pwd = ?2 ")
 	public Personne exist(String email, String pwd);
+	
 }

@@ -51,14 +51,22 @@ ${msg}
     <article>
         <h3>Repondre aux questions</h3>
         <p>Affiche la liste des question qui vous ont été posées.</p>
-        <form action="$/CeLienNEstPasImplemente"class="boutonActivite" >
-                <label for="canalChoisi">Choisissez un canal:</label>
-                <select name="canalChoisi" id="canal-select">
+        <form action="${pageContext.request.contextPath}/questions/repondre"class="boutonActivite" >
+                <label for="canal">Choisissez un canal:</label>
+                <select name="canal" id="canal-select">
                     <c:forEach items="${allCanauxMembre}" var="canal">
                         <option value="${canal.idCanal}">${canal.nom}</option>
                     </c:forEach>
                 </select>
             <button type="submit">Repondre aux questions</button>
+        </form>
+    </article>
+    
+    <article>
+        <h3>Afficher les questionnaires</h3>
+        <p>Affiche la liste des questionnaires.</p>
+        <form action="${pageContext.request.contextPath}/questionnaire/afficher" class="boutonActivite" >
+            <button type="submit">Afficher Questionnaires</button>
         </form>
     </article>
 
