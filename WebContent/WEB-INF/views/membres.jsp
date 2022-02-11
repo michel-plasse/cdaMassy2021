@@ -11,7 +11,7 @@
     <c:forEach items="${membres}" var="membre">
         <li>
             <form action="enleverMembre" method="post">
-                <input type="hidden" id="idMembreAEffacer" value="${membre.id}"
+                <input type="hidden" id="idMembreAEffacer" value="${membre.idPersonne}"
                        name="idMembreAEffacer" /> 
                 <input type="hidden" value="${idCanal}" name="idCanal" />
                 ${membre.prenom}  ${membre.nom}
