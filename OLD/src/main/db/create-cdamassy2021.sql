@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `reponse` (
   `id_personne` INT(11) NOT NULL,
   `id_proposition` INT NULL,
   `libelle` VARCHAR(45) NULL,
-  `date_rendu` DATETIME NOT NULL DEFAULT now(),
+  `date_rendu` DATETIME NULL DEFAULT now(),
   PRIMARY KEY (`id_question`, `id_personne`),
   INDEX `fk_reponse_quesion_personne_idx` (`id_personne` ASC),
   INDEX `fk_reponse_question_question_idx` (`id_question` ASC),
