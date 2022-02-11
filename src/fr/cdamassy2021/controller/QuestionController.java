@@ -11,13 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import fr.cdamassy2021.entity.Canal;
-import fr.cdamassy2021.entity.EFG;
 import fr.cdamassy2021.entity.Personne;
 import fr.cdamassy2021.entity.Question;
-import fr.cdamassy2021.service.CanalService;
 import fr.cdamassy2021.service.QuestionService;
-
 
 /**
  * 
@@ -44,10 +40,10 @@ public class QuestionController {
 	public ModelAndView afficherQuestions() {
 		List<Question> listQuestion = questionService.listAll();
 		ModelAndView mav = new ModelAndView("questions");
-		
 		mav.addObject("allQuestions", listQuestion);
 		return mav;
 	}
+	
 	@RequestMapping("/questions/{idCanal}/afficher")
 	public ModelAndView afficherQuestionsCanal(@PathVariable(value="idCanal") long idCanal, ModelAndView mv) {
 		mv.setViewName("questions");
