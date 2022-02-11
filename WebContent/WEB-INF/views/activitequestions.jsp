@@ -61,6 +61,14 @@ ${msg}
             <button type="submit">Repondre aux questions</button>
         </form>
     </article>
+    
+    <article>
+        <h3>Afficher les questionnaires</h3>
+        <p>Affiche la liste des questionnaires.</p>
+        <form action="${pageContext.request.contextPath}/questionnaire/afficher" class="boutonActivite" >
+            <button type="submit">Afficher Questionnaires</button>
+        </form>
+    </article>
 
     <article style="clear:left;">
         <h3>Editer une question</h3>

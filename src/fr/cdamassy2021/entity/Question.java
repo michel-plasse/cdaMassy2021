@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -36,6 +37,9 @@ public class Question {
 	@OneToOne
     @JoinColumn(name = "id_createur")
 	private Personne idCreateur;
+	@ManyToOne
+	@JoinColumn (name = "id_questionnaire")
+	private Questionnaire questionnaire;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idQuestion", cascade = CascadeType.ALL)
 	private Collection<Proposition> propositions = new LinkedHashSet<Proposition>();
