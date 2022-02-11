@@ -55,11 +55,20 @@ public class Canal {
 		this.idCanal = idCanal;
 	}
 
+<<<<<<< HEAD
     public String getNom() {
 		return nom;
 	}
 	public void setNom(String nom) {
 		this.nom = nom;
+=======
+	public String getNomCanal() {
+		return nom;
+	}
+
+	public void setNomCanal(String nomCanal) {
+		this.nom = nomCanal;
+>>>>>>> huawei
 	}
 	
 	public Set<Personne> getAllMembres() {
