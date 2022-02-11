@@ -48,6 +48,9 @@ public class EFGController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("EFG", efg);
 		System.out.println("coucou");
+		efg.setIdCreateur(1);
+		efg.setIdCanal(idCanal);
+		EFG efgSaved = efgService.saveEFG(efg);
 		mv.setViewName("redirect:/canaux/{idCanal}/EFGs");
 		return mv;
 	}

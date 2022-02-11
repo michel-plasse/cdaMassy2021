@@ -32,5 +32,9 @@ public class EFGService {
 		return efg;
 	}
 
-
+	
+	public EFG saveEFG(EFG efg){
+		return repo.save(efg);
+		
+	}
 }

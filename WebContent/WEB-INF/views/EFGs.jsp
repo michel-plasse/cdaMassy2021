@@ -25,15 +25,15 @@
 
 			<c:forEach items="${EFGs}" var="efg">
 				<tr>
-					<td>${efg.idEFG}</td>
+					<td>${efg.idEfg}</td>
 					<td>${efg.intitule}</td>
 					<td>
-						<button type="button" onClick="location.href='EFGs/${efg.idEFG}'"
+						<button type="button" onClick="location.href='EFGs/${efg.idEfg}'"
 							class="btn-efg">Accéder à l'EFG</button>
 					</td>
 					<td>
 						<button type="button" class="btn-efg"
-							onClick="location.href='listerGroupesEfg?idEfg=${efg.idEFG}'">Accéder
+							onClick="location.href='listerGroupesEfg?idEfg=${efg.idEfg}'">Accéder
 							aux groupes de l'EFG</button>
 					</td>
 				</tr>
