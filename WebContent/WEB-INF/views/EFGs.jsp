@@ -9,15 +9,17 @@
         <tr>
             <th>N°</th>
             <th>Intitule</th>
+            <th>Accès à l'EFG</th>
             <th>Accès au groupe de l'EFG</th>
         </tr>
     </thead>
     <tbody> 
         <c:forEach items="${EFGs}" var="efg">
-<!--  en cours -->
             <tr>
                 <td>${efg.idEFG}</td>
                 <td>${efg.intitule}</td>
+                <td><a href="EFGs/${efg.idEFG}">Accéder à l'EFG</a></td>
+                <c:out value="EFGs/${efg.idEFG}"/>
                 <td><a href="listerGroupesEfg?idEfg=${efg.idEFG}"><button type="button" class="btn-efg">Accéder aux groupes de l'EFG</button></a></td>
             </tr>
 

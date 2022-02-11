@@ -20,5 +20,4 @@
 
 </nav>
 <p:footer />
->>>>>>> branch 'main' of
-https://github.com/michel-plasse/cdaMassy2021.git
+
