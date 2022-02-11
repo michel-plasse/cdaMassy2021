@@ -1,5 +1,6 @@
 package fr.cdamassy2021.controller;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,12 @@ public class PersonneController {
 
 	@RequestMapping("/membres")
 	public ModelAndView listMembre() {
-		List<Personne> listPersonne = personneService.listAll();
+		Collection<Personne> collectionPersonnes = personneService.listMembreByCanal();
 		ModelAndView mv = new ModelAndView("membres");
-		mv.addObject("membres", listPersonne);
+		mv.addObject("membres", collectionPersonnes);
 		return mv;
 	}
+	
+
 
 }

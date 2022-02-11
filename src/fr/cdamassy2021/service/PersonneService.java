@@ -1,5 +1,6 @@
 package fr.cdamassy2021.service;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,10 @@ public class PersonneService {
 	public List<Personne> listAll() {
 		return (List<Personne>) repo.findAll();
 	}
+	
+	public Collection<Personne> listMembreByCanal(){
+		return repo.findMembreByCanal();
+	}
+	
 
 }
