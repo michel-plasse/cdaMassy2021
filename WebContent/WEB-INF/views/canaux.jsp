@@ -9,9 +9,9 @@
 </c:if>
   <c:forEach items="${canaux}" var="canal">
     ${canal.nomCanal} : <a href="membrescanal?idCanal=${canal.idCanal}">Membres</a>
+    
   <a href="canaux/${canal.idCanal}/EFGs">Exercices en groupe</a>
   </c:forEach>
 
 </nav>
 <p:footer />
->>>>>>> branch 'main' of https://github.com/michel-plasse/cdaMassy2021.git
