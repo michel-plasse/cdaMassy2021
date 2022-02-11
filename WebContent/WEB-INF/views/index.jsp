@@ -1,7 +1,8 @@
 <%@taglib prefix="p" tagdir="/WEB-INF/tags" %>
 <p:header title="CDA Massy 2021"/>
 <%-- Message d'erreur ou pas, au cas où --%>
-${msg}
+<h3 class="success">${messageSuccess}</h3>
+<h3 class="erreur">${messageError}</h3>
 <h1>CDA Massy 2021</h1>
 <section class="flexh">
   <p>Cette application est le projet fil rouge des CDA 2021 du Greta de Massy.</p>

@@ -9,7 +9,7 @@
 <h1>affichage questions:</h1>
 <form>
     <div class="questionLayout">
-            <c:forEach items="${questions}" var="question"> <!-- c:foreach = directive de compilation (lib core de jstl) -->
+            <c:forEach items="${allQuestions}" var="question"> <!-- c:foreach = directive de compilation (lib core de jstl) -->
                 <div class="form-question">
                     <div class="intituleQuestion" id="intituleQuestion">
                             <b>${question.libelle}</b>

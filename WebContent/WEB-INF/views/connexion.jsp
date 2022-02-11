@@ -4,6 +4,7 @@
 <p:header title="Connexion"/>
 <h1>Connexion</h1>
 <h3 class="success">${messageSuccess}</h3>
+<h3 class="erreur">${messageError}</h3>
     <form method="POST" action="tryconnection">
       <c:if test="${sessionScope['user'] == null}">
         Login :

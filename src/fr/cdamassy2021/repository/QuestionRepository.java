@@ -14,4 +14,7 @@ public interface QuestionRepository extends CrudRepository<Question, Long> {
 	// how to search for creator then?
 	@Query(value = "SELECT q FROM Question q WHERE q.libelle LIKE '%' || :keyword || '%'")
 	public List<Question> search(@Param("keyword") String keyword);
+	
+	@Query(value = "SELECT q FROM Question q WHERE q.idCanal=?1")	
+	public List<Question> findByCanal(long idCanal);
 }

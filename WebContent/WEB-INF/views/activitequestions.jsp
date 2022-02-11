@@ -27,7 +27,7 @@ ${msg}
     <article>
         <h3>Afficher vos questions</h3>
         <p>Affiche la liste des questions que vous avez déjà posées.</p>
-        <form action="ListerQuestionsUtilisateurCourant"class="boutonActivite" >
+        <form action="/CeLienNEstPasImplemente"class="boutonActivite" >
             <button type="submit">Afficher Questions</button>
         </form>
     </article>
@@ -35,7 +35,7 @@ ${msg}
     <article>
         <h3>Poser une question</h3>
         <p>Proposez une nouvelle question sur un canal.</p>
-        <form action="creationQuestion"class="boutonActivite" >
+        <form action="${pageContext.request.contextPath}/questions/creer"class="boutonActivite" >
             <button type="submit">Nouvelle Question</button>
         </form>
     </article>
@@ -43,7 +43,7 @@ ${msg}
     <article>
         <h3>Afficher les sondages</h3>
         <p>Affiche la liste des sondages.</p>
-        <form action="listesondages"class="boutonActivite" >
+        <form action="${context}/CeLienNEstPasImplemente"class="boutonActivite" >
             <button type="submit">Afficher Sondages</button>
         </form>
     </article>
@@ -51,7 +51,7 @@ ${msg}
     <article>
         <h3>Repondre aux questions</h3>
         <p>Affiche la liste des question qui vous ont été posées.</p>
-        <form action="repondreQuestions"class="boutonActivite" >
+        <form action="$/CeLienNEstPasImplemente"class="boutonActivite" >
                 <label for="canalChoisi">Choisissez un canal:</label>
                 <select name="canalChoisi" id="canal-select">
                     <c:forEach items="${allCanauxMembre}" var="canal">

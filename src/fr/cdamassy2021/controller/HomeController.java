@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import fr.cdamassy2021.entity.Personne;
 import fr.cdamassy2021.service.PersonneService;
@@ -38,16 +39,15 @@ public class HomeController {
 		String message;
 		Personne currentUser = personneService.exist(email,password);
 		if(currentUser!=null){
-			message = "Welcome " + email + ".";
-			ModelAndView mav = new ModelAndView("index", 
-					"message", message);
+			message = "Welcome " + currentUser.getPrenom() + ".";
+			request.setAttribute("messageSuccess",message);
 			request.getSession().setAttribute("currentUser",currentUser);
-			return mav;  
+			return new ModelAndView("redirect:/canaux");
 
 		}else{
 			message = "Wrong username or password.";
-			return new ModelAndView("errorPage", 
-					"message", message);
+			request.setAttribute("messageError",message);
+			return new ModelAndView("redirect:/connexion");
 		}
 	}
 }
