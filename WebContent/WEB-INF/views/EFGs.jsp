@@ -41,7 +41,7 @@
 		</tbody>
 	</table>
 </c:if>
-<button type="button" class="btn-efg" onClick="location.href='listerGroupesEfg?idEfg=${efg.idEFG}'">Créer un exercice en groupe</button>
+<button type="button" class="btn-efg" onClick="location.href='EFGs/new'">Créer un exercice en groupe</button>
 
 </body>
 </html>

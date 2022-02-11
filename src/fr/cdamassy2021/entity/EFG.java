@@ -27,6 +27,11 @@ public class EFG {
 
 	public EFG() {
 	}
+	
+	public EFG(String intitule, String groupes) {
+		this.intitule=intitule;
+		this.groupes=groupes;
+	}
 
 	public EFG(int idEFG, int idCreateur, int idCanal, String intitule, String groupes) {
 		this.idEfg = idEFG;
