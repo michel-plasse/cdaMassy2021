@@ -1,11 +1,11 @@
 @startuml
 participant Navigateur
 participant Vue
-Navigateur -> Controller : GET/{nom_canal}\nMembreController.ListAll()
-Controller -> Service : MembreService\n.listAll()
-Service -> Repository : MembreRepository.findAll()
-Repository -> Service : Iterable<Membre>
-Service -> Controller : membres = List<Membre>
-Controller -> Vue : ModelAndViex\n("membres", membres)
-Vue -> Navigateur : /{nom_canal}/membres
+Navigateur -> Controller : GET/canaux/{id_canal}\nPersonneController.listMembre(int idCanal)
+Controller -> Service : PersonneService\n.listMembreByCanal(int idCanal)
+Service -> Repository : PersonneRepository\n.findMembreByCanal(int idCanal)
+Repository -> Service : Collection<Personne>
+Service -> Controller : Collection<Personne>
+Controller -> Vue : ModelAndView\n("membres", Collection<Personne>)
+Vue -> Navigateur : /canaux/{nom_canal}
 @enduml
