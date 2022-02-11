@@ -14,7 +14,11 @@
 	<c:forEach items="${canaux}" var="canal">
     ${canal.nom} : 
     	<a href="membrescanal?idCanal=${canal.idCanal}">Membres</a>
-		<a href="canaux/${canal.idCanal}/EFGs">Exercices en groupe</a>
+
+		<button type="button"
+			onClick="location.href='canaux/${canal.idCanal}/EFGs'"
+			class="btn-efg">Exercices</button>
+
 		<a href="questions/${canal.idCanal}/afficher">Questions</a>
 	</c:forEach>
 
