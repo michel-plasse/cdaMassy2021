@@ -20,7 +20,7 @@ import javax.persistence.ManyToMany;
 public class Canal {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idCanal;
+	private long idCanal;
 	@Column
 	private String nom;
 
@@ -28,7 +28,7 @@ public class Canal {
 	@JoinTable(name = "membre_canal", 
 	joinColumns = { @JoinColumn(name = "id_canal") },
 	 inverseJoinColumns = { @JoinColumn(name = "id_personne") })
-	private Set<Canal> allMembres;
+	private Set<Personne> allMembres;
 	
 	public Canal() {
 		// TODO Auto-generated constructor stub
@@ -62,11 +62,11 @@ public class Canal {
 		this.nom = nom;
 	}
 	
-	public Set<Canal> getAllMembres() {
+	public Set<Personne> getAllMembres() {
 		return allMembres;
 	}
 	
-	public void setAllMembres(Set<Canal> allMembres) {
+	public void setAllMembres(Set<Personne> allMembres) {
 		this.allMembres = allMembres;
 	}
 	

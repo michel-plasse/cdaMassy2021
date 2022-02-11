@@ -31,6 +31,15 @@ public class QuestionController {
 	@Autowired
 	private QuestionService questionService;
 	
+	@RequestMapping("/questions/activite")
+	public ModelAndView activiteQuestions(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("activitequestions");
+		Personne currentUser = (Personne)request.getSession().getAttribute("currentUser");
+		mav.addObject("allCanauxMembre",currentUser.getAllCanauxMembre());
+		return mav;
+	}
+	
 	@RequestMapping("/questions/afficher")
 	public ModelAndView afficherQuestions() {
 		List<Question> listQuestion = questionService.listAll();
@@ -56,12 +65,13 @@ public class QuestionController {
 		return mav;
 	}
 	
-	@RequestMapping("/questions/activite")
-	public ModelAndView activiteQuestions(HttpServletRequest request,
+	@RequestMapping("/questions/repondre")
+	public ModelAndView repondreQuestions(HttpServletRequest request,
 			HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView("activitequestions");
-		Personne currentUser = (Personne)request.getSession().getAttribute("currentUser");
-		mav.addObject("allCanauxMembre",currentUser.getAllCanauxMembre());
+		ModelAndView mav = new ModelAndView("repondrequestions");
+		long userId = ((Personne)request.getSession().getAttribute("currentUser")).getIdPersonne();
+		long canalId = Long.parseLong(request.getParameter("canal"));
+		mav.addObject("pendingQuestions", questionService.listPending(userId,canalId));
 		return mav;
 	}
 }
