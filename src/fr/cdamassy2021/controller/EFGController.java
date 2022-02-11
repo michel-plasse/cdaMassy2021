@@ -29,7 +29,6 @@ public class EFGController {
 	public ModelAndView oneEFG(@PathVariable(value="idEFG") int idEFG, @PathVariable(value="idCanal") int idCanal, ModelAndView mv) {
 		System.out.println("coucou");
 		mv.setViewName("EFG");
-		
 		return mv;
 		
 	}

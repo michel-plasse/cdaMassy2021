@@ -5,5 +5,7 @@
 <h1>Liste d'EFGs </h1>
 
 La page des efg o/   
+
+<c:out value="${EFG.idEFG}"/>
 </body>
 </html>
