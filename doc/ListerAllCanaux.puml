@@ -1,4 +1,5 @@
 @startuml
+participant Beatrice
 participant Navigateur
 participant Vue
 Navigateur -> Controller : GET/canaux\nCanalController\n.home()
