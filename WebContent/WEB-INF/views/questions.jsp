@@ -3,9 +3,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%> <!-- @page = directive de compilation (jsp pure) -->
 <p:header title="CDA Massy 2021"/>
 
-    <style type="text/css">
-  		<%@include file="../../css/questionaire_style.css" %>  
-	</style> <!-- @include =  directive de compilation (jsp pure) -->
+<style type="text/css">
+ 		<%@include file="../../css/questionaire_style.css" %>  
+</style> <!-- @include =  directive de compilation (jsp pure) -->
 <h1>affichage questions:</h1>
 <form>
     <div class="questionLayout">
@@ -13,7 +13,7 @@
                 <div class="form-question">
                     <div class="intituleQuestion" id="intituleQuestion">
                             <b>${question.libelle}</b>
-                            <p> auteur: ${question.idCreateur.nom}<p>
+                            <p> auteur: ${question.auteur.nom}<p>
                     </div>
                     <!-- si la question a afficher a au moins une proposition de reponse: l afficher-->
                     <c:if test="${question.propositions.size() gt 1}">

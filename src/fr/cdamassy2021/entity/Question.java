@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -31,11 +32,13 @@ public class Question {
 	private long idQuestion;
 	@Column
 	private String libelle;
-	@Column
+	
+    @Column
 	private long idCanal;
+	
 	@OneToOne
     @JoinColumn(name = "id_createur")
-	private Personne idCreateur;
+	private Personne auteur;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idQuestion", cascade = CascadeType.ALL)
 	private Collection<Proposition> propositions = new LinkedHashSet<Proposition>();
@@ -51,101 +54,53 @@ public class Question {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-
-
-	public Question(long idQuestion, String libelle, long idCanal,Personne idCreateur, long idTypeQuestion
-			/*,long idQuestionnaire*/) {
+	public Question(String libelle, long idCanal, Personne auteur, Collection<Proposition> propositions,
+			long idTypeQuestion) {
 		super();
-		this.idQuestion = idQuestion;
 		this.libelle = libelle;
 		this.idCanal = idCanal;
+		this.auteur = auteur;
+		this.propositions = propositions;
 		this.idTypeQuestion = idTypeQuestion;
-		//this.idQuestionnaire = idQuestionnaire;
-		this.idCreateur = idCreateur;
 	}
-
-
-
 	public long getIdQuestion() {
 		return idQuestion;
 	}
-
-
-
 	public void setIdQuestion(long idQuestion) {
 		this.idQuestion = idQuestion;
 	}
-
-
-
 	public String getLibelle() {
 		return libelle;
 	}
-
-
-
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
-
-
-
 	public long getIdCanal() {
 		return idCanal;
 	}
-
-
-
 	public void setIdCanal(long idCanal) {
 		this.idCanal = idCanal;
 	}
-
-	public long getIdTypeQuestion() {
-		return idTypeQuestion;
+	public Personne getAuteur() {
+		return auteur;
 	}
-
-
-
-	public void setIdTypeQuestion(long idTypeQuestion) {
-		this.idTypeQuestion = idTypeQuestion;
+	public void setAuteur(Personne auteur) {
+		this.auteur = auteur;
 	}
-
-/*
-	public long getIdQuestionnaire() {
-		return idQuestionnaire;
-	}
-
-
-
-	public void setIdQuestionnaire(long idQuestionnaire) {
-		this.idQuestionnaire = idQuestionnaire;
-	}
-
-*/
-
-	public Personne getIdCreateur() {
-		return idCreateur;
-	}
-
-
-
-	public void setIdCreateur(Personne idCreateur) {
-		this.idCreateur = idCreateur;
-	}
-
-
-
 	public Collection<Proposition> getPropositions() {
 		return propositions;
 	}
-
-
-
 	public void setPropositions(Collection<Proposition> propositions) {
 		this.propositions = propositions;
 	}
+	public long getIdTypeQuestion() {
+		return idTypeQuestion;
+	}
+	public void setIdTypeQuestion(long idTypeQuestion) {
+		this.idTypeQuestion = idTypeQuestion;
+	}
+	
 
-
+	
 	
 }
