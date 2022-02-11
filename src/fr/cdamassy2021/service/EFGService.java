@@ -22,16 +22,12 @@ public class EFGService {
 	EFGRepository repo;
 
 	public List<EFG> listAll() {
-
 		List<EFG> EfgList = repo.findAll();
-
 		return EfgList;
-
 	}
 
 	public List<EFG> listByCanal(int idCanal) {
 		List<EFG> EfgList = repo.findByCanal(idCanal);
-
 		return EfgList;
 	}
 
