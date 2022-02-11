@@ -42,6 +42,7 @@ public class ListerMembresCanalServlet extends HttpServlet {
 	      List<Personne> membresCanal = CanalDao.getMembresDuCanal(idCanal);
 	      // Mettre en post-it les membres du canal concerné pour les reccuperer dans la jsp 
 	      request.setAttribute("membres", membresCanal);
+	      request.setAttribute("idCanal", idCanal);
 	    } catch (SQLException exc) {
 	      vue = VUE_ERREUR;
 	      

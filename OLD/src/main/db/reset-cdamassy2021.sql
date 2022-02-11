@@ -48,22 +48,22 @@ BEGIN
 		(3, 'options multiples');
       
 		-- Tableaux ne dépendant que du 1er groupe
-		INSERT INTO	efg(id_efg, intitule, date_creation, id_createur, id_canal) VALUES
+		INSERT INTO	efg(id_efg, intitule, date_creation, id_createur, id_canal, groupes) VALUES
     -- 2 dans le canal 1 + 1 dans le canal 2, tous du formateur 1
-			(1, 'TP définir objectif', date_effet - INTERVAL 1 MONTH, 1, 1),
-			(2, 'TP cadrage', date_effet - INTERVAL 1 MONTH, 1, 1),
-			(3, "TP tests d'acceptation", date_effet - INTERVAL 1 MONTH, 1, 2);
+			(1, 'TP définir objectif', date_effet - INTERVAL 1 MONTH, 1, 1,'2,3'),
+			(2, 'TP cadrage', date_effet - INTERVAL 1 MONTH, 1, 1, '2,2'),
+			(3, "TP tests d'acceptation", date_effet - INTERVAL 1 MONTH, 1, 2, NULL);
 		
 		INSERT INTO question(id_question, libelle, id_canal, id_createur, 
     id_type_question, id_questionnaire) VALUES
 			-- 1 de chaque type
-			(1, 'Avez-vous fini ?', 1, 1, 1,null), -- oui/non
-			(2, 'Combien de temps voulez-vous pour ce TP ?', 1, 1, 3,null), -- plusieurs choix 
+			(1, 'Avez-vous fini�?', 3, 1, 1,null), -- oui/non
+			(2, 'Combien de temps voulez-vous pour ce TP�?', 3, 1, 3,null), -- plusieurs choix 
 			(3, 'Donnez un exemple de classe abstraite', 1, 1, 2,null), -- libre
 			(4, "Chassez l'intrus",1,2,3,1), -- portée
 			(5, 'Que vaut s, avec String s = "0" + 1 ?', 1, 1, 3,1), -- plusieurs choix 
-			(6, "Quel fruit est un fruit d'hiver ?", 1, 1, 3,2), -- plusieurs choix 
-			(7, "Quel légume est le plus riche en vitamine C ?", 1, 1, 3,2); -- plusieurs choix 
+			(6, "Quel fruit est un fruit d'hiver�?", 2, 1, 3,2), -- plusieurs choix 
+			(7, "Quel légume est le plus riche en vitamine C�?", 2, 1, 3,2); -- plusieurs choix 
 		
         INSERT INTO membre_canal(id_canal, id_personne, ajoute_a) VALUES
 			-- les 2 formateurs dans canal 1

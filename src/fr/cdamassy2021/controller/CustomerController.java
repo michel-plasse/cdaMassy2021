@@ -21,13 +21,6 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 	
-	@RequestMapping("/")
-	public ModelAndView home() {
-		List<Customer> listCustomer = customerService.listAll();
-		ModelAndView mav = new ModelAndView("index");
-		mav.addObject("listCustomer", listCustomer);
-		return mav;
-	}
 	
 	@RequestMapping("/new")
 	public String newCustomerForm(Map<String, Object> model) {
