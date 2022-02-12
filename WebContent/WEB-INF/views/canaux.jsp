@@ -4,6 +4,7 @@
 <p:header title="Canaux" />
 <%-- Message d'erreur ou pas, au cas où --%>
 <h3 class="success">${messageSuccess}</h3>
+<h3 class="erreur">${messageError}</h3>
 <h1>Canaux</h1>
 <nav>
 	<c:if test="${empty canaux}">
