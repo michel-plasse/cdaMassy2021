@@ -13,9 +13,9 @@
             <form action="enleverMembre" method="post">
                 <input type="hidden" id="idMembreAEffacer" value="${membre.idPersonne}"
                        name="idMembreAEffacer" /> 
-                <input type="hidden" value="${idCanal}" name="idCanal" />
+                <input type="hidden" value="${canal.idCanal}" name="idCanal" />
                 ${membre.prenom}  ${membre.nom}
-                <button type="submit">Supprimer</button>
+                <button type="submit" href="${contextPath}/cdamassy2021/canaux/${canal.idCanal}/membres/{idPersonne}">Supprimer</button>
             </form>
         </li>
 

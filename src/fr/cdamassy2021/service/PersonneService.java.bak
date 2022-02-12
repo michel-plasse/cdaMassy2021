@@ -29,7 +29,10 @@ public class PersonneService {
 		return repo.findMembreByCanal(idCanal);
 	}
 	
+<<<<<<< Updated upstream
+=======
 	public void enleverMembreDuCanal(int idCanal, int idPersonne) {
 	}
+>>>>>>> Stashed changes
 
 }

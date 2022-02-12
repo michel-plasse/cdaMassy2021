@@ -11,7 +11,7 @@ Service -> Repository : CanalRepository\n.deleteById(idMembre_idC)
 Repository ->Service : ...
 Service -> Controleur : ...
 == Si ok ==
-Controleur -> Navigateur: redirect vers membresCanal.jsp
+Controleur -> Navigateur: redirect vers membres.jsp
 Controleur -> Vue: membresCanal.jsp
 Vue -> Javascript: liste des membres
 Javascript -> Navigateur: 
