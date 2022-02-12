@@ -1,5 +1,7 @@
 package fr.cdamassy2021.entity;
 
+import java.util.Objects;
+
 /** 
  * 
  * @author Kamal, Ben, Vinoth, Thomas
@@ -64,5 +66,4 @@ public class Proposition {
 	public void setEstCorrecte(String estCorrecte) {
 		this.estCorrecte = estCorrecte;
 	}
-	
 }
