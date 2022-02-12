@@ -15,13 +15,15 @@
 	</c:if>
 	<c:forEach items="${canaux}" var="canal">
     ${canal.nom} : 
-    	<a href="${contextPath}/cdamassy2021/canaux/${canal.idCanal}">Membres</a>
-
+		<a href="${contextPath}/cdamassy2021/canaux/${canal.idCanal}">Membres</a>
 		<button type="button"
 			onClick="location.href='canaux/${canal.idCanal}/EFGs'"
 			class="btn-efg">Exercices</button>
 
-		<a href="questions/${canal.idCanal}/afficher">Questions</a>
+		<a href="questions/${canal.idCanal}/afficher">Afficher les
+			questions</a>
+		<a href="questions/repondre?${canal.idCanal}">Repondre aux
+			questions</a>
 	</c:forEach>
 
 </nav>

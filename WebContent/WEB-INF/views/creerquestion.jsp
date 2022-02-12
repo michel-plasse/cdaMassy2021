@@ -27,7 +27,7 @@
                 </fieldset>
             </b>
             <b>
-                <label for="libelleQuestion"> Propositions <em>*</em></label><h4 class="erreur">${erreur_libelle}</h4>
+                <label for="libelleQuestion"> Propositions </label><h4 class="erreur">${erreur_libelle}</h4>
                 <fieldset>
                     <div class="blocAllPropositions">
                         Ajouter une proposition:<button type="button" id="addProposition">+</button>
