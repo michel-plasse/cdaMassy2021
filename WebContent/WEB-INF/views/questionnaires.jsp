@@ -4,7 +4,7 @@
 <p:header title="CDA Massy 2021"/>
 
     <style type="text/css">
-  		<%@include file="../../css/questionaire_style.css" %>  
+  		<%@include file="../../css/coquille_style.css" %>  
 	</style>
 	
 <h1>affichage questionnaires:</h1>

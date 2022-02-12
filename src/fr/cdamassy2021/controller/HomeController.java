@@ -24,6 +24,7 @@ public class HomeController {
 		ModelAndView mav = new ModelAndView("index");
 		return mav;
 	}
+		
 
 	@RequestMapping("/connexion")
 	public ModelAndView connexion() {
