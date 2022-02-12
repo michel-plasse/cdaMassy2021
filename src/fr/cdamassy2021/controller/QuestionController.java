@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.cdamassy2021.entity.Canal;
-import fr.cdamassy2021.entity.EFG;
 import fr.cdamassy2021.entity.Personne;
 import fr.cdamassy2021.entity.Question;
 import fr.cdamassy2021.service.CanalService;
@@ -30,6 +29,9 @@ public class QuestionController {
 
 	@Autowired
 	private QuestionService questionService;
+	
+	@Autowired
+	private CanalService canalService;
 	
 	@RequestMapping("/questions/activite")
 	public ModelAndView activiteQuestions(HttpServletRequest request,
@@ -70,7 +72,11 @@ public class QuestionController {
 			HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("repondrequestions");
 		long userId = ((Personne)request.getSession().getAttribute("currentUser")).getIdPersonne();
-		long canalId = Long.parseLong(request.getParameter("canal"));
+		Long canalId = (Long)request.getSession().getAttribute("currentCanalId");
+		if (canalId == null) {
+			canalId = Long.parseLong(request.getParameter("canal"));
+			request.getSession().setAttribute("currentCanalId",canalId);
+		}
 		mav.addObject("pendingQuestions", questionService.listPending(userId,canalId));
 		return mav;
 	}
