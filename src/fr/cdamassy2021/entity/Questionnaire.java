@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 package fr.cdamassy2021.entity;
-=======
-package entity;
->>>>>>> branch 'main' of local repository
 
 import java.sql.Date;
 import java.util.ArrayList;

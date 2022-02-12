@@ -16,10 +16,6 @@ import fr.cdamassy2021.repository.QuestionnaireRepository;
 public class QuestionnaireService {
 
 	@Autowired
-<<<<<<< HEAD
-=======
-	static
->>>>>>> branch 'main' of local repository
 	QuestionnaireRepository repo;
 	
 	public void save(Questionnaire questionnaire) {

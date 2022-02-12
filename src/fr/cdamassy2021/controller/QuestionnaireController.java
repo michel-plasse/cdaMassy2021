@@ -13,11 +13,7 @@ import fr.cdamassy2021.service.QuestionnaireService;
 
 /**
  * 
-<<<<<<< HEAD
  * @author grp2 11/02/2022
-=======
- * @author grp2
->>>>>>> branch 'main' of local repository
  * 
  * */
 
@@ -38,6 +34,5 @@ public class QuestionnaireController {
 		return mav;
 		
 	}
-		
-				
+					
 }
