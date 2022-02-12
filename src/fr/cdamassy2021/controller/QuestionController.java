@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import fr.cdamassy2021.entity.Personne;
 import fr.cdamassy2021.entity.Question;
+import fr.cdamassy2021.service.CanalService;
 import fr.cdamassy2021.service.QuestionService;
 
 /**
