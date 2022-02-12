@@ -20,9 +20,10 @@ import javax.persistence.ManyToMany;
 public class Canal {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idCanal;
+	private long idCanal;
 	@Column
 	private String nom;
+
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "membre_canal"
@@ -54,11 +55,19 @@ public class Canal {
 		this.idCanal = idCanal;
 	}
 
-	public String getNomCanal() {
+    public String getNom() {
 		return nom;
 	}
-
-	public void setNomCanal(String nomCanal) {
-		this.nom = nomCanal;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
+	
+	public Set<Personne> getAllMembres() {
+		return allMembres;
+	}
+	
+	public void setAllMembres(Set<Personne> allMembres) {
+		this.allMembres = allMembres;
+	}
+	
 }

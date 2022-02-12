@@ -40,6 +40,6 @@ public class CanalService {
 
 	public List<Canal> search(String keyword) {
 		return repo.search(keyword);
-
 	}
+
 }

@@ -3,8 +3,13 @@ package fr.cdamassy2021.entity;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -14,8 +19,24 @@ import javax.persistence.ManyToMany;
 public class Personne {
 
 	@Id
-	private int idPersonne;
-	private String prenom, nom, email, tel, pwd;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long idPersonne;
+	@Column
+	private String prenom;
+	@Column
+	private String nom;
+	@Column
+	private String email;
+	@Column
+	private String tel;
+	@Column
+	private String pwd;
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "membre_canal", 
+	joinColumns = { @JoinColumn(name = "id_personne") },
+	inverseJoinColumns = { @JoinColumn(name = "id_canal") })
+	private Set<Canal> allCanauxMembre;
 
 	/**
 	 * Constructeur
@@ -27,13 +48,6 @@ public class Personne {
 	 * @param tel
 	 * @param pwd
 	 */
-	
-	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="membre_canal"
-			,joinColumns = {@JoinColumn(name = "id_personne")}
-			,inverseJoinColumns = {@JoinColumn(name="id_canal")})
-	private Set<Canal> allCanauxMembre;
-	
 	public Personne(int id, String prenom, String nom, String email, String tel, String pwd) {
 		this.idPersonne = id;
 		this.prenom = prenom;
@@ -51,22 +65,14 @@ public class Personne {
 		this.pwd = pwd;
 	}
 
-	public Personne(int idPersonne, String prenom, String nom) {
-		this.idPersonne = idPersonne;
+	public Personne(int id, String prenom, String nom) {
+		this.idPersonne = id;
 		this.prenom = prenom;
 		this.nom = nom;
 	}
 
 	public Personne() {
 
-	}
-
-	public int getIdPersonne() {
-		return idPersonne;
-	}
-
-	public void setIdPersonne(int idPersonne) {
-		this.idPersonne = idPersonne;
 	}
 
 	public String getPrenom() {
@@ -109,10 +115,26 @@ public class Personne {
 		this.pwd = pwd;
 	}
 
+	public long getIdPersonne() {
+		return idPersonne;
+	}
+
+	public void setIdPersonne(long idPersonne) {
+		this.idPersonne = idPersonne;
+	}
+
+	public Set<Canal> getAllCanauxMembre() {
+		return allCanauxMembre;
+	}
+
+	public void setAllCanauxMembre(Set<Canal> allCanauxMembre) {
+		this.allCanauxMembre = allCanauxMembre;
+	}
+
 	@Override
 	public int hashCode() {
 		int hash = 7;
-		hash = 89 * hash + this.idPersonne;
+		hash = 89 * hash +(int) this.idPersonne;
 		hash = 89 * hash + Objects.hashCode(this.prenom);
 		hash = 89 * hash + Objects.hashCode(this.nom);
 		hash = 89 * hash + Objects.hashCode(this.email);

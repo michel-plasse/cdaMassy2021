@@ -13,4 +13,5 @@ public interface CanalRepository extends CrudRepository<Canal, Long> {
 	
 	@Query(value = "SELECT c FROM Canal c WHERE c.nom LIKE '%' || :keyword || '%'")
 	public List<Canal> search(@Param("keyword") String keyword);
+	
 }
