@@ -1,0 +1,47 @@
+     ┌──────────┐               ┌───┐          ┌──────────┐              ┌───┐          ┌────┐
+     │Navigateur│               │Vue│          │Controleur│              │Dao│          │SGBD│
+     └────┬─────┘               └─┬─┘          └────┬─────┘              └─┬─┘          └─┬──┘
+          │         GET /questionsParCanal?         │                      │              │   
+          │         noPage=... idCanal=...          │                      │              │   
+          │ ────────────────────────────────────────>                      │              │   
+          │                       │                 │                      │              │   
+          │                       │                 │ QuestionDao.         │              │   
+          │                       │                 │   getAllByCanal(     │              │   
+          │                       │                 │     noPage, idCanal) │              │   
+          │                       │                 │ ────────────────────>│              │   
+          │                       │                 │                      │              │   
+          │                       │                 │                      │SELECT *      │   
+          │                       │                 │                      │ FROM Question│   
+          │                       │                 │                      │ WHERE        │   
+          │                       │                 │                      │ id_canal=... │   
+          │                       │                 │                      │ LIMIT ...    │   
+          │                       │                 │                      │──────────────>   
+          │                       │                 │                      │              │   
+          │                       │                 │                      │    lignes    │   
+          │                       │                 │                      │<──────────────   
+          │                       │                 │                      │              │   
+          │                       │                 │    List<Question>    │              │   
+          │                       │                 │ <────────────────────│              │   
+          │                       │                 │                      │              │   
+          │                       │  questions.jsp  │                      │              │   
+          │                       │ <────────────────                      │              │   
+          │                       │                 │                      │              │   
+          │ tableau des questions │                 │                      │              │   
+          │ ecrites par canal     │                 │                      │              │   
+          │ +pagination           │                 │                      │              │   
+          │ <──────────────────────                 │                      │              │   
+     ┌────┴─────┐               ┌─┴─┐          ┌────┴─────┐              ┌─┴─┐          ┌─┴──┐
+     │Navigateur│               │Vue│          │Controleur│              │Dao│          │SGBD│
+     └──────────┘               └───┘          └──────────┘              └───┘          └────┘
+	 
+@startuml
+participant Navigateur
+participant Vue
+Navigateur -> Controleur : GET /questionsParCanal?\nnoPage=... idCanal=...
+Controleur -> Dao: QuestionDao.\n  getAllByCanal(\n    noPage, idCanal)
+Dao -> SGBD: SELECT *\n FROM Question\n WHERE\n id_canal=...\n LIMIT ...
+SGBD -> Dao: lignes
+Dao -> Controleur: List<Question>
+Controleur -> Vue: questions.jsp
+Vue -> Navigateur: tableau des questions \necrites par canal \n+pagination
+@enduml

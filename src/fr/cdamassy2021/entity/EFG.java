@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -14,6 +16,7 @@ import javax.persistence.Id;
 public class EFG {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEfg;
 
 	@Column
@@ -27,35 +30,26 @@ public class EFG {
 
 	public EFG() {
 	}
-	
+
 	public EFG(String intitule, String groupes) {
-		this.intitule=intitule;
-		this.groupes=groupes;
+		this.intitule = intitule;
+		this.groupes = groupes;
 	}
 
-	public EFG(int idEFG, int idCreateur, int idCanal, String intitule, String groupes) {
-		this.idEfg = idEFG;
+	public EFG(int idEfg, int idCreateur, int idCanal, String intitule, String groupes) {
+		this.idEfg = idEfg;
 		this.idCreateur = idCreateur;
 		this.idCanal = idCanal;
 		this.intitule = intitule;
 		this.groupes = groupes;
 	}
 
-	
 	public int getIdEfg() {
 		return idEfg;
 	}
 
 	public void setIdEfg(int idEfg) {
 		this.idEfg = idEfg;
-	}
-
-	public int getIdEFG() {
-		return idEfg;
-	}
-
-	public void setIdEFG(int idEFG) {
-		this.idEfg = idEFG;
 	}
 
 	public int getIdCreateur() {
@@ -81,8 +75,6 @@ public class EFG {
 	public void setIntitule(String intitule) {
 		this.intitule = intitule;
 	}
-
-	
 
 	public String getGroupes() {
 		return groupes;
