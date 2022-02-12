@@ -14,6 +14,7 @@
 
     <form:input path="intitule" placeholder="intitule" id="intitule"/>
     <form:input path="groupes" placeholder="groupes" id="groupes"/>
+    <!-- Gestion du reliquat avant de transmettre la répartition des groupes -->
     <button type="submit">Envoyer</button>
 </form:form>
 

@@ -15,7 +15,6 @@
 	<table>
 		<thead>
 			<tr>
-				<th>N°</th>
 				<th>Intitule</th>
 				<th>Accès à l'EFG</th>
 				<th>Accès au groupe de l'EFG</th>
@@ -25,7 +24,7 @@
 
 			<c:forEach items="${EFGs}" var="efg">
 				<tr>
-					<td>${efg.idEfg}</td>
+
 					<td>${efg.intitule}</td>
 					<td>
 						<button type="button" onClick="location.href='EFGs/${efg.idEfg}'"

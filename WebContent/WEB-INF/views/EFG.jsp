@@ -2,12 +2,12 @@
 <%@taglib prefix="p" tagdir="/WEB-INF/tags/"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <p:header title="Exercices de groupe" />
-<h1>Exercice n°${EFG.idEfg} : ${EFG.intitule}</h1>
+<h1>Exercice n°${EFG.idEfg}</h1>
 
-<p>Consignes : à venir</p>
+<p>Initutlé : ${EFG.intitule}</p>
 
-
-<button >${EFG.groupes}</button>
+<p>Répartition des groupes : ${EFG.groupes}.</p>
+<button>Créer les groupes</button>
 
 
 

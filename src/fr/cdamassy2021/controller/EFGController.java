@@ -48,11 +48,11 @@ public class EFGController {
 	public ModelAndView postForm(@ModelAttribute("newEFG") EFG efg, @PathVariable(value="idCanal") int idCanal) {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("EFG", efg);
-		System.out.println("coucou");
+		// provisoire, idéalement récupérer l'id de l'utilisateur connecté dans 
+		// la sessioncope et le setter dans l'idCreateur
 		efg.setIdCreateur(1);
 		efg.setIdCanal(idCanal);
 		EFG efgSaved = efgService.saveEFG(efg);
-		System.out.println(efgSaved);
 		mv.setViewName("redirect:/canaux/{idCanal}/EFGs/"+efgSaved.getIdEfg());
 		return mv;
 	}
