@@ -41,7 +41,15 @@
 		</tbody>
 	</table>
 </c:if>
-<button type="button" class="btn-efg" onClick="location.href='EFGs/new'">Créer un exercice en groupe</button>
+
+<!-- Empêche l'affichage du bouton de création de l'exercice dans le canal#3, car il n'y actuellement pas de membre à l'intérieur.
+A supprimer quand l'inscription sera faite -->
+<c:set var="idCanal" value="${idCanal}" />
+<c:if test="${idCanal != 3}">
+	<button type="button" class="btn-efg"
+		onClick="location.href='EFGs/new'">Créer un exercice en
+		groupe</button>
+</c:if>
 
 </body>
 </html>

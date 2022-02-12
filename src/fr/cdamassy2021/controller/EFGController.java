@@ -24,6 +24,7 @@ public class EFGController {
 		mv.setViewName("EFGs");
 		List<EFG> efgs = efgService.listByCanal(idCanal);
 		mv.addObject("EFGs", efgs);
+		mv.addObject("idCanal", idCanal);
 		return mv;
 	}
 
