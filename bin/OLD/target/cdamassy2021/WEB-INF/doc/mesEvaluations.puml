@@ -1,0 +1,16 @@
+@startuml
+' par défaut, les couches sont disposées dans l'ordre d'apparition
+' nous utilison participant pour préciser qu'après Navigateur il y a Vue et non Controleur
+participant Navigateur
+participant Vue
+
+Navigateur -> Controleur: GET /evaluations
+Controleur -> Controleur: récupère user de la session
+Controleur -> Dao: evaluationDao.getListEvaluationByPersonne(user.getId())
+Dao -> SGBD: SELECT ...
+SGBD -> Dao: lignes trouvées
+Dao -> Controleur: ArrayList<Evaluation>
+Controleur -> Vue: listEvaluations.jsp
+Vue -> Navigateur: html
+@enduml
+

@@ -24,6 +24,7 @@ public class EFGController {
 		mv.setViewName("EFGs");
 		List<EFG> efgs = efgService.listByCanal(idCanal);
 		mv.addObject("EFGs", efgs);
+		mv.addObject("idCanal", idCanal);
 		return mv;
 	}
 
@@ -48,7 +49,11 @@ public class EFGController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("EFG", efg);
 		System.out.println("coucou");
-		mv.setViewName("redirect:/canaux/{idCanal}/EFGs");
+		efg.setIdCreateur(1);
+		efg.setIdCanal(idCanal);
+		EFG efgSaved = efgService.saveEFG(efg);
+		System.out.println(efgSaved);
+		mv.setViewName("redirect:/canaux/{idCanal}/EFGs/"+efgSaved.getIdEfg());
 		return mv;
 	}
 }
