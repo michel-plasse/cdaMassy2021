@@ -6,6 +6,7 @@
 <h3 class="success">${messageSuccess}</h3>
 <h1>Canaux</h1>
 <nav>
+
 	<c:if test="${empty canaux}">
 		<p>
 			<c:out value="La liste est vide"></c:out>
@@ -13,7 +14,7 @@
 	</c:if>
 	<c:forEach items="${canaux}" var="canal">
     ${canal.nom} : 
-    	<a href="membrescanal?idCanal=${canal.idCanal}">Membres</a>
+    	<a href="${contextPath}/cdamassy2021/canaux/${canal.idCanal}">Membres</a>
 
 		<button type="button"
 			onClick="location.href='canaux/${canal.idCanal}/EFGs'"
@@ -24,4 +25,5 @@
 
 </nav>
 <p:footer />
+
 

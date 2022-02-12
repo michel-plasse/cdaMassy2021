@@ -1,0 +1,18 @@
+@startuml
+participant Navigateur
+participant Javascript
+participant Vue
+Navigateur -> Javascript
+Javascript -> Controleur : DELETE /canaux/{idCanal}/membres/{idPersonne}
+Controleur -> Controleur: v¨¦rifier droit de l'utilisateur
+Controleur -> Controleur: v¨¦rifier idCanal et idPersonne
+Controleur -> Service : CanalService\n.delete()
+Service -> Repository : CanalRepository\n.deleteById(idMembre_idC)
+Repository ->Service : ...
+Service -> Controleur : ...
+== Si ok ==
+Controleur -> Navigateur: redirect vers membresCanal.jsp
+Controleur -> Vue: membresCanal.jsp
+Vue -> Javascript: liste des membres
+Javascript -> Navigateur: 
+@enduml
