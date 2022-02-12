@@ -17,6 +17,7 @@ public class CanalController {
 	private CanalService canalService;
 	// autowired cree une instance de customerService. il reccupere le context dans le fichier WebAppInitaialiser
 	// cela cree aussi une instance de customerRepository 
+	
 	@RequestMapping("/canaux")
 	public ModelAndView home() {
 		List<Canal> listCanaux = canalService.listAll();

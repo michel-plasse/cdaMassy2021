@@ -24,6 +24,7 @@
           la BD</a>
         <a href="${context}/canaux">Canaux</a>
         <a href="${context}/activitequestions">Mes Questions</a>
+        <a href="${context}/questionnaires">Mes Questionnaires</a>
       </nav>
       <nav>
         <c:if test="${sessionScope['user'] != null}">

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import fr.cdamassy2021.entity.Canal;
 import fr.cdamassy2021.repository.CanalRepository;
 
-// fetch est une promesse , elle encpsule ... soit elle echoue soit elle reussie
+// fetch est une promesse , elle encapsule ... soit elle echoue soit elle reussie
 // en cas de succes => the 
 // fetch(url) cree un objet qui fait la requette ; elle a 2 methodes une en cas d'echec une autre en cas de succes
 
