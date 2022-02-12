@@ -1,6 +1,8 @@
 package fr.cdamassy2021.entity;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -46,6 +48,10 @@ public class Question {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idQuestion", cascade = CascadeType.ALL)
 	private Set<Proposition> propositions = new LinkedHashSet<Proposition>();
 
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "question", cascade = CascadeType.ALL)
+	private List<Reponse> reponses = new ArrayList<Reponse>();
+	
 	@Column
 	private long idTypeQuestion;
 
@@ -101,6 +107,12 @@ public class Question {
 	@Override
 	public int hashCode() {
 		return Objects.hash(auteur, idCanal, idQuestion, idTypeQuestion, libelle, propositions, questionnaire);
+	}
+	public List<Reponse> getReponses() {
+		return reponses;
+	}
+	public void setReponses(List<Reponse> reponses) {
+		this.reponses = reponses;
 	}
 	@Override
 	public boolean equals(Object obj) {

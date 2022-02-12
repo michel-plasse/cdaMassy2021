@@ -15,30 +15,31 @@ import fr.cdamassy2021.repository.QuestionRepository;
 public class QuestionService {
 
 	@Autowired
-	QuestionRepository repo;
+	QuestionRepository questionRepo;
 	
 	public void save(Question question) {
-		repo.save(question);
+		questionRepo.save(question);
 	}
 	
 	public List<Question> listAll() {
-		return (List<Question>) repo.findAll();
+		return (List<Question>) questionRepo.findAll();
 	}
 	public Question findById(long questionId) {
-		return repo.findById(questionId).get();
+		return questionRepo.findById(questionId).get();
 	}
 	
 	public List<Question> listByCanal(long idCanal) {
-		List<Question> allQuestions = repo.findByCanal(idCanal);
+		List<Question> allQuestions = questionRepo.findByCanal(idCanal);
 		System.out.println("QuestionService");
 		System.out.println(allQuestions);
 		return allQuestions;
 	}
 	
 	public List<Question> listPending(long idUser, long idCanal) {
-		List<Question> allQuestions = repo.findPending(idUser,idCanal);
+		List<Question> allQuestions = questionRepo.findPending(idUser,idCanal);
 		System.out.println("QuestionService : list pending questions");
 		System.out.println(allQuestions);
 		return allQuestions;
 	}
+	
 }
