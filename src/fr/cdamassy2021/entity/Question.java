@@ -1,23 +1,20 @@
 package fr.cdamassy2021.entity;
 
-import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
 
 /**
  * 
@@ -34,12 +31,12 @@ public class Question {
 
 	@Column
 	private String libelle;
-	
-    @Column
+
+	@Column
 	private long idCanal;
-	
+
 	@OneToOne
-    @JoinColumn(name = "id_createur")
+	@JoinColumn(name = "id_createur")
 	private Personne auteur;
 
 	@ManyToOne
@@ -47,16 +44,16 @@ public class Question {
 	private Questionnaire questionnaire;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idQuestion", cascade = CascadeType.ALL)
-	private Collection<Proposition> propositions = new LinkedHashSet<Proposition>();
-	
+	private Set<Proposition> propositions = new LinkedHashSet<Proposition>();
+
 	@Column
 	private long idTypeQuestion;
-	
+
 	public Question() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Question(String libelle, long idCanal, Personne auteur, Collection<Proposition> propositions,
+	public Question(String libelle, long idCanal, Personne auteur, Set<Proposition> propositions,
 			long idTypeQuestion) {
 		super();
 		this.libelle = libelle;
@@ -89,10 +86,10 @@ public class Question {
 	public void setAuteur(Personne auteur) {
 		this.auteur = auteur;
 	}
-	public Collection<Proposition> getPropositions() {
+	public Set<Proposition> getPropositions() {
 		return propositions;
 	}
-	public void setPropositions(Collection<Proposition> propositions) {
+	public void setPropositions(Set<Proposition> propositions) {
 		this.propositions = propositions;
 	}
 	public long getIdTypeQuestion() {
@@ -101,8 +98,22 @@ public class Question {
 	public void setIdTypeQuestion(long idTypeQuestion) {
 		this.idTypeQuestion = idTypeQuestion;
 	}
-	
-
-	
-	
+	@Override
+	public int hashCode() {
+		return Objects.hash(auteur, idCanal, idQuestion, idTypeQuestion, libelle, propositions, questionnaire);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Question other = (Question) obj;
+		return Objects.equals(auteur, other.auteur) && idCanal == other.idCanal && idQuestion == other.idQuestion
+				&& idTypeQuestion == other.idTypeQuestion && Objects.equals(libelle, other.libelle)
+				&& Objects.equals(propositions, other.propositions)
+				&& Objects.equals(questionnaire, other.questionnaire);
+	}
 }

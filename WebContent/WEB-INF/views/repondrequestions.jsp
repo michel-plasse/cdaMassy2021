@@ -11,10 +11,12 @@
  		<%@include file="../../css/questionaire_style.css" %>  
 </style> <!-- @include =  directive de compilation (jsp pure) -->
 <h1>Repondez à ces questions:</h1>
+<h3 class="success">${messageSuccess}</h3>
+<h3 class="erreur">${messageError}</h3>
 
 <div class="questionLayout">
     <c:forEach items="${pendingQuestions}" var="question">
-        <form method="post" action="envoyerreponseservlet">
+        <form method="post" action="${pageContext.request.contextPath}/reponses/envoyer">
             <div class="form-question">
                 <div class="intituleQuestion" id="intituleQuestion">
                     <b>${question.libelle}</b>
@@ -23,7 +25,7 @@
                 <c:if test="${question.propositions.size() gt 1}">
                     <br>
                 </c:if>
-                <c:forEach items="${question.getPropositions()}" var="proposition">
+                <c:forEach items="${question.propositions}" var="proposition">
                     <div>
                         <label for="01">${proposition.libelle}</label>
                         <input id="01" type="radio" name="reponse" value="${proposition.libelle}">
@@ -35,8 +37,8 @@
                     <textarea name="reponse" placeholder="..."></textarea>
                     <br>
                 </c:if>
-            </div>
-                <button type="submit" name="question" value="${question.idQuestion}" >Valider</button>
+                 <button type="submit" name="question" value="${question.idQuestion}" >Valider</button>
+            </div>  
         </form>
     </c:forEach>
     <br>

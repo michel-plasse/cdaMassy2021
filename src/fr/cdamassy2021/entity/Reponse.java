@@ -1,63 +1,52 @@
 package fr.cdamassy2021.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import fr.cdamassy2021.pkclasses.ReponsePK;
 
 /**
  * Une réponse est la réponse d'un utlisateur a un sondage.
  * @author thoma
  */
 @Entity
+@Table(name = "reponse")
+@IdClass(ReponsePK.class)
 public class Reponse {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idReponse;
-	
 	@ManyToOne
-    @JoinColumn(name = "id_personne")
-    private Personne auteur;
-    
+	@JoinColumn (name = "id_question")
+	private Question question;
+	
+	@Id
 	@ManyToOne
-    @JoinColumn(name = "id_question")
-    private Question question;
-	
+	@JoinColumn (name = "id_personne")
+	private Personne personne;
+
 	@Column
-    private String libelle;
-	
+	private String libelle;
+
 	@Column
-    private String dateRendu;
+	private String dateRendu;
 
-    public Reponse() {
+	public Reponse() {
 
-    }
+	}
+	
 
-	public Reponse(Personne auteur, Question question, String libelle, String dateRendu) {
+	public Reponse(Question question, Personne personne, String libelle) {
 		super();
-		this.auteur = auteur;
 		this.question = question;
+		this.personne = personne;
 		this.libelle = libelle;
-		this.dateRendu = dateRendu;
-	}
-
-	public long getIdReponse() {
-		return idReponse;
-	}
-
-	public void setIdReponse(long idReponse) {
-		this.idReponse = idReponse;
-	}
-
-	public Personne getAuteur() {
-		return auteur;
-	}
-
-	public void setAuteur(Personne auteur) {
-		this.auteur = auteur;
 	}
 
 	public Question getQuestion() {
@@ -66,6 +55,14 @@ public class Reponse {
 
 	public void setQuestion(Question question) {
 		this.question = question;
+	}
+
+	public Personne getPersonne() {
+		return personne;
+	}
+
+	public void setPersonne(Personne personne) {
+		this.personne = personne;
 	}
 
 	public String getLibelle() {
@@ -83,5 +80,25 @@ public class Reponse {
 	public void setDateRendu(String dateRendu) {
 		this.dateRendu = dateRendu;
 	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(dateRendu, libelle, personne, question);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Reponse other = (Reponse) obj;
+		return Objects.equals(dateRendu, other.dateRendu) && Objects.equals(libelle, other.libelle)
+				&& Objects.equals(personne, other.personne) && Objects.equals(question, other.question);
+	}	
 
 }
