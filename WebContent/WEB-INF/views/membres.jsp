@@ -32,7 +32,7 @@
     <button>Ajouter</button>
 </form>
 
-<script>
+<!-- <script>
     let formsSupprimer = document.querySelectorAll("form[action='enleverMembre']");
     console.log("numbre de formulaires :" + formsSupprimer.length);
     for (let i = 0; i < formsSupprimer.length; i++) {
@@ -43,4 +43,4 @@
             }
         }
     }
-</script>
+</script> -->
