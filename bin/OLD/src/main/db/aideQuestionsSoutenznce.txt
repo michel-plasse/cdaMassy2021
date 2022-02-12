@@ -1,0 +1,47 @@
+WEB JPA
+
+1. ou sont les jsp?
+dans la couche views, fichier WEB-INF pour 
+qu elle ne soient pas directement accessible
+pour le monde exterieur. 
+
+Dans le fichier WEB-INF/views pour la clarté.
+
+
+2. Vers ou amene une jsp?
+3. Ou est cree la servlet?
+	La servlet sont instanciees par 
+nos classes controller a moment du premier appel 
+de notre servlet.
+
+4. Qui cree la servlet?
+5. Ou ets la classe qui se conecte a la base de donnée?
+6. Ou est instanciee la classe de gestion de connexion?
+7. Ou est cree la requete SQL?
+8. Projet web: Les composents sont instanciés une fois au
+demarrage du projet au moment de son deploiement, 
+lors de la methode start-up de la configuration web.
+
+@ autowired.
+Quand spring va faire un new de CustomService il 
+va aussi faire un new de customer repository: 
+injection de dependance.
+
+9.Exemple MVC du modèle Customer.java:
+
+-CustomerController;
+@controller = est un compo de type controller instancie 
+par spring au moment du chargement du context a partir fichier config
+-CustomerRepository.java:
+Toutes les methode d acces a la base de donnée
+
+-CustomerService.java:
+toute les methodes metier, a en attribut 
+CustomerRepository et a l interieur de ces 
+methode on appele la methode correspondante 
+du CustomerRepository.
+le @Transactionnal 
+
+Au startup -> initializer.onStartup() -> maConfig.cfg
+Les composents ne sont pas encore instancie mais le 
+context est defini(quel compo instancier)
