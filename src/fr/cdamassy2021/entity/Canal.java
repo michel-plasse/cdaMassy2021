@@ -20,7 +20,7 @@ import javax.persistence.ManyToMany;
 public class Canal {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idCanal;
+	private int idCanal;
 	@Column
 	private String nom;
 
@@ -39,18 +39,18 @@ public class Canal {
 	 * @param idCanal
 	 * @param nom
 	 */
-	public Canal(Long idCanal, String nomCanal) {
+	public Canal(int idCanal, String nomCanal) {
 		// TODO Auto-generated constructor stub
 		this.idCanal = idCanal;
 		this.nom = nomCanal;
 
 	}
 
-	public Long getIdCanal() {
+	public int getIdCanal() {
 		return idCanal;
 	}
 
-	public void setIdCanal(Long idCanal) {
+	public void setIdCanal(int idCanal) {
 		this.idCanal = idCanal;
 	}
 

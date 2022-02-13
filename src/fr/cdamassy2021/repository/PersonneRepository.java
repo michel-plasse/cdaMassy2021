@@ -19,6 +19,6 @@ public interface PersonneRepository extends CrudRepository<Personne, Integer> {
 
 	@Query(value = "DELETE FROM membre_canal WHERE id_personne=? AND id_canal=?"
 			, nativeQuery = true)
-	public void SupprimerMembrDuCanal(int idCanal, int idPersonne);
+	public void SupprimerMembrDuCanal(int idPersonne,int idCanal);
 
 }

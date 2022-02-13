@@ -30,11 +30,11 @@ public class CanalService {
 		return (List<Canal>) repo.findAll();
 	}
 
-	public Canal get(Long idCanal) {
+	public Canal get(int idCanal) {
 		return repo.findById(idCanal).get();
 	}
 
-	public void delete(Long id) {
+	public void delete(int id) {
 		repo.deleteById(id);
 	}
 

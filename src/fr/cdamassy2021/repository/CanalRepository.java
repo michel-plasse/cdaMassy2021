@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import fr.cdamassy2021.entity.Canal;
 
 
-public interface CanalRepository extends CrudRepository<Canal, Long> {
+public interface CanalRepository extends CrudRepository<Canal, Integer> {
 	
 	@Query(value = "SELECT c FROM Canal c WHERE c.nom LIKE '%' || :keyword || '%'")
 	public List<Canal> search(@Param("keyword") String keyword);
