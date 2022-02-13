@@ -115,17 +115,17 @@ BEGIN
         
 		INSERT INTO reponse(id_question, id_personne, libelle) VALUES
 			-- question 1 avez-vous fini
-      (1, 3, 1),
-      (1, 4, 1),
-      (1, 5, 0),
-      (1, 6, 1),
-      (1, 7, 0),
+      (1, 3, 'Oui'),
+      (1, 4, 'Oui'),
+      (1, 5, 'Non'),
+      (1, 6, 'Oui'),
+      (1, 7, 'Non'),
 			-- question 2 Combien de temps voulez-vous pour ce TP (choix de 1 à 3)
-      (2, 3, 1),
-      (2, 4, 2),
-      (2, 5, 2),
-      (2, 6, 3),
-      (2, 7, 2),
+      (2, 3, '1h30'),
+      (2, 4, '1h'),
+      (2, 5, '1h30'),
+      (2, 6, '1h'),
+      (2, 7, '1h30'),
       -- question 3 Donnez un exemple de classe abstraite
       (3, 3, 'java.util.List'),
       (3, 4, 'ArrayList'),
