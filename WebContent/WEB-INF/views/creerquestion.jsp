@@ -11,10 +11,11 @@
   		<%@include file="../../css/questionaire_style.css" %>  
   		
 </style> <!-- @include =  directive de compilation (jsp pure) -->
-
-<h1>Formulaire de création question</h1>
 <h3 class="success">${messageSuccess}</h3>
 <h3 class="erreur">${messageError}</h3>
+
+<h1>Formulaire de création question</h1>
+
 <form class="form-question" action="${pageContext.request.contextPath}/questions/enregistrer" method="POST">
     <legend> Nouvelle Question: </legend>
     <p><i>Complétez le formulaire. Les champs marqué par </i><em>*</em> sont <em>obligatoires</em></p>

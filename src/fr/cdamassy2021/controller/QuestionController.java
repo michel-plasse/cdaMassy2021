@@ -73,6 +73,8 @@ public class QuestionController {
 		ModelAndView mav = new ModelAndView("creerquestion");
 		Personne currentUser = (Personne)request.getSession().getAttribute("currentUser");
 		mav.addObject("allCanauxMembre",currentUser.getAllCanauxMembre());
+		mav.addObject("messageSuccess",request.getParameter("messageSuccess"));
+		mav.addObject("messageError",request.getParameter("messageError"));
 		return mav;
 	}
 	
@@ -146,7 +148,8 @@ public class QuestionController {
                         (long)canalSelectionne);    
             System.out.println("valid free answer type");
         }
-        attrs.addAttribute("messageSuccess", "Question Enregistree");
+
+        if(valide) {attrs.addAttribute("messageSuccess", "Question Enregistree");}
 		ModelAndView mav = new ModelAndView("redirect:/questions/creer");
         System.out.println("should be ok Save");
 		return mav;
