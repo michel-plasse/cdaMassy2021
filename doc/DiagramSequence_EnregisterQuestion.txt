@@ -1,0 +1,27 @@
+@startuml
+
+Vue -> Controleur: POST /questions/enregister \n/w param : libelleQuestion, propositions, correctness
+
+== parametere valides : OK ==
+
+Controleur -> Service: QuestionService.save( \nString libelleQuestion, List<String>propositions, \nList<String>correctnesses)
+
+Service -> Repository: QuestionRepository.save(Question question)
+
+Repository -> Service: question
+
+Service ->Controleur: question
+Controleur -> Controleur : redirectAttribute.addAttribute("MessageSucces","message");)
+Controleur -> Controleur : redirect:/questions/creer \n Questioncontroller.creerQuestion()
+
+
+Controleur -> Vue: creerquestion.jsp
+
+== parametere valides : KO ==
+Controleur -> Controleur : redirectAttribute.addAttribute("MessageErreur","message");
+Controleur -> Controleur : redirect:/questions/creer \n Questioncontroller.creerQuestion()
+
+
+Controleur -> Vue: creerquestion.jsp
+
+@enduml
