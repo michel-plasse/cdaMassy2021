@@ -10,9 +10,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import fr.cdamassy2021.entity.Canal;
 import fr.cdamassy2021.entity.Personne;
 import fr.cdamassy2021.service.CanalService;
 import fr.cdamassy2021.service.PersonneService;
@@ -35,22 +37,22 @@ public class PersonneController {
 	}
 
 	@RequestMapping("/canaux/{idCanal}")
-	public ModelAndView listMembre(@PathVariable("idCanal") int IdCanal, 
-			HttpServletRequest request, 
-			HttpServletResponse response) {
+	public ModelAndView listMembre(@PathVariable("idCanal") int IdCanal) {
 		Collection<Personne> collectionPersonnes = personneService.listMembreByCanal(IdCanal);
 		ModelAndView mv = new ModelAndView("membres");
 		mv.addObject("membres", collectionPersonnes);
-		HttpSession session = request.getSession();
-		session.setAttribute("idCanal", IdCanal);
+		Canal canal = new Canal();
+		mv.addObject("canal", canal);
+		System.out.println("===========================" + canal.getNomCanal());
 		
 		return mv;
 	}
 	
-	@RequestMapping("/canaux/{idCanal}/membres/{idPersonne}")
+	@PostMapping("canaux/{canal.idCanal}/{idPersonne}/enleve")
 	public String supprimerMembreDuCanal(
 			@PathVariable("idCanal") int idCanal,
 			@PathVariable("idPersonne") int idPersonne) {
+		System.out.println("=================coucou");
 		//v¨¦rifier droit de l'utilisateur
 		//v¨¦rifier idCanal et idPersonne
 		personneService.enleverMembreDuCanal(idCanal, idPersonne);

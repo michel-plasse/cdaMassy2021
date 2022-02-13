@@ -10,12 +10,12 @@
 <ol>
     <c:forEach items="${membres}" var="membre">
         <li>
-            <form action="enleverMembre" method="post">
+            <form action="canaux/${canal.idCanal}/${idPersonne}/enleve" method="post">
                 <input type="hidden" id="idMembreAEffacer" value="${membre.idPersonne}"
                        name="idMembreAEffacer" /> 
                 <input type="hidden" value="${canal.idCanal}" name="idCanal" />
                 ${membre.prenom}  ${membre.nom}
-                <button type="submit" href="${contextPath}/cdamassy2021/canaux/${canal.idCanal}/membres/{idPersonne}">Supprimer</button>
+                <button type="submit" >Supprimer</button>
             </form>
         </li>
 
