@@ -1,0 +1,11 @@
+@startuml
+participant Navigateur
+participant Vue
+Navigateur -> Controller : GET/questionnaire/afficher\nQuestionnaireController\n.afficherQuestionnaires()
+Controller -> Service : QuestionnaireService\n.listAll()
+Service -> Repository : QuestionnaireRepository\n.findAll()
+Repository -> Service : collection<Questionnaire>
+Service -> Controller : questionnaire = collection<Questionnaire>
+Controler -> Vue : ModelAndView\n("questionnaire", afficherQuestionnaire)
+Vue -> Navigateur : afficherQuestionnaire.jsp
+@enduml
