@@ -2,9 +2,6 @@ package fr.cdamassy2021.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,9 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import fr.cdamassy2021.entity.Canal;
 import fr.cdamassy2021.entity.EFG;
-import fr.cdamassy2021.service.CanalService;
 import fr.cdamassy2021.service.EFGService;
 
 @Controller
@@ -24,16 +19,13 @@ public class EFGController {
 	@Autowired
 	private EFGService efgService;
 
-	@Autowired
-	private CanalService canalService;
-
 	@RequestMapping("canaux/{idCanal}/EFGs")
 	public ModelAndView allEFGs(@PathVariable(value = "idCanal") int idCanal, ModelAndView mv) {
 		mv.setViewName("EFGs");
 		List<EFG> efgs = efgService.listByCanal(idCanal);
-		int nbMembres = efgService.nombreMembresCanal(idCanal);
 		mv.addObject("EFGs", efgs);
 		mv.addObject("idCanal", idCanal);
+		int nbMembres = efgService.nbreMembresCanal(idCanal);
 		mv.addObject("nbMembres", nbMembres);
 		return mv;
 	}
@@ -46,25 +38,23 @@ public class EFGController {
 		mv.addObject("EFG", efg);
 		return mv;
 	}
-
+	
 	@RequestMapping("canaux/{idCanal}/EFGs/new")
-	public ModelAndView newEFG(@PathVariable(value = "idCanal") int idCanal, ModelAndView mv) {
+	public ModelAndView newEFG(@PathVariable(value="idCanal") int idCanal, ModelAndView mv) {
 		mv.setViewName("createEFG");
 		mv.addObject("newEFG", new EFG());
 		return mv;
 	}
-
-	@PostMapping("canaux/{idCanal}/EFGs/new")
-	public ModelAndView postForm(@ModelAttribute("newEFG") EFG efg, @PathVariable(value = "idCanal") int idCanal,
-			HttpServletRequest request, HttpServletResponse response) {
+	
+	@PostMapping("canaux/{idCanal}/EFGs/new") 
+	public ModelAndView postForm(@ModelAttribute("newEFG") EFG efg, @PathVariable(value="idCanal") int idCanal) {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("EFG", efg);
-		System.out.println("coucou");
 		efg.setIdCreateur(1);
 		efg.setIdCanal(idCanal);
 		EFG efgSaved = efgService.saveEFG(efg);
 		System.out.println(efgSaved);
-		mv.setViewName("redirect:/canaux/{idCanal}/EFGs/" + efgSaved.getIdEfg());
+		mv.setViewName("redirect:/canaux/{idCanal}/EFGs/"+efgSaved.getIdEfg());
 		return mv;
 	}
 }
