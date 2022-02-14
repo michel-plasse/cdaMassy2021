@@ -52,7 +52,7 @@ public class PersonneController {
 	@RequestMapping("/erreur/{message}")
 	public ModelAndView erreur(@PathVariable("message") String message ) {
 		ModelAndView mv = new ModelAndView("erreur");
-		
+
 		mv.addObject("message",message );
 
 		return mv;
@@ -60,28 +60,42 @@ public class PersonneController {
 
 	@PostMapping("/canaux/enleve")
 	public String deleteMembre(HttpServletRequest request, HttpServletResponse response, Model model) {
-		// v��rifier droit de l'utilisateur
-		// v��rifier idCanal et idPersonne
+		// verifier droit de l'utilisateur
+		// verifier idCanal et idPersonne
 		int idMembreAEffacer = Integer.parseInt(request.getParameter("idMembreAEffacer"));
 		int idCanal = Integer.parseInt(request.getParameter("idCanal"));
+
 		System.out.println("==============" + idMembreAEffacer + "++++++++" + idCanal);
-		personneService.enleverMembreDuCanal(idMembreAEffacer, idCanal);
-		model.addAttribute("idCanal", idCanal);
-		return "redirect:/canaux/{idCanal}";
+
+		Personne personne_en_session = (Personne) request.getSession().getAttribute("currentUser");
+
+		if(personne_en_session.getEst_administrateur()== 1) {
+			personneService.enleverMembreDuCanal(idMembreAEffacer, idCanal);
+			model.addAttribute("idCanal", idCanal);
+			return "redirect:/canaux/{idCanal}";
+
+		}else {
+			model.addAttribute("message", "Vous n'avez pas ces droits");
+			return "redirect:/erreur/{message}";
+		}
+
 	}
 	@RequestMapping("/canaux/addMembre")
 	public String addMembreToCanal(HttpServletRequest request, HttpServletResponse response, Model model) {
 		int idPersonneAAjouter = Integer.parseInt(request.getParameter("idPersonneAjouter"));
 		int idCanal = Integer.parseInt(request.getParameter("idCanalAjouter"));
-		Personne personne_en_session = (Personne) request.getSession().getAttribute("currentUser");	
-        if(personne_en_session.getEst_gestionnaire() ==1) {
-        	personneService.ajouterMembreDuCanal(idPersonneAAjouter, idCanal);
-        	model.addAttribute("idCanal", idCanal);
-    		return "redirect:/canaux/{idCanal}";
-        }else {
-        	model.addAttribute("message", "Vous n'avez pas ces droits");
-        	return "redirect:/erreur/{message}";
-        }
+
+		Personne personne_en_session = (Personne) request.getSession().getAttribute("currentUser");
+
+		if(personne_en_session.getEst_gestionnaire() ==1) {
+			personneService.ajouterMembreDuCanal(idPersonneAAjouter, idCanal);
+			model.addAttribute("idCanal", idCanal);
+			return "redirect:/canaux/{idCanal}";
+
+		}else {
+			model.addAttribute("message", "Vous n'avez pas ces droits");
+			return "redirect:/erreur/{message}";
+		}
 	}
 
 }
