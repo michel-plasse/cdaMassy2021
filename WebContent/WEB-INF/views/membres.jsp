@@ -32,8 +32,8 @@
     <button>Ajouter</button>
 </form>
 
-<!-- <script>
-    let formsSupprimer = document.querySelectorAll("form[action='enleverMembre']");
+ <script>
+    let formsSupprimer = document.querySelectorAll("form[action='enleve']");
     console.log("numbre de formulaires :" + formsSupprimer.length);
     for (let i = 0; i < formsSupprimer.length; i++) {
         formsSupprimer[i].onsubmit = function (event) {
@@ -43,4 +43,4 @@
             }
         }
     }
-</script> -->
+</script> 

@@ -39,14 +39,6 @@ public class CanalController {
 		mav.addObject("canaux", listCanaux);
 		return mav;
 	}
-	@RequestMapping("/canaux/addMembre")
-	public String addMembreToCanal(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
-		int idPersonneAAjouter = Integer.parseInt(request.getParameter("idPersonneAjouter"));
-		int idCanal = Integer.parseInt(request.getParameter("idCanalAjouter"));
-		 personneService.ajouterMembreDuCanal(idPersonneAAjouter, idCanal);
-		 model.addAttribute("idCanal", idCanal);
-		return "redirect:/canaux/{idCanal}";
-	}
+
 
 }
