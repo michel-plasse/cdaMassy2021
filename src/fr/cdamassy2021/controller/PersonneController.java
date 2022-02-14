@@ -69,7 +69,7 @@ public class PersonneController {
 
 		Personne personne_en_session = (Personne) request.getSession().getAttribute("currentUser");
 
-		if(personne_en_session.getEst_administrateur()== 1) {
+		if(personne_en_session.getEst_gestionnaire()== 1) {
 			personneService.enleverMembreDuCanal(idMembreAEffacer, idCanal);
 			model.addAttribute("idCanal", idCanal);
 			return "redirect:/canaux/{idCanal}";
