@@ -21,8 +21,8 @@ public class MembreCanal {
 	@Column(name="id_personne")
 	private int idPersonne;
 	
-	@OneToMany(mappedBy = "créateur",targetEntity = EFG.class)
-	private Set<EFG> efgCrées;
+	@OneToMany(mappedBy = "createur",targetEntity = EFG.class)
+	private Set<EFG> efgCrees;
 
 
 	public MembreCanal() {
@@ -45,12 +45,12 @@ public class MembreCanal {
 		this.idPersonne = idPersonne;
 	}
 
-	public Set<EFG> getEfgCrées() {
-		return efgCrées;
+	public Set<EFG> getEfgCrees() {
+		return efgCrees;
 	}
 
-	public void setEfgCrées(Set<EFG> efgCrées) {
-		this.efgCrées = efgCrées;
+	public void setEfgCrees(Set<EFG> efgCrées) {
+		this.efgCrees = efgCrées;
 	}
 	
 	

@@ -30,7 +30,7 @@ public class EFG {
 		@JoinColumn(name="id_createur",referencedColumnName = "id_personne"),
 		@JoinColumn(name="id_canal",referencedColumnName = "id_canal")
 	})
-	private MembreCanal cr�ateur;
+	private MembreCanal createur;
 
 	@Column
 	private String intitule;
@@ -38,24 +38,26 @@ public class EFG {
 	private String groupes;
 
 	public EFG() {
-		this.cr�ateur= new MembreCanal();
-		this.cr�ateur.setEfgCr�es(new HashSet<EFG>());
-		this.cr�ateur.getEfgCr�es().add(this);
+		this.createur= new MembreCanal();
+		this.createur.setEfgCrees(new HashSet<EFG>());
+		this.createur.getEfgCrees().add(this);
 	}
 
 	public EFG(String intitule, String groupes) {
 		this.intitule = intitule;
 		this.groupes = groupes;
-		this.cr�ateur.setEfgCr�es(new HashSet<EFG>());
-		this.cr�ateur.getEfgCr�es().add(this);
+		this.createur= new MembreCanal();
+		this.createur.setEfgCrees(new HashSet<EFG>());
+		this.createur.getEfgCrees().add(this);
 	}
 
 	public EFG(int idEfg, int idCreateur, int idCanal, String intitule, String groupes) {
 		this.idEfg = idEfg;
-		this.cr�ateur.setIdCanal(idCanal);
-		this.cr�ateur.setIdPersonne(idCreateur);
-		this.cr�ateur.setEfgCr�es(new HashSet<EFG>());
-		this.cr�ateur.getEfgCr�es().add(this);
+		this.createur= new MembreCanal();
+		this.createur.setIdCanal(idCanal);
+		this.createur.setIdPersonne(idCreateur);
+		this.createur.setEfgCrees(new HashSet<EFG>());
+		this.createur.getEfgCrees().add(this);
 		this.intitule = intitule;
 		this.groupes = groupes;
 	}
@@ -69,19 +71,19 @@ public class EFG {
 	}
 
 	public int getIdCreateur() {
-		return getCr�ateur().getIdPersonne();
+		return getCreateur().getIdPersonne();
 	}
 
 	public void setIdCreateur(int idCreateur) {
-		this.cr�ateur.setIdPersonne(idCreateur);
+		this.createur.setIdPersonne(idCreateur);
 	}
 
 	public int getIdCanal() {
-		return getCr�ateur().getIdCanal();
+		return getCreateur().getIdCanal();
 	}
 
 	public void setIdCanal(int idCanal) {
-		this.cr�ateur.setIdCanal(idCanal);
+		this.createur.setIdCanal(idCanal);
 	}
 
 	public String getIntitule() {
@@ -99,12 +101,12 @@ public class EFG {
 	public void setGroupes(String groupes) {
 		this.groupes = groupes;
 	}
-	public MembreCanal getCr�ateur() {
-		return cr�ateur;
+	public MembreCanal getCreateur() {
+		return createur;
 	}
 
-	public void setCr�ateur(MembreCanal cr�ateur) {
-		this.cr�ateur = cr�ateur;
+	public void setCreateur(MembreCanal createur) {
+		this.createur = createur;
 	}
 	@Override
 	public String toString() {

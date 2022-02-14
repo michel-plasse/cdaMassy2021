@@ -25,7 +25,7 @@ public class EFGController {
 		List<EFG> efgs = efgService.listByCanal(idCanal);
 		mv.addObject("EFGs", efgs);
 		mv.addObject("idCanal", idCanal);
-		int nbMembres = efgService.nbreMembresCanal(idCanal);
+		int nbMembres = efgService.nombreMembresCanal(idCanal);
 		mv.addObject("nbMembres", nbMembres);
 		return mv;
 	}
