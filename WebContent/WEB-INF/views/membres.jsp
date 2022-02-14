@@ -10,12 +10,12 @@
 <ol>
     <c:forEach items="${membres}" var="membre">
         <li>
-            <form action="enleverMembre" method="post">
+            <form action="enleve" method="post">
                 <input type="hidden" id="idMembreAEffacer" value="${membre.idPersonne}"
                        name="idMembreAEffacer" /> 
                 <input type="hidden" value="${idCanal}" name="idCanal" />
                 ${membre.prenom}  ${membre.nom}
-                <button type="submit">Supprimer</button>
+                <button type="submit" >Supprimer</button>
             </form>
         </li>
 
@@ -32,7 +32,7 @@
     <button>Ajouter</button>
 </form>
 
-<script>
+<!-- <script>
     let formsSupprimer = document.querySelectorAll("form[action='enleverMembre']");
     console.log("numbre de formulaires :" + formsSupprimer.length);
     for (let i = 0; i < formsSupprimer.length; i++) {
@@ -43,4 +43,4 @@
             }
         }
     }
-</script>
+</script> -->
