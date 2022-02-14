@@ -1,5 +1,7 @@
 package fr.cdamassy2021.controller;
 
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Collection;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +27,7 @@ public class PersonneController {
 
 	@Autowired
 	PersonneService personneService;
-	
+
 	@Autowired
 	CanalService canalService;
 
@@ -41,23 +44,21 @@ public class PersonneController {
 		Collection<Personne> collectionPersonnes = personneService.listMembreByCanal(IdCanal);
 		ModelAndView mv = new ModelAndView("membres");
 		mv.addObject("membres", collectionPersonnes);
-		Canal canal = new Canal();
-		mv.addObject("canal", canal);
-		System.out.println("===========================" + canal.getNomCanal());
-		
+		mv.addObject("idCanal", IdCanal);
+
 		return mv;
 	}
-	
-	@PostMapping("canaux/{canal.idCanal}/{idPersonne}/enleve")
-	public String supprimerMembreDuCanal(
-			@PathVariable("idCanal") int idCanal,
-			@PathVariable("idPersonne") int idPersonne) {
-		System.out.println("=================coucou");
-		//v¨¦rifier droit de l'utilisateur
-		//v¨¦rifier idCanal et idPersonne
-		personneService.enleverMembreDuCanal(idCanal, idPersonne);
+
+	@PostMapping("/canaux/enleve")
+	public String deleteMembre(HttpServletRequest request, HttpServletResponse response, Model model) {
+		// v¨¦rifier droit de l'utilisateur
+		// v¨¦rifier idCanal et idPersonne
+		int idMembreAEffacer = Integer.parseInt(request.getParameter("idMembreAEffacer"));
+		int idCanal = Integer.parseInt(request.getParameter("idCanal"));
+		System.out.println("==============" + idMembreAEffacer + "++++++++" + idCanal);
+		personneService.enleverMembreDuCanal(idMembreAEffacer, idCanal);
+		model.addAttribute("idCanal", idCanal);
 		return "redirect:/canaux/{idCanal}";
 	}
-
 
 }

@@ -2,6 +2,7 @@ package fr.cdamassy2021.repository;
 
 import java.util.Collection;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -17,8 +18,12 @@ public interface PersonneRepository extends CrudRepository<Personne, Integer> {
 			+ "WHERE id_canal=?", nativeQuery = true)
 	public Collection<Personne> findMembreByCanal(int idCanal);
 
+	//Quand faire Update ou Delele, 
+	//pour l'erreur "Cannot issue data manipulation statements with executeQuery()", 
+	//on peut ajouter une annotation @Modifying
+	@Modifying
 	@Query(value = "DELETE FROM membre_canal WHERE id_personne=? AND id_canal=?"
 			, nativeQuery = true)
-	public void SupprimerMembrDuCanal(int idPersonne,int idCanal);
+	public void SupprimerMembrDuCanal(int idMembreAEffacer,int idCanal);
 
 }
