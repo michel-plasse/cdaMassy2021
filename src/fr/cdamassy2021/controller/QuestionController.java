@@ -142,10 +142,7 @@ public class QuestionController {
 
         else if (valide){
             Personne auteur = (Personne) request.getSession().getAttribute("currentUser");
-            questionService.creerQuestion(
-                        libelleQuestion,
-                        auteur,
-                        (long)canalSelectionne);    
+            questionService.creerQuestion(libelleQuestion, auteur, (long)canalSelectionne);    
             System.out.println("valid free answer type");
         }
 
@@ -155,16 +152,25 @@ public class QuestionController {
 		return mav;
 	}
 	
+	@RequestMapping("/questions/repondre/{idCanal}")
+	public ModelAndView repondreQuestions(@PathVariable(value="idCanal") long idCanal, 
+			HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("repondrequestions");
+		long userId = ((Personne)request.getSession().getAttribute("currentUser")).getIdPersonne();
+		request.getSession().setAttribute("currentCanalId", idCanal);
+		mav.addObject("pendingQuestions", questionService.listPending(userId,idCanal));
+		return mav;
+	}
 	@RequestMapping("/questions/repondre")
-	public ModelAndView repondreQuestions(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView repondreQuestions( 
+			HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("repondrequestions");
 		long userId = ((Personne)request.getSession().getAttribute("currentUser")).getIdPersonne();
 		Long canalId = (Long)request.getSession().getAttribute("currentCanalId");
 		if (canalId == null) {
 			canalId = Long.parseLong(request.getParameter("canal"));
-			request.getSession().setAttribute("currentCanalId",canalId);
-		}
+			request.getSession().setAttribute("currentCanalId", canalId);
+			}
 		mav.addObject("pendingQuestions", questionService.listPending(userId,canalId));
 		return mav;
 	}

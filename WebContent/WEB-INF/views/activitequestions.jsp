@@ -25,7 +25,7 @@ ${msg}
 </section>
 <section id="index_articles">
     <article>
-        <h3>Afficher vos questions</h3>
+        <h3>Afficher vos questions (Not Implemented yet)</h3>
         <p>Affiche la liste des questions que vous avez déjà posées.</p>
         <form action="/CeLienNEstPasImplemente"class="boutonActivite" >
             <button type="submit">Afficher Questions</button>
@@ -51,7 +51,7 @@ ${msg}
     <article>
         <h3>Repondre aux questions</h3>
         <p>Affiche la liste des question qui vous ont été posées.</p>
-        <form action="${pageContext.request.contextPath}/questions/repondre"class="boutonActivite" >
+        <form action="${pageContext.request.contextPath}/questions/repondre/${canal}"class="boutonActivite" >
                 <label for="canal">Choisissez un canal:</label>
                 <select name="canal" id="canal-select">
                     <c:forEach items="${allCanauxMembre}" var="canal">
@@ -71,7 +71,7 @@ ${msg}
     </article>
 
     <article style="clear:left;">
-        <h3>Editer une question</h3>
+        <h3>Editer une question(Not Implemented yet)</h3>
         <p>En cours d'implémentation</p>
     </article>
     <p:footer/>

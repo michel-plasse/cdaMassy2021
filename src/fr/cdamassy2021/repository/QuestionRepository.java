@@ -26,8 +26,8 @@ public interface QuestionRepository extends CrudRepository<Question, Long> {
             + "WHERE NOT EXISTS(\n"
             + "	SELECT r.id_question\n"
             + "    FROM reponse r\n"
-            + "    WHERE r.id_question = q.id_question AND r.id_personne = ?\n" 
-            + ") AND id_canal = ?;"
+            + "    WHERE r.id_question = q.id_question AND r.id_personne=?1 " 
+            + ") AND id_canal=?2 ;"
             , nativeQuery=true)
 	public List<Question> findPending(long idUser, long idCanal);
 }
