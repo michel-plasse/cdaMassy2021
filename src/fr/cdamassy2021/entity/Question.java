@@ -45,7 +45,7 @@ public class Question {
 	@JoinColumn (name = "id_questionnaire")
 	private Questionnaire questionnaire;
 
-	@OneToMany(mappedBy="question")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "question", cascade = CascadeType.ALL)
 	private Set<Proposition> propositions = new LinkedHashSet<Proposition>();
 
 
