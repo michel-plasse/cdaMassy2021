@@ -40,18 +40,19 @@ public class Canal {
 	 * @param idCanal
 	 * @param nom
 	 */
-	public Canal(Long idCanal, String nomCanal) {
+	public Canal(long idCanal, String nomCanal) {
 		// TODO Auto-generated constructor stub
 		this.idCanal = idCanal;
 		this.nom = nomCanal;
 
 	}
 
-	public Long getIdCanal() {
+
+	public long getIdCanal() {
 		return idCanal;
 	}
 
-	public void setIdCanal(Long idCanal) {
+	public void setIdCanal(long idCanal) {
 		this.idCanal = idCanal;
 	}
 

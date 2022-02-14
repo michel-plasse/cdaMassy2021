@@ -45,14 +45,14 @@ public class Question {
 	@JoinColumn (name = "id_questionnaire")
 	private Questionnaire questionnaire;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "idQuestion", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "question", cascade = CascadeType.ALL)
 	private Set<Proposition> propositions = new LinkedHashSet<Proposition>();
 
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "question", cascade = CascadeType.ALL)
 	private List<Reponse> reponses = new ArrayList<Reponse>();
 	
-	@Column
+	@Column(name = "id_type_question")
 	private long idTypeQuestion;
 
 	public Question() {
@@ -68,6 +68,10 @@ public class Question {
 		this.propositions = propositions;
 		this.idTypeQuestion = idTypeQuestion;
 	}
+	
+	
+	
+	
 	public long getIdQuestion() {
 		return idQuestion;
 	}
@@ -92,11 +96,23 @@ public class Question {
 	public void setAuteur(Personne auteur) {
 		this.auteur = auteur;
 	}
+	public Questionnaire getQuestionnaire() {
+		return questionnaire;
+	}
+	public void setQuestionnaire(Questionnaire questionnaire) {
+		this.questionnaire = questionnaire;
+	}
 	public Set<Proposition> getPropositions() {
 		return propositions;
 	}
 	public void setPropositions(Set<Proposition> propositions) {
 		this.propositions = propositions;
+	}
+	public List<Reponse> getReponses() {
+		return reponses;
+	}
+	public void setReponses(List<Reponse> reponses) {
+		this.reponses = reponses;
 	}
 	public long getIdTypeQuestion() {
 		return idTypeQuestion;
@@ -108,12 +124,7 @@ public class Question {
 	public int hashCode() {
 		return Objects.hash(auteur, idCanal, idQuestion, idTypeQuestion, libelle, propositions, questionnaire);
 	}
-	public List<Reponse> getReponses() {
-		return reponses;
-	}
-	public void setReponses(List<Reponse> reponses) {
-		this.reponses = reponses;
-	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -128,4 +139,5 @@ public class Question {
 				&& Objects.equals(propositions, other.propositions)
 				&& Objects.equals(questionnaire, other.questionnaire);
 	}
+	
 }

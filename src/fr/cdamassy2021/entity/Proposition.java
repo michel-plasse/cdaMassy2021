@@ -22,13 +22,15 @@ public class Proposition {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String idProposition;
+	
 	@ManyToOne
 	@JoinColumn(name="id_question")
-	private Question idQuestion;
+	private Question question;
+	
 	@Column
 	private String libelle;
 	@Column
-	private String estCorrecte;
+	private Long estCorrecte;
 	
 	public Proposition() {
 		super();
@@ -43,12 +45,14 @@ public class Proposition {
 		this.idProposition = idProposition;
 	}
 
-	public Question getIdQuestion() {
-		return idQuestion;
+	
+
+	public Question getQuestion() {
+		return question;
 	}
 
-	public void setIdQuestion(Question idQuestion) {
-		this.idQuestion = idQuestion;
+	public void setQuestion(Question question) {
+		this.question = question;
 	}
 
 	public String getLibelle() {
@@ -59,11 +63,13 @@ public class Proposition {
 		this.libelle = libelle;
 	}
 
-	public String getEstCorrecte() {
+	public Long getEstCorrecte() {
 		return estCorrecte;
 	}
 
-	public void setEstCorrecte(String estCorrecte) {
+	public void setEstCorrecte(Long estCorrecte) {
 		this.estCorrecte = estCorrecte;
 	}
+
+	
 }
