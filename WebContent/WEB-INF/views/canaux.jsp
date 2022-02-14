@@ -22,7 +22,7 @@
 
 		<a href="questions/${canal.idCanal}/afficher">Afficher les
 			questions</a>
-		<a href="questions/repondre?${canal.idCanal}">Repondre aux
+		<a href="questions/repondre/${canal.idCanal}">Repondre aux
 			questions</a>
 	</c:forEach>
 

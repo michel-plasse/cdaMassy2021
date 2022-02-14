@@ -51,7 +51,7 @@ ${msg}
     <article>
         <h3>Repondre aux questions</h3>
         <p>Affiche la liste des question qui vous ont été posées.</p>
-        <form action="${pageContext.request.contextPath}/questions/repondre"class="boutonActivite" >
+        <form action="${pageContext.request.contextPath}/questions/repondre/${canal}"class="boutonActivite" >
                 <label for="canal">Choisissez un canal:</label>
                 <select name="canal" id="canal-select">
                     <c:forEach items="${allCanauxMembre}" var="canal">
