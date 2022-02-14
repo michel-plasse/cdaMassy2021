@@ -37,4 +37,8 @@ public class EFGService {
 		return repo.save(efg);
 		
 	}
+	
+	public int nbreMembresCanal(int idCanal) {
+		return repo.nbreMembreCanal(idCanal);
+	}
 }

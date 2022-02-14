@@ -4,7 +4,7 @@
 <p:header title="Exercices de groupe" />
 
 <h1>Liste d'EFGs</h1>
-
+il y a <c:out value="${nbMembres}"/> membres dans ce canal
 <c:if test="${empty EFGs}">
 	<p>
 		<c:out value="Il n'y a pas encore d'exercice de groupe."></c:out>

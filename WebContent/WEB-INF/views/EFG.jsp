@@ -9,7 +9,7 @@
 
 <button >${EFG.groupes}</button>
 
-
+créateur : <c:out value="${EFG.getIdCreateur() }"/>
 
 </body>
 </html>

@@ -25,6 +25,8 @@ public class EFGController {
 		List<EFG> efgs = efgService.listByCanal(idCanal);
 		mv.addObject("EFGs", efgs);
 		mv.addObject("idCanal", idCanal);
+		int nbMembres = efgService.nbreMembresCanal(idCanal);
+		mv.addObject("nbMembres", nbMembres);
 		return mv;
 	}
 
@@ -48,7 +50,6 @@ public class EFGController {
 	public ModelAndView postForm(@ModelAttribute("newEFG") EFG efg, @PathVariable(value="idCanal") int idCanal) {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("EFG", efg);
-		System.out.println("coucou");
 		efg.setIdCreateur(1);
 		efg.setIdCanal(idCanal);
 		EFG efgSaved = efgService.saveEFG(efg);
