@@ -25,7 +25,7 @@ ${msg}
 </section>
 <section id="index_articles">
     <article>
-        <h3>Afficher vos questions</h3>
+        <h3>Afficher vos questions (Not Implemented yet)</h3>
         <p>Affiche la liste des questions que vous avez déjà posées.</p>
         <form action="/CeLienNEstPasImplemente"class="boutonActivite" >
             <button type="submit">Afficher Questions</button>
@@ -71,7 +71,7 @@ ${msg}
     </article>
 
     <article style="clear:left;">
-        <h3>Editer une question</h3>
+        <h3>Editer une question(Not Implemented yet)</h3>
         <p>En cours d'implémentation</p>
     </article>
     <p:footer/>
