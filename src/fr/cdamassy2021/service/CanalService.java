@@ -29,6 +29,9 @@ public class CanalService {
 	public List<Canal> listAll() {
 		return (List<Canal>) repo.findAll();
 	}
+	public List<Canal> ListCanauxByIdMembre(int idMembre) {
+		return repo.ListCanauxByIdMemebre(idMembre);
+	}
 
 	public Canal get(long idCanal) {
 		return repo.findById(idCanal).get();
