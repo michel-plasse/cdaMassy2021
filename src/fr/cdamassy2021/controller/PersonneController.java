@@ -51,8 +51,8 @@ public class PersonneController {
 
 	@PostMapping("/canaux/enleve")
 	public String deleteMembre(HttpServletRequest request, HttpServletResponse response, Model model) {
-		// v¨¦rifier droit de l'utilisateur
-		// v¨¦rifier idCanal et idPersonne
+		// vï¿½ï¿½rifier droit de l'utilisateur
+		// vï¿½ï¿½rifier idCanal et idPersonne
 		int idMembreAEffacer = Integer.parseInt(request.getParameter("idMembreAEffacer"));
 		int idCanal = Integer.parseInt(request.getParameter("idCanal"));
 		System.out.println("==============" + idMembreAEffacer + "++++++++" + idCanal);

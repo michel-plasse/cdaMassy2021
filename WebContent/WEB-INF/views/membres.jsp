@@ -24,7 +24,7 @@
 
 <h3>Ajout De Membres Au Canal</h3>
 
-<form id="formAjouter" action="ajouterMembre" method="post">
+<form id="formAjouter" action="addMembre" method="get">
     ID Du Membre A Ajouter : <br>
     <input type="text" name="idPersonneAjouter">
     <input type="hidden" value="${idCanal}" name="idCanalAjouter" />

@@ -38,5 +38,9 @@ public class PersonneService {
 	public void enleverMembreDuCanal(int idMembreAEffacer,int idCanal) {
 		repo.SupprimerMembrDuCanal(idMembreAEffacer, idCanal);
 	}
+	
+	public void ajouterMembreDuCanal(int idMembre,int idCanal) {
+		 repo.AjouterMembreAuCanal(idMembre, idCanal);
+	}
 
 }
