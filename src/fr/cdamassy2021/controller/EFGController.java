@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import fr.cdamassy2021.entity.Canal;
 import fr.cdamassy2021.entity.EFG;
+import fr.cdamassy2021.service.CanalService;
 import fr.cdamassy2021.service.EFGService;
 
 @Controller
@@ -18,13 +20,19 @@ public class EFGController {
 
 	@Autowired
 	private EFGService efgService;
+	
+	@Autowired
+	private CanalService canalService;
+	
 
 	@RequestMapping("canaux/{idCanal}/EFGs")
 	public ModelAndView allEFGs(@PathVariable(value = "idCanal") int idCanal, ModelAndView mv) {
 		mv.setViewName("EFGs");
 		List<EFG> efgs = efgService.listByCanal(idCanal);
+		int nbMembres = efgService.nombreMembresCanal(idCanal);
 		mv.addObject("EFGs", efgs);
 		mv.addObject("idCanal", idCanal);
+		mv.addObject("nbMembres",nbMembres);
 		return mv;
 	}
 

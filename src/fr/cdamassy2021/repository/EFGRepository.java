@@ -16,4 +16,9 @@ public interface EFGRepository extends CrudRepository<EFG, Integer> {
 	public List<EFG> findByCanal(int idCanal);
 	
 	
+	
+	
+	@Query(value="SELECT COUNT(m) FROM MembreCanal m WHERE id_canal = ?1")
+	public int membresCanal(int idCanal);
+	
 }

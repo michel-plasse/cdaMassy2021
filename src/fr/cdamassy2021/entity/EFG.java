@@ -1,12 +1,16 @@
 package fr.cdamassy2021.entity;
 
 import java.util.Objects;
-
+import javax.persistence.JoinColumn;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -19,8 +23,12 @@ public class EFG {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEfg;
 
+	// Une fois que l'id Créateur de canal est ajouté à la BDD, on peut ajouter la gestoin de la clé
+	//étrangère (@Many-to-one ). Il faut que le créateur de l'EFG soit le créateur du canal.
 	@Column
 	private int idCreateur;
+	
+	//@ManyToOne(fetch = FetchType.EAGER)
 	@Column
 	private int idCanal;
 	@Column
