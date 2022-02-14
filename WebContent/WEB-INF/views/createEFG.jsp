@@ -8,6 +8,7 @@
 </head>
 <p:header title="Creation d'un Exercice en groupe" />
 <body>
+
 	<h1>Création d'un Exercice de Groupe</h1>
 
 	<form:form method="post" modelAttribute="newEFG">
@@ -17,23 +18,23 @@
 		<br />
 
 		<label>Nombre de groupes</label>
-		<form:input path="groupes" type="number" min="2" max="6" id="groupes"
+		<input type="number" min="2" max="6" id="groupes"
 			onChange="reliquat()" />
+		<form:input path="groupes" type="hidden" id="hiddenField" />
 		<p id="messageReliquat">Aucun membre par groupe.</p>
 
 		<button type="submit">Envoyer</button>
 	</form:form>
 
 	<script>
-		const groupes = document.querySelector("#groupes");
+		const groupesList = document.querySelector("#groupes");
 		let nbCanal = 23;
 		let messageHTML = document.querySelector("#messageReliquat");
 		let message;
 
 		function reliquat() {
 			let arrGroupes = [];
-			let nbGroupes = groupes.value;
-			console.log(nbGroupes);
+			let nbGroupes = groupesList.value;
 
 			let modulo = nbCanal % nbGroupes;
 
@@ -51,9 +52,12 @@
 				modulo--;
 			}
 
-			message = "Voici la réparition de vos groupes : " + arrGroupes.join(", ")+".";
+			message = "Voici la réparition de vos groupes : "
+					+ arrGroupes.join(", ") + ".";
 			messageReliquat.innerHTML = message;
-			console.log(arrGroupes);
+			
+			document.getElementById("hiddenField").value = arrGroupes.toString();
 		}
+		
 	</script>
 </body>

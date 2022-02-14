@@ -2,6 +2,9 @@ package fr.cdamassy2021.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,10 +23,9 @@ public class EFGController {
 
 	@Autowired
 	private EFGService efgService;
-	
+
 	@Autowired
 	private CanalService canalService;
-	
 
 	@RequestMapping("canaux/{idCanal}/EFGs")
 	public ModelAndView allEFGs(@PathVariable(value = "idCanal") int idCanal, ModelAndView mv) {
@@ -32,7 +34,7 @@ public class EFGController {
 		int nbMembres = efgService.nombreMembresCanal(idCanal);
 		mv.addObject("EFGs", efgs);
 		mv.addObject("idCanal", idCanal);
-		mv.addObject("nbMembres",nbMembres);
+		mv.addObject("nbMembres", nbMembres);
 		return mv;
 	}
 
@@ -44,16 +46,17 @@ public class EFGController {
 		mv.addObject("EFG", efg);
 		return mv;
 	}
-	
+
 	@RequestMapping("canaux/{idCanal}/EFGs/new")
-	public ModelAndView newEFG(@PathVariable(value="idCanal") int idCanal, ModelAndView mv) {
+	public ModelAndView newEFG(@PathVariable(value = "idCanal") int idCanal, ModelAndView mv) {
 		mv.setViewName("createEFG");
 		mv.addObject("newEFG", new EFG());
 		return mv;
 	}
-	
-	@PostMapping("canaux/{idCanal}/EFGs/new") 
-	public ModelAndView postForm(@ModelAttribute("newEFG") EFG efg, @PathVariable(value="idCanal") int idCanal) {
+
+	@PostMapping("canaux/{idCanal}/EFGs/new")
+	public ModelAndView postForm(@ModelAttribute("newEFG") EFG efg, @PathVariable(value = "idCanal") int idCanal,
+			HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("EFG", efg);
 		System.out.println("coucou");
@@ -61,7 +64,7 @@ public class EFGController {
 		efg.setIdCanal(idCanal);
 		EFG efgSaved = efgService.saveEFG(efg);
 		System.out.println(efgSaved);
-		mv.setViewName("redirect:/canaux/{idCanal}/EFGs/"+efgSaved.getIdEfg());
+		mv.setViewName("redirect:/canaux/{idCanal}/EFGs/" + efgSaved.getIdEfg());
 		return mv;
 	}
 }
