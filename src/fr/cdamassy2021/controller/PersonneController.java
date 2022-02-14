@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.cdamassy2021.entity.Canal;
@@ -48,6 +49,14 @@ public class PersonneController {
 
 		return mv;
 	}
+	@RequestMapping("/erreur/{message}")
+	public ModelAndView erreur(@PathVariable("message") String message ) {
+		ModelAndView mv = new ModelAndView("erreur");
+		
+		mv.addObject("message",message );
+
+		return mv;
+	}
 
 	@PostMapping("/canaux/enleve")
 	public String deleteMembre(HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -62,12 +71,17 @@ public class PersonneController {
 	}
 	@RequestMapping("/canaux/addMembre")
 	public String addMembreToCanal(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
 		int idPersonneAAjouter = Integer.parseInt(request.getParameter("idPersonneAjouter"));
 		int idCanal = Integer.parseInt(request.getParameter("idCanalAjouter"));
-		 personneService.ajouterMembreDuCanal(idPersonneAAjouter, idCanal);
-		 model.addAttribute("idCanal", idCanal);
-		return "redirect:/canaux/{idCanal}";
+		Personne personne_en_session = (Personne) request.getSession().getAttribute("currentUser");	
+        if(personne_en_session.getEst_gestionnaire() ==1) {
+        	personneService.ajouterMembreDuCanal(idPersonneAAjouter, idCanal);
+        	model.addAttribute("idCanal", idCanal);
+    		return "redirect:/canaux/{idCanal}";
+        }else {
+        	model.addAttribute("message", "Vous n'avez pas ces droits");
+        	return "redirect:/erreur/{message}";
+        }
 	}
 
 }

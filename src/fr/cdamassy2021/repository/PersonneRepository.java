@@ -24,6 +24,7 @@ public interface PersonneRepository extends CrudRepository<Personne, Long> {
 			+ "			ON mc.id_personne = p.id_personne\n"
 			+ "WHERE id_canal=?", nativeQuery = true)
 	public Collection<Personne> findMembreByCanal(int idCanal);
+	
 
 	//Quand faire Update ou Delele, 
 	//pour l'erreur "Cannot issue data manipulation statements with executeQuery()", 

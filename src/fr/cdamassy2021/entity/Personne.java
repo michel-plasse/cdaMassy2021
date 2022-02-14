@@ -31,6 +31,13 @@ public class Personne {
 	private String tel;
 	@Column
 	private String pwd;
+	@Column
+	private int est_formateur;
+	@Column
+	private int est_gestionnaire;
+	@Column
+	private int est_administrateur;
+
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "membre_canal", 
@@ -129,6 +136,29 @@ public class Personne {
 
 	public void setAllCanauxMembre(Set<Canal> allCanauxMembre) {
 		this.allCanauxMembre = allCanauxMembre;
+	}
+	public int getEst_formateur() {
+		return est_formateur;
+	}
+
+	public void setEst_formateur(int est_formateur) {
+		this.est_formateur = est_formateur;
+	}
+
+	public int getEst_gestionnaire() {
+		return est_gestionnaire;
+	}
+
+	public void setEst_gestionnaire(int est_gestionnaire) {
+		this.est_gestionnaire = est_gestionnaire;
+	}
+
+	public int getEst_administrateur() {
+		return est_administrateur;
+	}
+
+	public void setEst_administrateur(int est_administrateur) {
+		this.est_administrateur = est_administrateur;
 	}
 
 	@Override
