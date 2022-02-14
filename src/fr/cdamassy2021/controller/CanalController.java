@@ -32,13 +32,23 @@ public class CanalController {
 	// autowired cree une instance de customerService. il reccupere le context dans
 	// le fichier WebAppInitaialiser
 	// cela cree aussi une instance de customerRepository
-	@RequestMapping("/canaux")
+	/*@RequestMapping("/canaux")
 	public ModelAndView home() {
 		List<Canal> listCanaux = canalService.listAll();
 		ModelAndView mav = new ModelAndView("canaux");
 		mav.addObject("canaux", listCanaux);
 		return mav;
+	}*/
+	@RequestMapping("/canaux")
+	public ModelAndView ListCanauxByIdMembre(HttpServletRequest request, HttpServletResponse reponse) {
+		
+		Personne membre = (Personne) request.getSession().getAttribute("currentUser");
+		List<Canal> listCanaux = canalService.ListCanauxByIdMembre((int) membre.getIdPersonne());
+		ModelAndView mav = new ModelAndView("canaux");
+		mav.addObject("canaux", listCanaux);
+		return mav;
 	}
+	
 
 
 }
