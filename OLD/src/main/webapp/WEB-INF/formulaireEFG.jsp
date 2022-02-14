@@ -49,7 +49,7 @@
                         break;
                     case 1 :
                         nbGroupe = Math.floor(sum);
-                        message = "Il y a "+ nbGroupe + ", mais l'un ou plusieurs groupes a un membre de plus que le nombre souhaité.";
+                        message = "Il y a "+ nbGroupes + ", mais l'un ou plusieurs groupes a un membre de plus que le nombre souhaité.";
                         break;
                     default:
                         nbGroupe = Math.floor(sum);

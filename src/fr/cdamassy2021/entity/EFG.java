@@ -1,7 +1,11 @@
 package fr.cdamassy2021.entity;
 
+import java.util.HashSet;
 import java.util.Objects;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,27 +23,41 @@ public class EFG {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEfg;
 
-	@Column
-	private int idCreateur;
-	@Column
-	private int idCanal;
+	// Une fois que l'id Cr�ateur de canal est ajout� � la BDD, on peut ajouter la gestoin de la cl�
+	//�trang�re (@Many-to-one ). Il faut que le cr�ateur de l'EFG soit le cr�ateur du canal.
+	@ManyToOne
+	@JoinColumns({
+		@JoinColumn(name="id_createur",referencedColumnName = "id_personne"),
+		@JoinColumn(name="id_canal",referencedColumnName = "id_canal")
+	})
+	private MembreCanal createur;
+
 	@Column
 	private String intitule;
 	@Column
 	private String groupes;
 
 	public EFG() {
+		this.createur= new MembreCanal();
+		this.createur.setEfgCrees(new HashSet<EFG>());
+		this.createur.getEfgCrees().add(this);
 	}
 
 	public EFG(String intitule, String groupes) {
 		this.intitule = intitule;
 		this.groupes = groupes;
+		this.createur= new MembreCanal();
+		this.createur.setEfgCrees(new HashSet<EFG>());
+		this.createur.getEfgCrees().add(this);
 	}
 
 	public EFG(int idEfg, int idCreateur, int idCanal, String intitule, String groupes) {
 		this.idEfg = idEfg;
-		this.idCreateur = idCreateur;
-		this.idCanal = idCanal;
+		this.createur= new MembreCanal();
+		this.createur.setIdCanal(idCanal);
+		this.createur.setIdPersonne(idCreateur);
+		this.createur.setEfgCrees(new HashSet<EFG>());
+		this.createur.getEfgCrees().add(this);
 		this.intitule = intitule;
 		this.groupes = groupes;
 	}
@@ -53,19 +71,19 @@ public class EFG {
 	}
 
 	public int getIdCreateur() {
-		return idCreateur;
+		return getCreateur().getIdPersonne();
 	}
 
 	public void setIdCreateur(int idCreateur) {
-		this.idCreateur = idCreateur;
+		this.createur.setIdPersonne(idCreateur);
 	}
 
 	public int getIdCanal() {
-		return idCanal;
+		return getCreateur().getIdCanal();
 	}
 
 	public void setIdCanal(int idCanal) {
-		this.idCanal = idCanal;
+		this.createur.setIdCanal(idCanal);
 	}
 
 	public String getIntitule() {
@@ -83,18 +101,24 @@ public class EFG {
 	public void setGroupes(String groupes) {
 		this.groupes = groupes;
 	}
+	public MembreCanal getCreateur() {
+		return createur;
+	}
 
+	public void setCreateur(MembreCanal createur) {
+		this.createur = createur;
+	}
 	@Override
 	public String toString() {
-		return "EFG n°" + idEfg + ", crée par " + idCreateur + " dans " + idCanal + ". Intitule: " + intitule;
+		return "EFG n°" + idEfg + ", crée par " + getIdCreateur() + " dans " + getIdCanal() + ". Intitule: " + intitule;
 	}
 
 	@Override
 	public int hashCode() {
 		int hash = 5;
 		hash = 89 * hash + this.idEfg;
-		hash = 89 * hash + this.idCreateur;
-		hash = 89 * hash + this.idCanal;
+		hash = 89 * hash + this.getIdCanal();
+		hash = 89 * hash + this.getIdCreateur();
 		hash = 89 * hash + Objects.hashCode(this.intitule);
 		return hash;
 	}
@@ -114,12 +138,7 @@ public class EFG {
 		if (this.idEfg != other.idEfg) {
 			return false;
 		}
-		if (this.idCreateur != other.idCreateur) {
-			return false;
-		}
-		if (this.idCanal != other.idCanal) {
-			return false;
-		}
+
 		if (!Objects.equals(this.intitule, other.intitule)) {
 			return false;
 		}
