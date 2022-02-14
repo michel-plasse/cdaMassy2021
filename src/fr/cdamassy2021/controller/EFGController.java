@@ -13,12 +13,25 @@ import org.springframework.web.servlet.ModelAndView;
 import fr.cdamassy2021.entity.EFG;
 import fr.cdamassy2021.service.EFGService;
 
+/**
+ * 
+ * @author TeamVerte
+ * Classe responsable de la gestion des requetes client
+ * 
+ */
 @Controller
 public class EFGController {
 
 	@Autowired
 	private EFGService efgService;
 
+	/**
+	 * En reponse a la requete du client affiche 
+	 * la page listant les exercices du canal actuel
+	 * @param idCanal
+	 * @param ModelAndView
+	 * @return ModelAndView
+	 */
 	@RequestMapping("canaux/{idCanal}/EFGs")
 	public ModelAndView allEFGs(@PathVariable(value = "idCanal") int idCanal, ModelAndView mv) {
 		mv.setViewName("EFGs");
@@ -30,6 +43,14 @@ public class EFGController {
 		return mv;
 	}
 
+	/**
+	 * En reponse au client envoie la page de l'exercice 
+	 * selectionne
+	 * @param idEFG
+	 * @param idCanal
+	 * @param ModelAndView
+	 * @return ModelAndView
+	 */
 	@RequestMapping("canaux/{idCanal}/EFGs/{idEFG}")
 	public ModelAndView oneEFG(@PathVariable(value = "idEFG") int idEFG, @PathVariable(value = "idCanal") int idCanal,
 			ModelAndView mv) {
@@ -39,6 +60,13 @@ public class EFGController {
 		return mv;
 	}
 	
+	/**
+	 * En reponse au client envoie le formulaire
+	 * de creation d'exercice
+	 * @param idCanal
+	 * @param ModelAndView
+	 * @return ModelAndView
+	 */
 	@RequestMapping("canaux/{idCanal}/EFGs/new")
 	public ModelAndView newEFG(@PathVariable(value="idCanal") int idCanal, ModelAndView mv) {
 		mv.setViewName("createEFG");
@@ -46,6 +74,14 @@ public class EFGController {
 		return mv;
 	}
 	
+	/**
+	 * En reponse a l'envoi du formulaire rempli
+	 * enregistre le nouvel exercice dans la base
+	 * et redirige vers la page de celui-ci
+	 * @param efg
+	 * @param idCanal
+	 * @return ModelAndView
+	 */
 	@PostMapping("canaux/{idCanal}/EFGs/new") 
 	public ModelAndView postForm(@ModelAttribute("newEFG") EFG efg, @PathVariable(value="idCanal") int idCanal) {
 		ModelAndView mv = new ModelAndView();
