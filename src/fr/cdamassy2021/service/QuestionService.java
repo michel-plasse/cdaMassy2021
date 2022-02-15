@@ -87,12 +87,11 @@ public class QuestionService {
     	}
     	nouvelleQuestion.setPropositions(props);
     	nouvelleQuestion.setIdTypeQuestion(3);
-    	questionRepo.save(nouvelleQuestion);
     	for(Proposition prop:nouvelleQuestion.getPropositions()) {
     		prop.setQuestion(nouvelleQuestion);
-    		propService.save(prop);
+    		//propService.save(prop);
     	}
-    	return nouvelleQuestion;
+    	return questionRepo.save(nouvelleQuestion);
     }
     
     @Transactional
