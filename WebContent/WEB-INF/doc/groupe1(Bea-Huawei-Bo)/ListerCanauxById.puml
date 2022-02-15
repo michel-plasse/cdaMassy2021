@@ -1,0 +1,11 @@
+@startuml
+participant Navigateur
+participant Vue
+Navigateur -> Controller : GET/canaux\nCanalController\n.canauxById(idPersonne)
+Controller -> Service : CanalService\n.ListCanauxByIdMembre(idPersonne)
+Service -> Repository : CanalRepository\n.ListCanauxByIdMemebre(idPersonne)
+Repository -> Service : Iterable<Canal>
+Service -> Controller : canaux = List<Canal>
+Controler -> Vue : ModelAndView\n("canaux", canaux)
+Vue -> Navigateur : /canaux
+@enduml
