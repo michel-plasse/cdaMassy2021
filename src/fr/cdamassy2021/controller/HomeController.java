@@ -25,7 +25,12 @@ public class HomeController {
 		ModelAndView mav = new ModelAndView("index");
 		return mav;
 	}
-
+	@RequestMapping("/resetDb")
+	public ModelAndView resetDb() {
+		
+		ModelAndView mav = new ModelAndView("index");
+		return mav;
+	}
 	@RequestMapping("/connexion")
 	public ModelAndView connexion() {
 		ModelAndView mav = new ModelAndView("connexion");

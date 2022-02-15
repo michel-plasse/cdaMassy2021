@@ -1,0 +1,18 @@
+@startuml
+participant Navigateur
+participant Javascript
+participant Vue
+== Ajouter Membre ==
+Javascript -> Controleur : PUT /canaux/addMembre
+Controleur -> Controleur: verifier droit de l'utilisateur
+Controleur -> Controleur: verifier idCanal et idPersonne
+Controleur -> Service : CanalService\n.ajouterMembreAuCanal()
+Service -> Repository : CanalRepository\n.ajouterMembreAuCanal(idMembre_idCanal)
+Repository ->Service : ...
+Service -> Controleur : ...
+== Si ok ==
+Controleur -> Navigateur: redirect vers /canaux/{idCanal}
+== Si pb (doublon par exemple) ==
+Controleur -> Vue: erreur.jsp
+Vue -> Navigateur: avec message d'erreur
+@enduml

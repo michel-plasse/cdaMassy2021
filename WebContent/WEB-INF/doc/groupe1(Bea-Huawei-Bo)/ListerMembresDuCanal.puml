@@ -1,0 +1,11 @@
+@startuml
+participant Navigateur
+participant Vue
+Navigateur -> Controller : GET/canaux/{idCanal}/membres\nMembreController.ListAll()
+Controller -> Service : MembreService\n.listMembreByCanal()
+Service -> Repository : MembreRepository.findMembreByCanal()
+Repository -> Service : Iterable<Membre>
+Service -> Controller : membres = List<Membre>
+Controller -> Vue : ModelAndViex\n("membres", membres)
+Vue -> Navigateur : membres.jsp
+@enduml

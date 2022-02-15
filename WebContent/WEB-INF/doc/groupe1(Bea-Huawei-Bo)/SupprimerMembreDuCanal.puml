@@ -1,0 +1,18 @@
+@startuml
+participant Navigateur
+participant Javascript
+participant Vue
+Navigateur -> Javascript : 
+Javascript -> Controleur : DELETE /canaux/enleve
+Controleur -> Controleur: verifier droit de l'utilisateur
+Controleur -> Controleur: verifier idCanal et idPersonne
+Controleur -> Service : CanalService\n.enleverMembreDuCanal(idMembreAEffacer, idCanal)
+Service -> Repository : CanalRepository\n.SupprimerMembrDuCanal(idMembreAEffacer, idCanal)
+Repository ->Service : ...
+Service -> Controleur : ...
+== Si ok ==
+Controleur -> Navigateur: redirect vers /canaux/{idCanal}
+== Si pb (doublon par exemple) ==
+Controleur -> Vue: erreur.jsp
+Vue -> Navigateur: liste des membres\navec message d'erreur
+@enduml
