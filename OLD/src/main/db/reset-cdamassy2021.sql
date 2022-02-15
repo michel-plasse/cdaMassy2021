@@ -50,9 +50,9 @@ BEGIN
 		-- Tableaux ne dépendant que du 1er groupe
 		INSERT INTO	efg(id_efg, intitule, date_creation, id_createur, id_canal, groupes) VALUES
     -- 2 dans le canal 1 + 1 dans le canal 2, tous du formateur 1
-			(1, 'TP définir objectif', date_effet - INTERVAL 1 MONTH, 1, 1,'2,3'),
+			(1, 'TP d�finir objectif', date_effet - INTERVAL 1 MONTH, 1, 1,'2,3'),
 			(2, 'TP cadrage', date_effet - INTERVAL 1 MONTH, 1, 1, '2,2'),
-			(3, "TP tests d'acceptation", date_effet - INTERVAL 1 MONTH, 1, 2, NULL);
+			(3, "TP tests d'acceptation", date_effet - INTERVAL 1 MONTH, 1, 2, '3,2,2');
 		
 		INSERT INTO question(id_question, libelle, id_canal, id_createur, 
     id_type_question, id_questionnaire) VALUES
