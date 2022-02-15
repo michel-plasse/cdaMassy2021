@@ -81,7 +81,7 @@ public class QuestionService {
     	for(int i = 0; i<allPropositionsLibelles.length; i++)
     	{
     		Proposition prop = new Proposition();
-    		prop.setEstCorrecte(Long.parseLong(allPropositionsCorrectnesses.get(i)));
+    		prop.setEstCorrecte(Integer.parseInt(allPropositionsCorrectnesses.get(i)));
     		prop.setLibelle(allPropositionsLibelles[i]);
     		props.add(prop);
     	}
