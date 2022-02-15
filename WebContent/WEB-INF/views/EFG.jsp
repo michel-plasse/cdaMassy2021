@@ -3,6 +3,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <p:header title="Exercices de groupe" />
 
+
 <h1>Exercice n°${EFG.idEfg}</h1>
 <table>
 	<thead>

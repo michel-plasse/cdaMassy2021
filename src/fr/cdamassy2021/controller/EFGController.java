@@ -71,6 +71,8 @@ public class EFGController {
 	public ModelAndView newEFG(@PathVariable(value="idCanal") int idCanal, ModelAndView mv) {
 		mv.setViewName("createEFG");
 		mv.addObject("newEFG", new EFG());
+		int nbMembres = efgService.nombreMembresCanal(idCanal);
+		mv.addObject("nbMembres", nbMembres);
 		return mv;
 	}
 	
