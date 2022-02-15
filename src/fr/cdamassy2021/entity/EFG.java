@@ -13,8 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
+ * @author TeamVerte
+ * Classe representant les exercices a faire en groupe
+ * Liee au tableau efg de la base de donnee 
  *
- * @author scdel Exercices en groupe
  */
 @Entity
 public class EFG {
@@ -23,8 +25,14 @@ public class EFG {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEfg;
 
-	// Une fois que l'id Cr�ateur de canal est ajout� � la BDD, on peut ajouter la gestoin de la cl�
-	//�trang�re (@Many-to-one ). Il faut que le cr�ateur de l'EFG soit le cr�ateur du canal.
+	// Une fois que l'id Createur de canal est ajoute a la BDD, on peut ajouter la gestoin de la cle
+	//etrangere (@Many-to-one ). Il faut que le createur de l'EFG soit le createur du canal.
+	/**
+	 * Entite representant l'utilisateur qui a cree l'exercice
+	 * Liee au tableau membre_canal de la base de donnee
+	 * Chaque personne peut creer plusieurs exercices dans un meme canal,
+	 * mais un exercice n est cree que par une personne dans un seul canal
+	 */
 	@ManyToOne
 	@JoinColumns({
 		@JoinColumn(name="id_createur",referencedColumnName = "id_personne"),
