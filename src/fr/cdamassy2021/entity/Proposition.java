@@ -30,7 +30,7 @@ public class Proposition {
 	@Column
 	private String libelle;
 	@Column
-	private Long estCorrecte;
+	private int estCorrecte;
 	
 	public Proposition() {
 		super();
@@ -63,11 +63,11 @@ public class Proposition {
 		this.libelle = libelle;
 	}
 
-	public Long getEstCorrecte() {
+	public int getEstCorrecte() {
 		return estCorrecte;
 	}
 
-	public void setEstCorrecte(Long estCorrecte) {
+	public void setEstCorrecte(int estCorrecte) {
 		this.estCorrecte = estCorrecte;
 	}
 
