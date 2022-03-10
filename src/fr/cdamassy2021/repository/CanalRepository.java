@@ -5,10 +5,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import fr.cdamassy2021.entity.Canal;
 
-
+@Repository
 public interface CanalRepository extends CrudRepository<Canal, Long> {
 
 	@Query(value = "SELECT c FROM Canal c WHERE c.nom LIKE '%' || :keyword || '%'")
