@@ -131,7 +131,7 @@ public class QuestionController {
             }
 
             Personne auteur = (Personne) request.getSession().getAttribute("currentUser");
-            questionService.creerQuestion(
+            questionService.creerQuestionChoixMultiples(
                         libelleQuestion,
                         allPropositions,
                         allCorrectnesses,
@@ -142,7 +142,7 @@ public class QuestionController {
 
         else if (valide){
             Personne auteur = (Personne) request.getSession().getAttribute("currentUser");
-            questionService.creerQuestion(libelleQuestion, auteur, (long)canalSelectionne);    
+            questionService.creerQuestionLibre(libelleQuestion, auteur, (long)canalSelectionne);    
             System.out.println("valid free answer type");
         }
 

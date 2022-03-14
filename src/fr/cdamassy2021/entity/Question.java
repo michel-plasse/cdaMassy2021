@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +19,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import fr.cdamassy2021.enums.TypeQuestion;
 
 /**
  * 
@@ -53,7 +57,8 @@ public class Question {
 	private List<Reponse> reponses = new ArrayList<Reponse>();
 	
 	@Column(name = "id_type_question")
-	private long idTypeQuestion;
+	@Enumerated(EnumType.ORDINAL)
+	private TypeQuestion typeQuestion;
 
 	public Question() {
 		super();
@@ -61,22 +66,22 @@ public class Question {
 	}
 	
 	public Question(String libelle, long idCanal, Personne auteur,
-			Set<Proposition> propositions, long idTypeQuestion) {
+			Set<Proposition> propositions, TypeQuestion typeQuestion) {
 		super();
 		this.libelle = libelle;
 		this.idCanal = idCanal;
 		this.auteur = auteur;
 		this.propositions = propositions;
-		this.idTypeQuestion = idTypeQuestion;
+		this.typeQuestion = typeQuestion;
 	}
 	
 	public Question(String libelle, long idCanal, Personne auteur,
-			long idTypeQuestion) {
+			TypeQuestion typeQuestion) {
 		super();
 		this.libelle = libelle;
 		this.idCanal = idCanal;
 		this.auteur = auteur;
-		this.idTypeQuestion = idTypeQuestion;
+		this.typeQuestion = typeQuestion;
 	}
 
 	public long getIdQuestion() {
@@ -121,15 +126,19 @@ public class Question {
 	public void setReponses(List<Reponse> reponses) {
 		this.reponses = reponses;
 	}
-	public long getIdTypeQuestion() {
-		return idTypeQuestion;
+
+	
+	public TypeQuestion getTypeQuestion() {
+		return typeQuestion;
 	}
-	public void setIdTypeQuestion(long idTypeQuestion) {
-		this.idTypeQuestion = idTypeQuestion;
+
+	public void setTypeQuestion(TypeQuestion typeQuestion) {
+		this.typeQuestion = typeQuestion;
 	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(auteur, idCanal, idQuestion, idTypeQuestion, libelle, propositions, questionnaire);
+		return Objects.hash(auteur, idCanal, idQuestion, libelle, propositions, questionnaire, reponses, typeQuestion);
 	}
 
 	@Override
@@ -142,9 +151,10 @@ public class Question {
 			return false;
 		Question other = (Question) obj;
 		return Objects.equals(auteur, other.auteur) && idCanal == other.idCanal && idQuestion == other.idQuestion
-				&& idTypeQuestion == other.idTypeQuestion && Objects.equals(libelle, other.libelle)
-				&& Objects.equals(propositions, other.propositions)
-				&& Objects.equals(questionnaire, other.questionnaire);
+				&& Objects.equals(libelle, other.libelle) && Objects.equals(propositions, other.propositions)
+				&& Objects.equals(questionnaire, other.questionnaire) && Objects.equals(reponses, other.reponses)
+				&& typeQuestion == other.typeQuestion;
 	}
+
 	
 }
