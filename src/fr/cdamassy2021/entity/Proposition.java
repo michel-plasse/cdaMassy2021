@@ -34,7 +34,11 @@ public class Proposition {
 	
 	public Proposition() {
 		super();
-		// TODO Auto-generated constructor stub
+	}
+	public Proposition(String libelle, int estCorrecte) {
+		super();
+		this.libelle = libelle;
+		this.estCorrecte = estCorrecte;
 	}
 
 	public String getIdProposition() {

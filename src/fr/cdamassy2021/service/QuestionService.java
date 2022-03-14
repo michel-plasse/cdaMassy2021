@@ -104,21 +104,25 @@ public class QuestionService {
             Personne auteur,
             long canal) {
     	
+    	// Crée le set de propositions de réponse à la question
     	Set<Proposition> props = new HashSet<Proposition>();
     	for(int i = 0; i<allPropositionsLibelles.length; i++)
     	{
-    		Proposition prop = new Proposition();
-    		prop.setEstCorrecte(Integer.parseInt(allPropositionsCorrectnesses.get(i)));
-    		prop.setLibelle(allPropositionsLibelles[i]);
+    		int correctness = Integer.parseInt(allPropositionsCorrectnesses.get(i));
+    		Proposition prop = new Proposition(allPropositionsLibelles[i], correctness);
     		props.add(prop);
     	}
     	
+    	// Crée une nouvelle question de type choix-multiples
     	Question nouvelleQuestion = new Question(
     			libelleQuestion,canal, auteur,
     			props,TypeQuestion.CHOIXMULTIPLES);
+    	
+    	// Assigne la nouvelle question à chacune des propositions
     	for(Proposition prop:nouvelleQuestion.getPropositions()) {
     		prop.setQuestion(nouvelleQuestion);
     	}
+    	
     	return questionRepo.save(nouvelleQuestion);
     }
     
