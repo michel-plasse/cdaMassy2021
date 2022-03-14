@@ -72,10 +72,6 @@ public class QuestionService {
             ArrayList<String> allPropositionsCorrectnesses,
             Personne auteur,
             long canal) {
-    	Question nouvelleQuestion = new Question();
-    	nouvelleQuestion.setIdCanal(canal);
-    	nouvelleQuestion.setAuteur(auteur);
-    	nouvelleQuestion.setLibelle(libelleQuestion);
     	
     	Set<Proposition> props = new HashSet<Proposition>();
     	for(int i = 0; i<allPropositionsLibelles.length; i++)
@@ -85,11 +81,10 @@ public class QuestionService {
     		prop.setLibelle(allPropositionsLibelles[i]);
     		props.add(prop);
     	}
-    	nouvelleQuestion.setPropositions(props);
-    	nouvelleQuestion.setIdTypeQuestion(3);
+    	
+    	Question nouvelleQuestion = new Question( libelleQuestion,canal, auteur,props,3);
     	for(Proposition prop:nouvelleQuestion.getPropositions()) {
     		prop.setQuestion(nouvelleQuestion);
-    		//propService.save(prop);
     	}
     	return questionRepo.save(nouvelleQuestion);
     }
@@ -99,11 +94,8 @@ public class QuestionService {
             String libelleQuestion,
             Personne auteur,
             long canal) {
-    	Question nouvelleQuestion = new Question();
-    	nouvelleQuestion.setIdCanal(canal);
-    	nouvelleQuestion.setAuteur(auteur);
-    	nouvelleQuestion.setLibelle(libelleQuestion);
-    	nouvelleQuestion.setIdTypeQuestion(2);
+    	int typeQuestion = 2;
+    	Question nouvelleQuestion = new Question(libelleQuestion, canal, auteur, 2);
     	return	questionRepo.save(nouvelleQuestion);
     }
 }

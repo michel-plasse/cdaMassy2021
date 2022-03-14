@@ -37,7 +37,7 @@ public class Question {
 	@Column
 	private long idCanal;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_createur")
 	private Personne auteur;
 
@@ -59,8 +59,9 @@ public class Question {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Question(String libelle, long idCanal, Personne auteur, Set<Proposition> propositions,
-			long idTypeQuestion) {
+	
+	public Question(String libelle, long idCanal, Personne auteur,
+			Set<Proposition> propositions, long idTypeQuestion) {
 		super();
 		this.libelle = libelle;
 		this.idCanal = idCanal;
@@ -69,9 +70,15 @@ public class Question {
 		this.idTypeQuestion = idTypeQuestion;
 	}
 	
-	
-	
-	
+	public Question(String libelle, long idCanal, Personne auteur,
+			long idTypeQuestion) {
+		super();
+		this.libelle = libelle;
+		this.idCanal = idCanal;
+		this.auteur = auteur;
+		this.idTypeQuestion = idTypeQuestion;
+	}
+
 	public long getIdQuestion() {
 		return idQuestion;
 	}
