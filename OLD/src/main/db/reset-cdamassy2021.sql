@@ -52,7 +52,7 @@ BEGIN
     -- 2 dans le canal 1 + 1 dans le canal 2, tous du formateur 1
 			(1, 'TP définir objectif', date_effet - INTERVAL 1 MONTH, 1, 1,'2,3'),
 			(2, 'TP cadrage', date_effet - INTERVAL 1 MONTH, 1, 1, '2,2'),
-			(3, "TP tests d'acceptation", date_effet - INTERVAL 1 MONTH, 1, 2, NULL);
+			(3, "TP tests d'acceptation", date_effet - INTERVAL 1 MONTH, 1, 2, '3,2,2');
 		
 		INSERT INTO question(id_question, libelle, id_canal, id_createur, 
     id_type_question, id_questionnaire) VALUES
@@ -134,12 +134,16 @@ BEGIN
       -- 7e étudiant ne donne pas de réponse
 		
 		INSERT INTO membre_groupe_efg(id_personne, id_efg, id_createur) VALUES
-			-- 2 groupes par efg, avec min 2 membres dans chaque
+      	-- 2 groupes par efg, avec min 2 membres dans chaque
+	(3, 1, 3),
       (5, 1, 3),
       (6, 1, 3),
+      (4, 1, 4),
       (7, 1, 4),
-      -- 2e efg, avec un membre pas en groupe, et des groupes différents
+      -- 2e efg, avec un membre pas en groupe, et des groupes diffÃ©rents
+      (3, 2, 3),
       (4, 2, 3),
+      (5, 2, 5),
       (6, 2, 5);
 	
       -- Valider tout
