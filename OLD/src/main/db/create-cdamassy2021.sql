@@ -160,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `efg` (
   `date_creation` DATETIME NOT NULL DEFAULT now(),
   `id_createur` INT(11) NOT NULL,
   `id_canal` INT NOT NULL,
-  `groupes`VARCHAR(150) NULL,
+  `groupes`VARCHAR(150) NOT NULL,
   PRIMARY KEY (`id_efg`),
   INDEX `fk_efg_membre_canal_id` (`id_canal` ASC, `id_createur` ASC),
   CONSTRAINT `fk_efg_membre_canal1`
