@@ -4,7 +4,7 @@
     Author     : Florian
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="p" tagdir="/WEB-INF/tags/"%>
+<%@taglib prefix="p" tagdir="/WEB-INF/tags"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
