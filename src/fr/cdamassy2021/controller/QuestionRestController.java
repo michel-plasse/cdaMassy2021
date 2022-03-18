@@ -13,6 +13,7 @@ import fr.cdamassy2021.entity.Question;
 import fr.cdamassy2021.service.QuestionService;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/question")
 public class QuestionRestController {
 
@@ -22,17 +23,14 @@ public class QuestionRestController {
 	/*
 	 * GET /bycanal/{canalId} -> renvoie la liste des questions appartenant au canal
 	 */
-	@CrossOrigin
 	@RequestMapping(value="/bycanal/{canalId}", method = RequestMethod.GET)
 	public List<Question> getQuestionByCanal(@PathVariable int canalId){
 		return questionService.listByCanal(canalId);
 	}
 	
 	/*
-	 * GET /api/product -> renvoie la liste de toutes les questions
+	 * GET /api/question -> renvoie la liste de toutes les questions
 	 */
-    @CrossOrigin(origins = "*")
-	@RequestMapping(method = RequestMethod.GET,  produces = "application/json")
 	public List<Question> getQuestions(){
 		return questionService.listAll();
 	}
