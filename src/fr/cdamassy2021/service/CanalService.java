@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.cdamassy2021.entity.Canal;
+import fr.cdamassy2021.entity.Questionnaire;
 import fr.cdamassy2021.repository.CanalRepository;
 
 // fetch est une promesse , elle encpsule ... soit elle echoue soit elle reussie
@@ -44,5 +45,7 @@ public class CanalService {
 	public List<Canal> search(String keyword) {
 		return repo.search(keyword);
 	}
+	
+	
 
 }

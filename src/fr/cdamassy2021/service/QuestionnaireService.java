@@ -24,5 +24,6 @@ public class QuestionnaireService {
 		return (Collection<Questionnaire>) repo.findAll();
 	}
 		
-
+	public Collection<Questionnaire> listQuestionnaireByIdCanal(Long idCanal){
+		return repo.findByIdCanal(idCanal);}
 }

@@ -1,5 +1,6 @@
 package fr.cdamassy2021.repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -18,4 +19,6 @@ public interface QuestionnaireRepository extends CrudRepository<Questionnaire, L
 	
 	@Query(value = "SELECT q FROM Questionnaire q WHERE q.idCanal=?1")
 	public Set<Questionnaire> findByCanal(long idCanal);
+	
+	public Collection<Questionnaire> findByIdCanal(Long idCanal);
 }

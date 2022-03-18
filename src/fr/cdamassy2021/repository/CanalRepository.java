@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import fr.cdamassy2021.entity.Canal;
+import fr.cdamassy2021.entity.Questionnaire;
 
 @Repository
 public interface CanalRepository extends CrudRepository<Canal, Long> {
@@ -22,5 +23,7 @@ public interface CanalRepository extends CrudRepository<Canal, Long> {
 			+ "WHERE id_personne=?\n"
 			+ "ORDER BY ca.id_canal",nativeQuery = true)
 	public List<Canal> ListCanauxByIdMemebre(int IdMembre);
+
+	
 
 }
