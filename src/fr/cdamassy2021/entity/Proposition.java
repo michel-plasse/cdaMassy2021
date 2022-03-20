@@ -21,7 +21,7 @@ import javax.persistence.ManyToOne;
 public class Proposition {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String idProposition;
+	private long idProposition;
 	
 	@ManyToOne
 	@JoinColumn(name="id_question")
@@ -30,7 +30,7 @@ public class Proposition {
 	@Column
 	private String libelle;
 	@Column
-	private int estCorrecte;
+	private Integer estCorrecte;
 	
 	public Proposition() {
 		super();
@@ -41,11 +41,11 @@ public class Proposition {
 		this.estCorrecte = estCorrecte;
 	}
 
-	public String getIdProposition() {
+	public long getIdProposition() {
 		return idProposition;
 	}
 
-	public void setIdProposition(String idProposition) {
+	public void setIdProposition(long idProposition) {
 		this.idProposition = idProposition;
 	}
 
@@ -67,11 +67,11 @@ public class Proposition {
 		this.libelle = libelle;
 	}
 
-	public int getEstCorrecte() {
+	public Integer getEstCorrecte() {
 		return estCorrecte;
 	}
 
-	public void setEstCorrecte(int estCorrecte) {
+	public void setEstCorrecte(Integer estCorrecte) {
 		this.estCorrecte = estCorrecte;
 	}
 
