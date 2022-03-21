@@ -27,8 +27,8 @@ public class EFGService {
 		return EfgList;
 	}
 	
-	public EFG findById(int idEFG) {
-		EFG efg = repo.findById(idEFG).get();
+	public Optional<EFG> findById(int idEFG) {
+		Optional<EFG> efg = repo.findById(idEFG);
 		return efg;
 	}
 

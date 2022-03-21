@@ -8,6 +8,7 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +26,7 @@ public class EFG {
 
 	// Une fois que l'id Cr�ateur de canal est ajout� � la BDD, on peut ajouter la gestoin de la cl�
 	//�trang�re (@Many-to-one ). Il faut que le cr�ateur de l'EFG soit le cr�ateur du canal.
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumns({
 		@JoinColumn(name="id_createur",referencedColumnName = "id_personne"),
 		@JoinColumn(name="id_canal",referencedColumnName = "id_canal")
@@ -39,16 +40,13 @@ public class EFG {
 
 	public EFG() {
 		this.createur= new MembreCanal();
-		this.createur.setEfgCrees(new HashSet<EFG>());
-		this.createur.getEfgCrees().add(this);
 	}
 
 	public EFG(String intitule, String groupes) {
 		this.intitule = intitule;
 		this.groupes = groupes;
 		this.createur= new MembreCanal();
-		this.createur.setEfgCrees(new HashSet<EFG>());
-		this.createur.getEfgCrees().add(this);
+		
 	}
 
 	public EFG(int idEfg, int idCreateur, int idCanal, String intitule, String groupes) {
@@ -56,8 +54,6 @@ public class EFG {
 		this.createur= new MembreCanal();
 		this.createur.setIdCanal(idCanal);
 		this.createur.setIdPersonne(idCreateur);
-		this.createur.setEfgCrees(new HashSet<EFG>());
-		this.createur.getEfgCrees().add(this);
 		this.intitule = intitule;
 		this.groupes = groupes;
 	}
