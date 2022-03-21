@@ -18,13 +18,14 @@ import fr.cdamassy2021.entity.EFG;
 import fr.cdamassy2021.service.EFGService;
 
 @CrossOrigin(origins = "*",allowedHeaders = "*")
+@RequestMapping("canaux/{idCanal}/EFGs")
 @RestController
 public class EFGController {
 
 	@Autowired
 	private EFGService efgService;
 
-	@RequestMapping("canaux/{idCanal}/EFGs")
+	@RequestMapping
 	public ModelAndView allEFGs(@PathVariable(value = "idCanal") int idCanal, ModelAndView mv) {
 		mv.setViewName("EFGs");
 		List<EFG> efgs = efgService.listByCanal(idCanal);
@@ -46,7 +47,7 @@ public class EFGController {
 	}
 	**/
 	
-	@RequestMapping("canaux/{idCanal}/EFGs/{idEFG}")
+	@RequestMapping("/{idEFG}")
 	public ResponseEntity<EFG> getEFG(@PathVariable(value = "idEFG") int idEFG, @PathVariable(value = "idCanal") int idCanal){
 		Optional<EFG> optEFG = efgService.findById(idEFG);
 		if(optEFG.isPresent()) {
@@ -55,14 +56,14 @@ public class EFGController {
 		return ResponseEntity.notFound().build();
 	}
 	
-	@RequestMapping("canaux/{idCanal}/EFGs/new")
+	@RequestMapping("/new")
 	public ModelAndView newEFG(@PathVariable(value="idCanal") int idCanal, ModelAndView mv) {
 		mv.setViewName("createEFG");
 		mv.addObject("newEFG", new EFG());
 		return mv;
 	}
 	
-	@PostMapping("canaux/{idCanal}/EFGs/new") 
+	@PostMapping("/new") 
 	public ModelAndView postForm(@ModelAttribute("newEFG") EFG efg, @PathVariable(value="idCanal") int idCanal) {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("EFG", efg);
