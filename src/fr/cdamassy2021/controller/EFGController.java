@@ -27,7 +27,7 @@ public class EFGController {
 	@Autowired
 	private EFGService efgService;
 
-	@RequestMapping
+	/**@RequestMapping
 	public ModelAndView allEFGs(@PathVariable(value = "idCanal") int idCanal, ModelAndView mv) {
 
 		Optional<List<EFG>> optEFGS = efgService.listByCanal(idCanal);
@@ -48,7 +48,17 @@ public class EFGController {
 		
 		
 	}
-
+	**/
+	@RequestMapping
+	public ResponseEntity<List<EFG>> getAllEFGs(@PathVariable(value = "idCanal") int idCanal) {
+		Optional<List<EFG>> optEFGs = efgService.listByCanal(idCanal); 
+		if(optEFGs.isPresent()) {
+			return ResponseEntity.ok(optEFGs.get());
+		}else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
 	/**
 	 * @RequestMapping("canaux/{idCanal}/EFGs/{idEFG}")
 	public ModelAndView oneEFG(@PathVariable(value = "idEFG") int idEFG, @PathVariable(value = "idCanal") int idCanal,
