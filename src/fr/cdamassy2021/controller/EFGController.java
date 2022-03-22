@@ -22,18 +22,31 @@ import fr.cdamassy2021.service.EFGService;
 @RestController
 public class EFGController {
 
+
+	
 	@Autowired
 	private EFGService efgService;
 
 	@RequestMapping
 	public ModelAndView allEFGs(@PathVariable(value = "idCanal") int idCanal, ModelAndView mv) {
-		mv.setViewName("EFGs");
-		List<EFG> efgs = efgService.listByCanal(idCanal);
-		mv.addObject("EFGs", efgs);
-		mv.addObject("idCanal", idCanal);
-		int nbMembres = efgService.nombreMembresCanal(idCanal);
-		mv.addObject("nbMembres", nbMembres);
-		return mv;
+
+		Optional<List<EFG>> optEFGS = efgService.listByCanal(idCanal);
+		if(optEFGS.isPresent()) {
+			List<EFG> efgs = optEFGS.get() ;
+			mv.setViewName("EFGs");
+			mv.addObject("EFGs", efgs);
+			mv.addObject("idCanal", idCanal);
+			int nbMembres = efgService.nombreMembresCanal(idCanal);
+			mv.addObject("nbMembres", nbMembres);
+			return mv;
+		}else {
+			
+			mv.setViewName("erreur");
+			mv.addObject("message", "erreur ");
+			return mv;
+		}
+		
+		
 	}
 
 	/**
@@ -48,7 +61,7 @@ public class EFGController {
 	**/
 	
 	@RequestMapping("/{idEFG}")
-	public ResponseEntity<EFG> getEFG(@PathVariable(value = "idEFG") int idEFG, @PathVariable(value = "idCanal") int idCanal){
+	public ResponseEntity<EFG> getEFG(@PathVariable(value = "idEFG") int idEFG){
 		Optional<EFG> optEFG = efgService.findById(idEFG);
 		if(optEFG.isPresent()) {
 			return ResponseEntity.ok(optEFG.get());

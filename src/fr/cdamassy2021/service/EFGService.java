@@ -22,8 +22,8 @@ public class EFGService {
 	@Autowired
 	EFGRepository repo;
 
-	public List<EFG> listByCanal(int idCanal) {
-		List<EFG> EfgList = repo.findByCanal(idCanal);
+	public Optional<List<EFG>> listByCanal(int idCanal) {
+		Optional<List<EFG>> EfgList = repo.findByCanal(idCanal);
 		return EfgList;
 	}
 	
