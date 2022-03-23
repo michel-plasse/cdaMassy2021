@@ -53,7 +53,6 @@ public class EFGService {
 			EFG efg = optEFG.get();
 			return repoPersonne.findById((long) efg.getIdCreateur());
 		}else {
-			System.out.println("oops");
 			return null;
 		}
 	}

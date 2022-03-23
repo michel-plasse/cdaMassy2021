@@ -122,5 +122,11 @@ public class EFGController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+	
+	@RequestMapping("api/{idCanal}/EFGs/nombreMembres")
+	public ResponseEntity<Integer> getNombreMembres(@PathVariable(value = "idCanal") int idCanal){
+		int nombreMembres = efgService.nombreMembresCanal(idCanal);
+		return ResponseEntity.ok(nombreMembres);
+	}
 
 }
