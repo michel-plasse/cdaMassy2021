@@ -18,7 +18,6 @@ import fr.cdamassy2021.entity.EFG;
 import fr.cdamassy2021.service.EFGService;
 
 @CrossOrigin(origins = "*",allowedHeaders = "*")
-@RequestMapping("canaux/{idCanal}/EFGs")
 @RestController
 public class EFGController {
 
@@ -27,8 +26,8 @@ public class EFGController {
 	@Autowired
 	private EFGService efgService;
 
-	/**@RequestMapping
-	public ModelAndView allEFGs(@PathVariable(value = "idCanal") int idCanal, ModelAndView mv) {
+	@RequestMapping("canaux/{idCanal}/EFGs")
+	public ModelAndView allEFGs(@PathVariable(value = "idCanal" ) int idCanal, ModelAndView mv) {
 
 		Optional<List<EFG>> optEFGS = efgService.listByCanal(idCanal);
 		if(optEFGS.isPresent()) {
@@ -48,8 +47,8 @@ public class EFGController {
 		
 		
 	}
-	**/
-	@RequestMapping
+	
+	@RequestMapping("api/{idCanal}/EFGs")
 	public ResponseEntity<List<EFG>> getAllEFGs(@PathVariable(value = "idCanal") int idCanal) {
 		Optional<List<EFG>> optEFGs = efgService.listByCanal(idCanal); 
 		if(optEFGs.isPresent()) {
@@ -59,18 +58,18 @@ public class EFGController {
 		}
 	}
 	
-	/**
-	 * @RequestMapping("canaux/{idCanal}/EFGs/{idEFG}")
+
+	@RequestMapping("canaux/{idCanal}/EFGs/{idEFG}")
 	public ModelAndView oneEFG(@PathVariable(value = "idEFG") int idEFG, @PathVariable(value = "idCanal") int idCanal,
 			ModelAndView mv) {
 		mv.setViewName("EFG");
-		EFG efg = efgService.findById(idEFG);
-		mv.addObject("EFG", efg);
+		Optional<EFG> efg = efgService.findById(idEFG);
+		mv.addObject("EFG", efg.get());
 		return mv;
 	}
-	**/
+
 	
-	@RequestMapping("/{idEFG}")
+	@RequestMapping("api/{idCanal}/EFGs/{idEFG}")
 	public ResponseEntity<EFG> getEFG(@PathVariable(value = "idEFG") int idEFG){
 		Optional<EFG> optEFG = efgService.findById(idEFG);
 		if(optEFG.isPresent()) {
@@ -79,14 +78,14 @@ public class EFGController {
 		return ResponseEntity.notFound().build();
 	}
 	
-	@RequestMapping("/new")
+	@RequestMapping("canaux/{idCanal}/EFGs/new")
 	public ModelAndView newEFG(@PathVariable(value="idCanal") int idCanal, ModelAndView mv) {
 		mv.setViewName("createEFG");
 		mv.addObject("newEFG", new EFG());
 		return mv;
 	}
 	
-	@PostMapping("/new") 
+	@PostMapping("canaux/{idCanal}/EFGs/new") 
 	public ModelAndView postForm(@ModelAttribute("newEFG") EFG efg, @PathVariable(value="idCanal") int idCanal) {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("EFG", efg);
