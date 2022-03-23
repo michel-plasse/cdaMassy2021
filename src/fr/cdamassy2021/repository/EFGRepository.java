@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import fr.cdamassy2021.entity.EFG;
+import fr.cdamassy2021.entity.Personne;
 
 
 public interface EFGRepository extends CrudRepository<EFG, Integer> {
@@ -15,8 +16,7 @@ public interface EFGRepository extends CrudRepository<EFG, Integer> {
 	@Query(value = "SELECT e FROM EFG e WHERE e.createur.idCanal=?1")	
 	public Optional<List<EFG>>findByCanal(int idCanal);
 	
-	
-	
+	 
 	
 	@Query(value="SELECT COUNT(m) FROM MembreCanal m WHERE id_canal = ?1")
 	public int membresCanal(int idCanal);

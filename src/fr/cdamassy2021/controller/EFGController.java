@@ -4,17 +4,20 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.cdamassy2021.entity.EFG;
+import fr.cdamassy2021.entity.Personne;
 import fr.cdamassy2021.service.EFGService;
 
 @CrossOrigin(origins = "*",allowedHeaders = "*")
@@ -85,6 +88,16 @@ public class EFGController {
 		return mv;
 	}
 	
+	@PostMapping(value="api/{idCanal}/EFGs/new",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<EFG> postEFG(@RequestBody EFG efg){
+		try {
+			EFG savedEFG = efgService.saveEFG(efg);
+			return ResponseEntity.ok(savedEFG);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+	
 	@PostMapping("canaux/{idCanal}/EFGs/new") 
 	public ModelAndView postForm(@ModelAttribute("newEFG") EFG efg, @PathVariable(value="idCanal") int idCanal) {
 		ModelAndView mv = new ModelAndView();
@@ -96,4 +109,18 @@ public class EFGController {
 		mv.setViewName("redirect:/canaux/{idCanal}/EFGs/"+efgSaved.getIdEfg());
 		return mv;
 	}
+
+
+	@RequestMapping("api/{idCanal}/EFGs/{idEFG}/createur")
+	public ResponseEntity<Personne> getCreator(@PathVariable(value = "idEFG") int idEFG){
+		Optional<Personne> optPersonne = efgService.getCreateur(idEFG);
+		if(optPersonne.isPresent()) {
+			Personne perso = optPersonne.get();
+			perso.setAllCanauxMembre(null);
+			return ResponseEntity.ok(perso);
+		}else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 }
