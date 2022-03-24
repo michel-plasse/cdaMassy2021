@@ -62,8 +62,11 @@ public class PersonneRestController {
 		personnesDuCanal.forEach(p -> membreDtos.add(new MembreDto(p)));
 		return membreDtos;
 	}
-	
-	@RequestMapping(value="/{idCanal}/membre/{idMembre}")
+
+	/**
+	 * GET /api/canal/{idCanal}/membre/{idMembre} -> supprimer un membre d'un canal 
+	 */
+	@RequestMapping(value="/{idCanal}/membre/{idMembre}", method = RequestMethod.GET)
 	public ResponseEntity<Boolean> deleteMembre(
 			@PathVariable int idCanal,
 			@PathVariable int idMembre){
@@ -74,9 +77,31 @@ public class PersonneRestController {
 		catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
-		
 	}
 	
+	
+//	@RequestMapping(value="/{idCanal}/membre/{idMembre}", method = RequestMethod.GET)
+//	public ResponseEntity<Boolean> deleteMembre(
+//			@PathVariable int idCanal,
+//			@PathVariable int idMembre){
+//		try {
+//			personneService.enleverMembreDuCanal(idMembre, idCanal);
+//			return ResponseEntity.ok(true);
+//		}
+//		catch (Exception e) {
+//			return ResponseEntity.badRequest().build();
+//		}
+//	}
+	
+
+//	@RequestMapping("/erreur/{message}")
+//	public ModelAndView erreur(@PathVariable("message") String message ) {
+//		ModelAndView mv = new ModelAndView("erreur");
+//
+//		mv.addObject("message",message );
+//
+//		return mv;
+//	}
 //
 //	@PostMapping("/canaux/enleve")
 //	public String deleteMembre(HttpServletRequest request, HttpServletResponse response, Model model) {
