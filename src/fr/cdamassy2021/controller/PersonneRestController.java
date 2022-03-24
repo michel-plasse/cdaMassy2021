@@ -79,69 +79,19 @@ public class PersonneRestController {
 		}
 	}
 	
-	
-//	@RequestMapping(value="/{idCanal}/membre/{idMembre}", method = RequestMethod.GET)
-//	public ResponseEntity<Boolean> deleteMembre(
-//			@PathVariable int idCanal,
-//			@PathVariable int idMembre){
-//		try {
-//			personneService.enleverMembreDuCanal(idMembre, idCanal);
-//			return ResponseEntity.ok(true);
-//		}
-//		catch (Exception e) {
-//			return ResponseEntity.badRequest().build();
-//		}
-//	}
-	
-
-//	@RequestMapping("/erreur/{message}")
-//	public ModelAndView erreur(@PathVariable("message") String message ) {
-//		ModelAndView mv = new ModelAndView("erreur");
-//
-//		mv.addObject("message",message );
-//
-//		return mv;
-//	}
-//
-//	@PostMapping("/canaux/enleve")
-//	public String deleteMembre(HttpServletRequest request, HttpServletResponse response, Model model) {
-//		// verifier droit de l'utilisateur
-//		// verifier idCanal et idPersonne
-//		int idMembreAEffacer = Integer.parseInt(request.getParameter("idMembreAEffacer"));
-//		int idCanal = Integer.parseInt(request.getParameter("idCanal"));
-//
-//		System.out.println("==============" + idMembreAEffacer + "++++++++" + idCanal);
-//
-//		Personne personne_en_session = (Personne) request.getSession().getAttribute("currentUser");
-//
-//		if(personne_en_session.getEst_gestionnaire()== 1) {
-//			personneService.enleverMembreDuCanal(idMembreAEffacer, idCanal);
-//			model.addAttribute("idCanal", idCanal);
-//			return "redirect:/canaux/{idCanal}";
-//
-//		}else {
-//			model.addAttribute("message", "Vous n'avez pas ces droits");
-//			return "redirect:/erreur/{message}";
-//		}
-//
-//	}
-	
-//	@RequestMapping("/canaux/addMembre")
-//	public String addMembreToCanal(HttpServletRequest request, HttpServletResponse response, Model model) {
-//		int idPersonneAAjouter = Integer.parseInt(request.getParameter("idPersonneAjouter"));
-//		int idCanal = Integer.parseInt(request.getParameter("idCanalAjouter"));
-//
-//		Personne personne_en_session = (Personne) request.getSession().getAttribute("currentUser");
-//
-//		if(personne_en_session.getEst_gestionnaire() ==1) {
-//			personneService.ajouterMembreDuCanal(idPersonneAAjouter, idCanal);
-//			model.addAttribute("idCanal", idCanal);
-//			return "redirect:/canaux/{idCanal}";
-//
-//		}else {
-//			model.addAttribute("message", "Vous n'avez pas ces droits");
-//			return "redirect:/erreur/{message}";
-//		}
-//	}
-
+	/**
+	 * Post /api/canal/{idCanal}/membre/{idMembre} -> ajouter un membre a un canal 
+	 */
+	@RequestMapping(value="/{idCanal}/membre/{idMembre}", method = RequestMethod.POST)
+	public ResponseEntity<Boolean> addMembre(
+			@PathVariable int idCanal,
+			@PathVariable int idMembre){
+		try {
+			personneService.ajouterMembreDuCanal(idMembre, idCanal);
+			return ResponseEntity.ok(true);
+		}
+		catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
 }
