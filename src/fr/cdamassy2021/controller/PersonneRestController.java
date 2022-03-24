@@ -2,6 +2,7 @@ package fr.cdamassy2021.controller;
 
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import fr.cdamassy2021.dto.MembreDto;
 import fr.cdamassy2021.entity.Canal;
 import fr.cdamassy2021.entity.Personne;
 import fr.cdamassy2021.service.CanalService;
@@ -42,18 +44,24 @@ public class PersonneRestController {
 	 * GET /api/canal -> renvoie la liste des personnes
 	 */
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public Collection<Personne> allPersonnes(){
-		return personneService.listAll();
-	}
+//	@RequestMapping(method = RequestMethod.GET)
+//	public List<MembreDto> GetAllMembres(){
+//		ArrayList<MembreDto> allMembreDtos = new ArrayList<>();
+//		Collection<Personne> allPersonnes = personneService.listAll();
+//		allPersonnes.forEach(p -> allMembreDtos.add(new MembreDto(p)));
+//		return allMembreDtos;
+//	}
 
 	/**
 	 * GET /api/canal/{idCanal} -> renvoie la liste des produits
 	 * erreur 500
 	 */
 	@RequestMapping(value="/{idCanal}", method = RequestMethod.GET)
-	public Collection<Personne> listerMemebrs(@PathVariable int IdCanal) {
-		return personneService.listMembreByCanal(IdCanal);
+	public List<MembreDto> GetMembresDuCanal(@PathVariable int idCanal){
+		ArrayList<MembreDto> membreDtos = new ArrayList<>();
+		Collection<Personne> personnesDuCanal = personneService.listMembreByCanal(idCanal);
+		personnesDuCanal.forEach(p -> membreDtos.add(new MembreDto(p)));
+		return membreDtos;
 	}
 	
 //	@RequestMapping("/erreur/{message}")
