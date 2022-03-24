@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -43,7 +44,6 @@ public class PersonneRestController {
 	/**
 	 * GET /api/canal -> renvoie la liste des personnes
 	 */
-	
 //	@RequestMapping(method = RequestMethod.GET)
 //	public List<MembreDto> GetAllMembres(){
 //		ArrayList<MembreDto> allMembreDtos = new ArrayList<>();
@@ -53,8 +53,7 @@ public class PersonneRestController {
 //	}
 
 	/**
-	 * GET /api/canal/{idCanal} -> renvoie la liste des produits
-	 * erreur 500
+	 * GET /api/canal/{idCanal} -> renvoie la liste des membres d'un canal
 	 */
 	@RequestMapping(value="/{idCanal}", method = RequestMethod.GET)
 	public List<MembreDto> GetMembresDuCanal(@PathVariable int idCanal){
@@ -64,14 +63,20 @@ public class PersonneRestController {
 		return membreDtos;
 	}
 	
-//	@RequestMapping("/erreur/{message}")
-//	public ModelAndView erreur(@PathVariable("message") String message ) {
-//		ModelAndView mv = new ModelAndView("erreur");
-//
-//		mv.addObject("message",message );
-//
-//		return mv;
-//	}
+	@RequestMapping(value="/{idCanal}/membre/{idMembre}")
+	public ResponseEntity<Boolean> deleteMembre(
+			@PathVariable int idCanal,
+			@PathVariable int idMembre){
+		try {
+			personneService.enleverMembreDuCanal(idMembre, idCanal);
+			return ResponseEntity.ok(true);
+		}
+		catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+		
+	}
+	
 //
 //	@PostMapping("/canaux/enleve")
 //	public String deleteMembre(HttpServletRequest request, HttpServletResponse response, Model model) {
