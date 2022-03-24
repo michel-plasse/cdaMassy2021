@@ -1,10 +1,8 @@
 package fr.cdamassy2021.controller;
 
-<<<<<<< Updated upstream
-=======
+
 import java.util.ArrayList;
 import java.util.Collection;
->>>>>>> Stashed changes
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +24,7 @@ public class CanalRestController {
 	@Autowired
 	CanalService canalService;
 	
-<<<<<<< Updated upstream
-	/*
-	 * GET /api/canaux/{idLogin} -> renvoie tous les canaux dont l'utilisateur fait partie
-	 */
-	@RequestMapping(value="/{idLogin}", method = RequestMethod.GET)
-	public List<Canal> canauxByIdLogin(@PathVariable int idLogin){
-		return canalService.ListCanauxByIdMembre(idLogin);
-=======
+
 //	@RequestMapping(method = RequestMethod.GET)
 //	public List<CanalDto> getCanaux(){
 //		ArrayList<CanalDto> canalDtos = new ArrayList<>();
@@ -48,7 +39,6 @@ public class CanalRestController {
 		List<Canal> canaux = canalService.ListCanauxByIdMembre(idLogin);
 		canaux.forEach(c -> canalDtos.add(new CanalDto(c)));
 		return canalDtos;
->>>>>>> Stashed changes
 	}
 	
 }
