@@ -44,8 +44,8 @@ public class ReponseController {
 		//valid true:
 		if (valid) {
 			Reponse reponse = new Reponse(
-					question,
 					currentUser,
+					question,
 					libelleReponse);
 			// persist data
 			reponseService.save(reponse);

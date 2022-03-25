@@ -3,7 +3,7 @@ package fr.cdamassy2021.pkclasses;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class ReponsePK implements Serializable {
+public class ReponsePK2 implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -11,7 +11,7 @@ public class ReponsePK implements Serializable {
     private long personne;
     
 
-	public ReponsePK() {
+	public ReponsePK2() {
 		super();
 	}
 
@@ -53,7 +53,7 @@ public class ReponsePK implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ReponsePK other = (ReponsePK) obj;
+		ReponsePK2 other = (ReponsePK2) obj;
 		return personne == other.personne && question == other.question;
 	}
 

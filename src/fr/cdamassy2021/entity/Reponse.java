@@ -10,7 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import fr.cdamassy2021.pkclasses.ReponsePK;
+import fr.cdamassy2021.dto.ReponseDto;
+import fr.cdamassy2021.pkclasses.ReponsePK2;
 
 /**
  * Une réponse est la réponse d'un utlisateur a un sondage.
@@ -18,7 +19,7 @@ import fr.cdamassy2021.pkclasses.ReponsePK;
  */
 @Entity
 @Table(name = "reponse")
-@IdClass(ReponsePK.class)
+@IdClass(ReponsePK2.class)
 public class Reponse {
 	
 	@Id
@@ -40,9 +41,8 @@ public class Reponse {
 	public Reponse() {
 
 	}
-	
 
-	public Reponse(Question question, Personne personne, String libelle) {
+	public Reponse( Personne personne, Question question, String libelle) {
 		super();
 		this.question = question;
 		this.personne = personne;
