@@ -4,9 +4,9 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
 
@@ -21,9 +21,6 @@ public class MembreCanal {
 	@Column(name="id_personne")
 	private int idPersonne;
 	
-	@OneToMany(mappedBy = "createur",targetEntity = EFG.class)
-	private Set<EFG> efgCrees;
-
 
 	public MembreCanal() {
 		super();
@@ -44,15 +41,5 @@ public class MembreCanal {
 	public void setIdPersonne(int idPersonne) {
 		this.idPersonne = idPersonne;
 	}
-
-	public Set<EFG> getEfgCrees() {
-		return efgCrees;
-	}
-
-	public void setEfgCrees(Set<EFG> efgCrées) {
-		this.efgCrees = efgCrées;
-	}
-	
-	
 
 }

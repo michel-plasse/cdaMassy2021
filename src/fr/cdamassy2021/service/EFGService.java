@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import fr.cdamassy2021.entity.Canal;
 import fr.cdamassy2021.entity.EFG;
+import fr.cdamassy2021.entity.Personne;
 import fr.cdamassy2021.repository.EFGRepository;
+import fr.cdamassy2021.repository.PersonneRepository;
 
 @Service
 @Transactional
@@ -21,14 +23,17 @@ public class EFGService {
 
 	@Autowired
 	EFGRepository repo;
+	
+	@Autowired
+	PersonneRepository repoPersonne;
 
-	public List<EFG> listByCanal(int idCanal) {
-		List<EFG> EfgList = repo.findByCanal(idCanal);
+	public Optional<List<EFG>> listByCanal(int idCanal) {
+		Optional<List<EFG>> EfgList = repo.findByCanal(idCanal);
 		return EfgList;
 	}
 	
-	public EFG findById(int idEFG) {
-		EFG efg = repo.findById(idEFG).get();
+	public Optional<EFG> findById(int idEFG) {
+		Optional<EFG> efg = repo.findById(idEFG);
 		return efg;
 	}
 
@@ -40,5 +45,15 @@ public class EFGService {
 	
 	public int nombreMembresCanal(int idCanal) {
 		return repo.membresCanal(idCanal);
+	}
+	
+	public Optional<Personne> getCreateur(int idEFG) {
+		Optional<EFG> optEFG = this.findById(idEFG);
+		if (optEFG.isPresent()) {
+			EFG efg = optEFG.get();
+			return repoPersonne.findById((long) efg.getIdCreateur());
+		}else {
+			return null;
+		}
 	}
 }
