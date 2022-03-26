@@ -4,15 +4,19 @@ import fr.cdamassy2021.entity.Personne;
 import fr.cdamassy2021.entity.Reponse;
 
 public class ReponseDto {
-	private final long idQuestion;
+	private long idQuestion;
 	
-	private final long idAuteur;
+	private long idAuteur;
 	
-	private final String nomAuteur;
+	private String nomAuteur;
 
-	private final String libelle;
+	private String libelle;
 
-	private final String dateRendu;
+	private String dateRendu;
+	
+	public ReponseDto(){
+		
+	}
 	
 	public ReponseDto(Reponse reponse) {
 		Personne auteur  = reponse.getPersonne();
