@@ -4,13 +4,15 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import fr.cdamassy2021.dto.ReponseDto;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import fr.cdamassy2021.pkclasses.ReponsePK2;
 
 /**
@@ -49,6 +51,7 @@ public class Reponse {
 		this.libelle = libelle;
 	}
 
+	@JsonBackReference
 	public Question getQuestion() {
 		return question;
 	}
@@ -84,7 +87,7 @@ public class Reponse {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateRendu, libelle, personne, question);
+		return Objects.hash(dateRendu, libelle, personne, question.getIdQuestion());
 	}
 
 
@@ -99,6 +102,11 @@ public class Reponse {
 		Reponse other = (Reponse) obj;
 		return Objects.equals(dateRendu, other.dateRendu) && Objects.equals(libelle, other.libelle)
 				&& Objects.equals(personne, other.personne) && Objects.equals(question, other.question);
+	}
+
+	@Override
+	public String toString() {
+		return "Reponse [personne=" + personne + ", libelle=" + libelle + ", dateRendu=" + dateRendu + "]";
 	}	
 
 }

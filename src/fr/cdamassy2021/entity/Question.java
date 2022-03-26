@@ -19,14 +19,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import fr.cdamassy2021.enums.TypeQuestion;
 
-/**
+/*
  * 
  *  @author Kamal, Ben, Vinoth, Thomas
  *  
- *  
- *  */
+ */
 @Entity
 public class Question {
 
@@ -53,7 +54,7 @@ public class Question {
 
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "question", cascade = CascadeType.ALL)
-	private List<Reponse> reponses = new ArrayList<Reponse>();
+	private Set<Reponse> reponses = new LinkedHashSet<Reponse>();
 	
 	@Column(name = "id_type_question")
 	@Enumerated(EnumType.ORDINAL)
@@ -119,13 +120,13 @@ public class Question {
 	public void setPropositions(Set<Proposition> propositions) {
 		this.propositions = propositions;
 	}
-	public List<Reponse> getReponses() {
+	@JsonManagedReference
+	public Set<Reponse> getReponses() {
 		return reponses;
 	}
-	public void setReponses(List<Reponse> reponses) {
+	public void setReponses(Set<Reponse> reponses) {
 		this.reponses = reponses;
 	}
-
 	
 	public TypeQuestion getTypeQuestion() {
 		return typeQuestion;
