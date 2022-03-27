@@ -1,6 +1,7 @@
 package fr.cdamassy2021.controller;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,7 @@ public class QuestionnaireController {
 	
 	@RequestMapping("/questionnaire/afficher")
 	public ModelAndView afficherQuestionnaires() {
-		Collection<Questionnaire> listQuestionnaire = questionnaireService.listAll();
+		List<Questionnaire> listQuestionnaire = questionnaireService.findAllQuestionnaire();
 		ModelAndView mav = new ModelAndView("afficherquestionnaires");
 		
 		mav.addObject("allQuestionnaires", listQuestionnaire);

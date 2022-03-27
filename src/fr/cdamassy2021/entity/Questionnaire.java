@@ -11,8 +11,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * 
@@ -23,19 +29,28 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Questionnaire {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idQuestionnaire;
+	
 	@Column
 	private String libelle;
-	@Column(name = "id_canal")
-	private long idCanal;
-	@OneToOne
+	
+	@JsonManagedReference
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_canal", nullable=false)
+	private Canal canal;
+	
+	@JsonManagedReference
+	@ManyToOne
 	@JoinColumn(name = "id_createur")
-	private Personne idCreateur;
+	private Personne createur;
+	//private Personne createur ??? Christian 200220327
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "questionnaire", cascade = CascadeType.ALL)
 	private Collection<Question> allQuestions = new LinkedHashSet<Question>();
+	
 	
 	@Column
 	private String dateAjout;
@@ -44,13 +59,13 @@ public class Questionnaire {
 		super();
 	}
 
-	public Questionnaire(long idQuestionnaire, String libelle, long idCanal, Personne idCreateur,
+	public Questionnaire(long idQuestionnaire, String libelle, Canal canal, Personne createur,
 			Collection<Question> allQuestions, String dateAjout) {
 		super();
 		this.idQuestionnaire = idQuestionnaire;
 		this.libelle = libelle;
-		this.idCanal = idCanal;
-		this.idCreateur = idCreateur;
+		this.canal = canal;
+		this.createur = createur;
 		this.allQuestions = allQuestions;
 		this.dateAjout = dateAjout;
 	}
@@ -71,20 +86,20 @@ public class Questionnaire {
 		this.libelle = libelle;
 	}
 
-	public long getIdCanal() {
-		return idCanal;
+	public Canal getIdCanal() {
+		return canal;
 	}
 
-	public void setIdCanal(long idCanal) {
-		this.idCanal = idCanal;
+	public void setIdCanal(Canal canal) {
+		this.canal = canal;
 	}
 
-	public Personne getIdCreateur() {
-		return idCreateur;
+	public Personne getCreateur() {
+		return createur;
 	}
 
-	public void setIdCreateur(Personne idCreateur) {
-		this.idCreateur = idCreateur;
+	public void setCreateur(Personne createur) {
+		this.createur = createur;
 	}
 
 	public Collection<Question> getAllQuestions() {
@@ -101,6 +116,14 @@ public class Questionnaire {
 
 	public void setDateAjout(String dateAjout) {
 		this.dateAjout = dateAjout;
+	}
+
+	public Canal getCanal() {
+		return canal;
+	}
+
+	public void setCanal(Canal canal) {
+		this.canal = canal;
 	}
 
 
