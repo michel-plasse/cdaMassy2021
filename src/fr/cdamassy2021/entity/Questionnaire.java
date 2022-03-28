@@ -13,12 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * 
@@ -37,20 +32,16 @@ public class Questionnaire {
 	@Column
 	private String libelle;
 	
-	@JsonManagedReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_canal", nullable=false)
 	private Canal canal;
 	
-	@JsonManagedReference
-	@ManyToOne
-	@JoinColumn(name = "id_createur")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_createur", nullable=false)
 	private Personne createur;
-	//private Personne createur ??? Christian 200220327
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "questionnaire", cascade = CascadeType.ALL)
 	private Collection<Question> allQuestions = new LinkedHashSet<Question>();
-	
 	
 	@Column
 	private String dateAjout;
@@ -84,14 +75,6 @@ public class Questionnaire {
 
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
-	}
-
-	public Canal getIdCanal() {
-		return canal;
-	}
-
-	public void setIdCanal(Canal canal) {
-		this.canal = canal;
 	}
 
 	public Personne getCreateur() {

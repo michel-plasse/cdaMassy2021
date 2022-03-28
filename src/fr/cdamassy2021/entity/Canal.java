@@ -39,8 +39,8 @@ public class Canal {
 		, inverseJoinColumns = {@JoinColumn(name = "id_canal") })
 	private Set<Personne> allMembres;
 	
-	@JsonBackReference
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "canal")
+	//@JsonBackReference
+	@OneToMany(mappedBy = "canal")
 	private List<Questionnaire> questionnaires;
 	
 	public Canal() {

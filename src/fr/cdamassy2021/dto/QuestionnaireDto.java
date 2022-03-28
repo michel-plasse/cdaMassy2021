@@ -22,8 +22,6 @@ public class QuestionnaireDto {
 	private String dateAjout;
 	private String nomCreateur;
 	private String prenomCreateur;
-
-
 	
 	public QuestionnaireDto(Questionnaire questionnaire) {
 
