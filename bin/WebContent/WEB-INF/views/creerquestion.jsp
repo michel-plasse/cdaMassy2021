@@ -11,11 +11,12 @@
   		<%@include file="../../css/questionaire_style.css" %>  
   		
 </style> <!-- @include =  directive de compilation (jsp pure) -->
+<h3 class="success">${messageSuccess}</h3>
+<h3 class="erreur">${messageError}</h3>
 
 <h1>Formulaire de création question</h1>
-<h2 class="erreur">${message}</h2>
-<h2 class="success">${messageSuccess}</h2>
-<form class="form-question" method="POST">
+
+<form class="form-question" action="${pageContext.request.contextPath}/questions/enregistrer" method="POST">
     <legend> Nouvelle Question: </legend>
     <p><i>Complétez le formulaire. Les champs marqué par </i><em>*</em> sont <em>obligatoires</em></p>
     <div class="questionLayout">
@@ -33,9 +34,9 @@
                         Ajouter une proposition:<button type="button" id="addProposition">+</button>
                         <div id="blocProposition">
                             <textarea type="text"  id="proposition" placeholder="Ecrivez votre proposition" name="proposition"></textarea>
-                            <input type="radio" id="correctness" name="correctness" value="Undefined" checked="true">Indéfinie
-                            <input type="radio" id="correctness" name="correctness" value="Correct">Correcte
-                            <input type="radio" id="correctness" name="correctness" value="Incorrect">Incorrecte             
+                            <input type="radio" id="correctness" name="correctness" value="2" checked="true">Indéfinie
+                            <input type="radio" id="correctness" name="correctness" value="1">Correcte
+                            <input type="radio" id="correctness" name="correctness" value="0">Incorrecte             
                         </div>
                     </div>
                 </fieldset>
