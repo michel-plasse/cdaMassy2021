@@ -22,12 +22,9 @@
 
 		<a href="questions/${canal.idCanal}/afficher">Afficher les
 			questions</a>
-		<a href="questions/repondre/${canal.idCanal}">Repondre aux
+		<a href="questions/repondre?${canal.idCanal}">Repondre aux
 			questions</a>
-	    <a href="${pageContext.request.contextPath}/questions/creer">Poser une question</a>
 	</c:forEach>
-	
-	
 
 </nav>
 <p:footer />

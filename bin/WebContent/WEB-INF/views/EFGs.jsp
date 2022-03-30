@@ -5,8 +5,6 @@
 
 <h1>Liste d'EFGs</h1>
 
- il y a <c:out value="${nbMembres}"/> membres dans ce canal 
-
 <c:if test="${empty EFGs}">
 	<p>
 		<c:out value="Il n'y a pas encore d'exercice de groupe."></c:out>
@@ -27,15 +25,15 @@
 
 			<c:forEach items="${EFGs}" var="efg">
 				<tr>
-					<td>${efg.idEfg}</td>
+					<td>${efg.idEFG}</td>
 					<td>${efg.intitule}</td>
 					<td>
-						<button type="button" onClick="location.href='EFGs/${efg.idEfg}'"
+						<button type="button" onClick="location.href='EFGs/${efg.idEFG}'"
 							class="btn-efg">Accéder à l'EFG</button>
 					</td>
 					<td>
 						<button type="button" class="btn-efg"
-							onClick="location.href='listerGroupesEfg?idEfg=${efg.idEfg}'">Accéder
+							onClick="location.href='listerGroupesEfg?idEfg=${efg.idEFG}'">Accéder
 							aux groupes de l'EFG</button>
 					</td>
 				</tr>
@@ -43,15 +41,7 @@
 		</tbody>
 	</table>
 </c:if>
-
-<!-- Empêche l'affichage du bouton de création de l'exercice dans le canal#3, car il n'y actuellement pas de membre à l'intérieur.
-A supprimer quand l'inscription sera faite -->
-<c:set var="idCanal" value="${idCanal}" />
-<c:if test="${idCanal != 3}">
-	<button type="button" class="btn-efg"
-		onClick="location.href='EFGs/new'">Créer un exercice en
-		groupe</button>
-</c:if>
+<button type="button" class="btn-efg" onClick="location.href='EFGs/new'">Créer un exercice en groupe</button>
 
 </body>
 </html>

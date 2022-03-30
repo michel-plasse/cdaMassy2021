@@ -1,71 +1,5 @@
 USE `cdamassy2021` ;
 
--- -----------------------------------------------------
--- procedures utilitaires
--- -----------------------------------------------------
-
-DELIMITER $$
-DROP PROCEDURE IF EXISTS apply_to_all_tables$$
-CREATE PROCEDURE `apply_to_all_tables`(p_prefix VARCHAR(45), p_suffix VARCHAR(128))
-BEGIN
-	-- to exit the cursor loop
-	DECLARE v_ended BOOLEAN DEFAULT FALSE;
-  -- sql statement for each table
-	DECLARE v_sql VARCHAR(64);
-  -- truncate statements (one for each table)
-  DECLARE v_stmts CURSOR FOR 
-		SELECT concat(p_prefix, ' ', table_name, ' ', p_suffix)
-		FROM information_schema.tables	
-		WHERE table_schema = DATABASE() AND table_type = 'BASE TABLE'
-    ORDER BY table_name ASC;  
-	-- truncate or drop require disabling referential integrity constraints
-	SET FOREIGN_KEY_CHECKS = 0;
-  OPEN v_stmts;
-  BEGIN
-    DECLARE EXIT HANDLER FOR NOT FOUND SET v_ended = TRUE;
-    REPEAT
-      FETCH v_stmts INTO v_sql;
-      -- Need to use a user-defined variable
-      SET @sql = v_sql;
-      -- 3 statements to execute the truncate statement!
-      PREPARE v_stmt FROM @sql;
-      EXECUTE v_stmt;
-			DEALLOCATE PREPARE v_stmt;
-		UNTIL v_ended END REPEAT; 
-  END;
-  CLOSE v_stmts;
-  -- Enabling again the referential integrity constraints
-	SET FOREIGN_KEY_CHECKS = 0;
-  -- SELECT 'All tables of current schema truncated' AS log;
-END$$
-
-
-DROP PROCEDURE IF EXISTS drop_all_tables$$
-CREATE PROCEDURE `drop_all_tables`()
-BEGIN
-	CALL apply_to_all_tables('DROP TABLE', '');
-END$$
-
-
-DROP PROCEDURE IF EXISTS reset_auto_increment_all_tables$$
-CREATE PROCEDURE `reset_auto_increment_all_tables`()
-BEGIN
-	CALL apply_to_all_tables('ALTER TABLE', 'AUTO_INCREMENT 1');
-END$$
-
-
-DROP PROCEDURE IF EXISTS truncate_all_tables$$
-CREATE PROCEDURE `truncate_all_tables`()
-BEGIN
-	CALL apply_to_all_tables('TRUNCATE TABLE', '');
-END$$
-
-
-
--- -----------------------------------------------------
--- Recréation des tableaux 
--- -----------------------------------------------------
-DELIMITER ;
 CALL drop_all_tables();
 
 -- -----------------------------------------------------
@@ -160,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `efg` (
   `date_creation` DATETIME NOT NULL DEFAULT now(),
   `id_createur` INT(11) NOT NULL,
   `id_canal` INT NOT NULL,
-  `groupes`VARCHAR(150) NOT NULL,
+  `groupes`VARCHAR(150) NULL,
   PRIMARY KEY (`id_efg`),
   INDEX `fk_efg_membre_canal_id` (`id_canal` ASC, `id_createur` ASC),
   CONSTRAINT `fk_efg_membre_canal1`
@@ -337,3 +271,255 @@ CREATE TABLE IF NOT EXISTS `membre_groupe_efg` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+USE `cdamassy2021` ;
+
+-- -----------------------------------------------------
+-- procedure apply_to_all_tables
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `cdamassy2021`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `apply_to_all_tables`(p_prefix VARCHAR(45), p_suffix VARCHAR(128))
+BEGIN
+	-- to exit the cursor loop
+	DECLARE v_ended BOOLEAN DEFAULT FALSE;
+  -- sql statement for each table
+	DECLARE v_sql VARCHAR(64);
+  -- truncate statements (one for each table)
+  DECLARE v_stmts CURSOR FOR 
+		SELECT concat(p_prefix, ' ', table_name, ' ', p_suffix)
+		FROM information_schema.tables	
+		WHERE table_schema = DATABASE() AND table_type = 'BASE TABLE'
+    ORDER BY table_name ASC;  
+	-- truncate or drop require disabling referential integrity constraints
+	SET FOREIGN_KEY_CHECKS = 0;
+  OPEN v_stmts;
+  BEGIN
+    DECLARE EXIT HANDLER FOR NOT FOUND SET v_ended = TRUE;
+    REPEAT
+      FETCH v_stmts INTO v_sql;
+      -- Need to use a user-defined variable
+      SET @sql = v_sql;
+      -- 3 statements to execute the truncate statement!
+      PREPARE v_stmt FROM @sql;
+      EXECUTE v_stmt;
+			DEALLOCATE PREPARE v_stmt;
+		UNTIL v_ended END REPEAT; 
+  END;
+  CLOSE v_stmts;
+  -- Enabling again the referential integrity constraints
+	SET FOREIGN_KEY_CHECKS = 0;
+  -- SELECT 'All tables of current schema truncated' AS log;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure drop_all_tables
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `cdamassy2021`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `drop_all_tables`()
+BEGIN
+	CALL apply_to_all_tables('DROP TABLE', '');
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure reset_auto_increment_all_tables
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `cdamassy2021`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reset_auto_increment_all_tables`()
+BEGIN
+	CALL apply_to_all_tables('ALTER TABLE', 'AUTO_INCREMENT 1');
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure reset_cdamassy2021
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `cdamassy2021`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reset_cdamassy2021`(date_effet DATETIME)
+BEGIN
+	CALL truncate_all_tables();
+  IF date_effet IS NULL THEN
+		SET date_effet = NOW();
+	END IF;
+  BEGIN
+    -- Recuperation en cas d'exception (intégrité, syntaxe)
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+      -- Annuler la transaction
+      ROLLBACK;
+			-- Propager l'exception
+      RESIGNAL;
+    END;  
+    -- Demarrer une transaction : si une erreur se produit,
+    -- tout sera annulé
+    START TRANSACTION;
+    -- 1er groupe : tableaux ne dépendant d'aucun autre
+    INSERT INTO canal(id_canal, nom) VALUES
+			(1, 'SIO 2021 projet'),
+			(2, 'SIO 2021 java'),
+			(3, 'CDA 2021');
+ 
+		INSERT INTO personne(id_personne, prenom, nom, email, pwd, tel, est_formateur,
+    est_gestionnaire, est_administrateur, url_photo, inscrit_a) VALUES
+			-- 2 formateurs
+			(1, 'Tryphon', 'Tournesol', 'formateur1@gmail.com', 'azerty', '0601020304', 1,
+				0, 0, 'formateur1@gmail.com.jpg', date_effet - INTERVAL 3 MONTH),
+			(2, 'Bianca', 'Castafiore', 'formateur2@gmail.com', 'azerty', '0611121314', 1,
+				0, 0, 'formateur2@gmail.com.jpg', date_effet - INTERVAL 3 MONTH),
+			-- 5 etudiants
+			(3, 'Manuel', 'Rivière', 'etudiant1@gmail.com', 'azerty', '0621222324', 0,
+				0, 0, 'etudiant1@gmail.com.jpg', date_effet - INTERVAL 2 MONTH),
+			(4, 'Marguerite', 'Moulin', 'etudiant2@gmail.com', 'azerty', '0631323334', 0,
+				0, 0, 'etudiant2@gmail.com.jpg', date_effet - INTERVAL 2 MONTH),
+			(5, 'Nadia', 'Lupin', 'etudiant3@gmail.com', 'azerty', '0631323334', 0,
+				0, 0, 'etudiant3@gmail.com.jpg', date_effet - INTERVAL 1 MONTH - INTERVAL 15 DAY),
+			(6, 'Marguerite', 'Gatot', 'etudiant4@gmail.com', 'azerty', '0641424344', 0,
+				0, 0, 'etudiant4@gmail.com.jpg', date_effet - INTERVAL 1 MONTH - INTERVAL 15 DAY),
+			(7, 'Karim', 'Malingua', 'etudiant5@gmail.com', 'azerty', '0651525354', 0,
+				0, 0, 'etudiant5@gmail.com.jpg', date_effet - INTERVAL 1 MONTH - INTERVAL 15 DAY);
+		INSERT INTO type_question(id_type_question, libelle) VALUES
+		(1, 'oui/non'),
+		(2, 'réponse libre'),
+		(3, 'options multiples');
+      
+		-- Tableaux ne dépendant que du 1er groupe
+		INSERT INTO	efg(id_efg, intitule, date_creation, id_createur, id_canal) VALUES
+    -- 2 dans le canal 1 + 1 dans le canal 2, tous du formateur 1
+			(1, 'TP définir objectif', date_effet - INTERVAL 1 MONTH, 1, 1),
+			(2, 'TP cadrage', date_effet - INTERVAL 1 MONTH, 1, 1),
+			(3, "TP tests d'acceptation", date_effet - INTERVAL 1 MONTH, 1, 2);
+		
+		INSERT INTO question(id_question, libelle, id_canal, id_createur, 
+    id_type_question, id_questionnaire) VALUES
+			-- 1 de chaque type
+			(1, 'Avez-vous fini ?', 1, 1, 1,null), -- oui/non
+			(2, 'Combien de temps voulez-vous pour ce TP ?', 1, 1, 3,null), -- plusieurs choix 
+			(3, 'Donnez un exemple de classe abstraite', 1, 1, 2,null), -- libre
+			(4, "Chassez l'intrus",1,2,3,1), -- portée
+			(5, 'Que vaut s, avec String s = "0" + 1 ?', 1, 1, 3,1), -- plusieurs choix 
+			(6, "Quel fruit est un fruit d'hiver ?", 1, 1, 3,2), -- plusieurs choix 
+			(7, "Quel légume est le plus riche en vitamine C ?", 1, 1, 3,2); -- plusieurs choix 
+		
+        INSERT INTO membre_canal(id_canal, id_personne, ajoute_a) VALUES
+			-- les 2 formateurs dans canal 1
+			(1, 1, date_effet - INTERVAL 2 MONTH),
+			(1, 2, date_effet - INTERVAL 2 MONTH),
+      -- tous les étudiants dans canal 1
+			(1, 3, date_effet - INTERVAL 1 MONTH),
+			(1, 4, date_effet - INTERVAL 1 MONTH),
+			(1, 5, date_effet - INTERVAL 1 MONTH),
+			(1, 6, date_effet - INTERVAL 1 MONTH),
+			(1, 7, date_effet - INTERVAL 1 MONTH),
+      -- canal 2
+			(2, 1, date_effet - INTERVAL 2 MONTH),
+			(2, 3, date_effet - INTERVAL 1 MONTH),
+			(2, 4, date_effet - INTERVAL 1 MONTH),
+			(2, 5, date_effet - INTERVAL 1 MONTH);
+		INSERT INTO questionnaire(id_questionnaire, id_createur,id_canal, libelle) VALUES
+			(1, 1, 1, 'Bases de Java'),
+			(2, 1, 1, 'Fruits et légumes');
+
+
+		INSERT INTO groupe_efg(id_efg, id_createur) VALUES
+			-- 2 groupes par efg, avec 2 membres dans chaque (voir plus loin)
+      (1, 3),
+      (1, 4),
+      (2, 3),
+      (2, 5);
+
+		INSERT INTO proposition(id_proposition, id_question, libelle, est_correcte) VALUES
+			-- 2 questions dans les 2 questionnaires (1= Java, 2=fruits et légumes)
+      (1, 1, 'private', 0), -- portée
+      (2, 1, 'protege', 1),
+      (3, 1, 'public', 0),
+      (4, 2, '1', 0), -- Que vaut s, avec String s = "0" + 1 ?'
+      (5, 2, '01', 1),
+      (6, 2, 'erreur', 0),
+      (7, 3, 'kaki', 1), -- Quel fruit est un fruit d'hiver ?
+      (8, 3, 'melon', 0),
+      (9, 3, 'orange', 1),
+      (10, 4, 'chou', 1), -- Quel légume est le plus riche en vitamine C ?
+      (11, 4, 'carotte', 0),
+      (12, 4, 'epinard', 0),
+			-- sondages
+      (13, 2, '1/2h', null),
+      (14, 2, '1h', null),
+      (15, 2, '1h30', null);
+        
+		INSERT INTO reponse(id_question, id_personne, libelle) VALUES
+			-- question 1 avez-vous fini
+      (1, 3, 1),
+      (1, 4, 1),
+      (1, 5, 0),
+      (1, 6, 1),
+      (1, 7, 0),
+			-- question 2 Combien de temps voulez-vous pour ce TP (choix de 1 à 3)
+      (2, 3, 1),
+      (2, 4, 2),
+      (2, 5, 2),
+      (2, 6, 3),
+      (2, 7, 2),
+      -- question 3 Donnez un exemple de classe abstraite
+      (3, 3, 'java.util.List'),
+      (3, 4, 'ArrayList'),
+      (3, 5, 'java.sql.Connection'),
+      (3, 6, 'je sais pas');
+      -- 7e étudiant ne donne pas de réponse
+		
+		INSERT INTO membre_groupe_efg(id_personne, id_efg, id_createur) VALUES
+			-- 2 groupes par efg, avec min 2 membres dans chaque
+	  (3, 1, 3),
+      (5, 1, 3),
+      (6, 1, 3),
+      (4, 1, 4),
+      (7, 1, 4),
+      -- 2e efg, avec un membre pas en groupe, et des groupes différents
+      (3, 2, 3),
+      (4, 2, 3),
+      (5, 2, 5),
+      (6, 2, 5);
+	
+      -- Valider tout
+      COMMIT;
+	END;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure reset_to_now
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `cdamassy2021`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reset_to_now`()
+BEGIN
+  CALL reset_cdamassy2021(NOW());
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure truncate_all_tables
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `cdamassy2021`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `truncate_all_tables`()
+BEGIN
+	CALL apply_to_all_tables('TRUNCATE TABLE', '');
+END$$
+
+DELIMITER ;

@@ -11,7 +11,7 @@
 				value="org.hibernate.dialect.MySQL5Dialect" />
 
 			<property name="javax.persistence.jdbc.url"
-                value="jdbc:mysql://localhost:3306/cdamassy2021?serverTimezone=UTC&amp;useSSL=false" />
+				value="jdbc:mysql://localhost:3306/cdamassy2021?serverTimezone=UTC" />
 			<property name="javax.persistence.jdbc.user"
 				value="cdamassy2021_user" />
 			<property name="javax.persistence.jdbc.password"

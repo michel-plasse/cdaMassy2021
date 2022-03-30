@@ -10,12 +10,12 @@
 <ol>
     <c:forEach items="${membres}" var="membre">
         <li>
-            <form action="enleve" method="post">
+            <form action="enleverMembre" method="post">
                 <input type="hidden" id="idMembreAEffacer" value="${membre.idPersonne}"
                        name="idMembreAEffacer" /> 
                 <input type="hidden" value="${idCanal}" name="idCanal" />
                 ${membre.prenom}  ${membre.nom}
-                <button type="submit" >Supprimer</button>
+                <button type="submit">Supprimer</button>
             </form>
         </li>
 
@@ -24,7 +24,7 @@
 
 <h3>Ajout De Membres Au Canal</h3>
 
-<form id="formAjouter" action="addMembre" method="post">
+<form id="formAjouter" action="ajouterMembre" method="post">
     ID Du Membre A Ajouter : <br>
     <input type="text" name="idPersonneAjouter">
     <input type="hidden" value="${idCanal}" name="idCanalAjouter" />
@@ -32,8 +32,8 @@
     <button>Ajouter</button>
 </form>
 
- <script>
-    let formsSupprimer = document.querySelectorAll("form[action='enleve']");
+<script>
+    let formsSupprimer = document.querySelectorAll("form[action='enleverMembre']");
     console.log("numbre de formulaires :" + formsSupprimer.length);
     for (let i = 0; i < formsSupprimer.length; i++) {
         formsSupprimer[i].onsubmit = function (event) {
@@ -43,4 +43,4 @@
             }
         }
     }
-</script> 
+</script>

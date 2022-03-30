@@ -12,6 +12,7 @@
 	<c:forEach items="${canaux}" var="canal">
     ${canal.nomCanal} : <a href="membrescanal?idCanal=${canal.idCanal}">Membres</a>
     <input type="hidden" 
-		<a href="ListeEFGs?idCanal=${canal.idCanal}">Exercices en groupe</a>/>
+		<a href="ListeEFGs?idCanal=${canal.idCanal}">Exercices en groupe</a>
+		/>
 	</c:forEach>
 </nav>

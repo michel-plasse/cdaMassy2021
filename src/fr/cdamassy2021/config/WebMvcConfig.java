@@ -12,7 +12,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @Configuration
 @ComponentScan("fr.cdamassy2021")
-public class AppConfig implements WebMvcConfigurer{
+public class WebMvcConfig implements WebMvcConfigurer{
     @Bean(name = "viewResolver")
     public InternalResourceViewResolver getViewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -28,12 +28,3 @@ public class AppConfig implements WebMvcConfigurer{
     }
     
 }
-
-
-
-
-
-
-
-
-

@@ -6,21 +6,21 @@ body {
 	background-color: antiquewhite;
 }
 
-.form-question {
-	--background: #ffffff; 
-	--text: #414856;
-	--radio: #7C96B2;
-	--radio-checked: #4F29F0;
-	--radio-size: 25px;
-	--max-width: 30px;
-	--border-radius: 10px;
-	background: var(--background);
-	height: var(--height);
-	border-radius: var(--border-radius);
-	color: var(--text);
+.form-question { -
+	-background: #ffffff; -
+	-text: #414856; -
+	-radio: #7C96B2; -
+	-radio-checked: #4F29F0; -
+	-radio-size: 25px; -
+	-max-width: 30px; -
+	-border-radius: 10px;
+	background: var(- -background);
+	height: var(- -height);
+	border-radius: var(- -border-radius);
+	color: var(- -text);
 	box-shadow: 0 10px 30px rgba(65, 72, 86, 0.05);
 	padding: 20px 32px;
-	grid-template-columns: auto var(--radio-size);
+	grid-template-columns: auto var(- -radio-size);
 	margin: 12px;
 	display: flex;
 	flex-direction: column;
