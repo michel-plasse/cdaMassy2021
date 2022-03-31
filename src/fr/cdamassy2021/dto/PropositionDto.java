@@ -5,13 +5,17 @@ import fr.cdamassy2021.entity.Proposition;
 
 public class PropositionDto {
 	
-	private final long idProposition;
+	private long idProposition;
 	
-	private final long idQuestion;
+	private long idQuestion;
 	
-	private final String libelle;
+	private String libelle;
 	
-	private final int estCorrecte;
+	private int estCorrecte;
+	
+	public PropositionDto() {
+		
+	}
 	
 	public PropositionDto(Proposition proposition) {
 		this.idProposition = proposition.getIdProposition();

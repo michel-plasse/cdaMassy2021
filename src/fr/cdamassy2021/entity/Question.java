@@ -33,6 +33,7 @@ public class Question {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_question")
 	private long idQuestion;
 
 	@Column

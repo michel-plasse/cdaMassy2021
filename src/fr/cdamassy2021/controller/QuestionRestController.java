@@ -81,8 +81,8 @@ public class QuestionRestController {
 	@RequestMapping( method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE )
 	public ResponseEntity saveQuestion(@RequestBody QuestionDto questionDto) {
 		try {
-			Question saved = questionService.creerQuestion(questionDto);
-			return ResponseEntity.ok(saved);
+			QuestionDto response = questionService.creerQuestion(questionDto);
+			return ResponseEntity.ok(response);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e);
 		}
