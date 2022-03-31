@@ -1,5 +1,6 @@
 package fr.cdamassy2021.entity;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,13 +15,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Personne {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_personne")
 	private long idPersonne;
+	
 	@Column
 	private String prenom;
 	@Column
@@ -44,6 +49,11 @@ public class Personne {
 	joinColumns = { @JoinColumn(name = "id_personne") },
 	inverseJoinColumns = { @JoinColumn(name = "id_canal") })
 	private Set<Canal> allCanauxMembre;
+	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "personne")
+	private List<MbrGrpEFG> mbrGrpEFG;
+	
 
 	/**
 	 * Constructeur
