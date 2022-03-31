@@ -3,7 +3,11 @@ package fr.cdamassy2021.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fr.cdamassy2021.dto.QuestionDto;
 import fr.cdamassy2021.dto.ReponseDto;
+import fr.cdamassy2021.entity.Personne;
 import fr.cdamassy2021.entity.Question;
 import fr.cdamassy2021.entity.Reponse;
 import fr.cdamassy2021.service.QuestionService;
@@ -70,6 +77,15 @@ public class QuestionRestController {
 		questionService.listAll().forEach(q -> allQuestionDto.add(new QuestionDto(q)));
 		return allQuestionDto;
 	}
-
-
+	
+	@RequestMapping( method = RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE )
+	public ResponseEntity saveQuestion(@RequestBody QuestionDto questionDto) {
+		try {
+			Question saved = questionService.creerQuestion(questionDto);
+			return ResponseEntity.ok(saved);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e);
+		}
+	}
 }
+
