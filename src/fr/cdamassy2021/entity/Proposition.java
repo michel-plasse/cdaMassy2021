@@ -17,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import fr.cdamassy2021.dto.PropositionDto;
+
 @Entity
 public class Proposition {
 	@Id
@@ -34,6 +36,11 @@ public class Proposition {
 	
 	public Proposition() {
 		super();
+	}
+	public Proposition(PropositionDto prop) {
+		super();
+		this.libelle = prop.getLibelle();
+		this.estCorrecte = prop.getEstCorrecte();
 	}
 	public Proposition(String libelle, int estCorrecte) {
 		super();

@@ -10,8 +10,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import fr.cdamassy2021.controller.PropositionService;
+import fr.cdamassy2021.dto.PropositionDto;
+import fr.cdamassy2021.dto.QuestionDto;
 import fr.cdamassy2021.entity.Personne;
 import fr.cdamassy2021.entity.Proposition;
 import fr.cdamassy2021.entity.Question;
@@ -149,5 +152,42 @@ public class QuestionService {
     	Question nouvelleQuestion = new Question(
     			libelleQuestion, canal, auteur, TypeQuestion.LIBRE);
     	return	questionRepo.save(nouvelleQuestion);
+    }
+    
+    
+    public boolean isBetween0And255Chars(String str) {
+    	return (str.length() <= 255 && str.length() > 0);
+    }
+    
+    @Transactional
+    public Question creerQuestion(QuestionDto questionDto) throws Exception {
+    	
+        if(isBetween0And255Chars(questionDto.getLibelle())) 
+        	throw new Exception("Libelle Question Libelle doit faire entre 1 et 255 caracteres");
+        
+    	for (PropositionDto propos : questionDto.getPropositions()) {
+    		if (!isBetween0And255Chars(propos.getLibelle()))
+    			throw new Exception("Libelle Proposition doit faire entre 1 et 255 caracteres");
+    		if (propos.getEstCorrecte()>2 || propos.getEstCorrecte()<0)
+    			throw new Exception("La valeur d'exactitude d'une proposition de réponse doit valoir 0, 1 ou 2 "
+    				+ "0:incorrecte, 1:correct, 2:indéfinie");
+    		}
+    	
+    	TypeQuestion type = (questionDto.getPropositions().isEmpty()) 
+    			? TypeQuestion.LIBRE
+    		    : TypeQuestion.CHOIXMULTIPLES;
+    	
+    	Question newQuestion = new Question();
+    	newQuestion.setLibelle(questionDto.getLibelle());
+    	newQuestion.setTypeQuestion(type);
+    	newQuestion.setAuteur(personRepo.findById(questionDto.getIdAuteur()).get());
+    	newQuestion.setIdCanal(questionDto.getIdCanal());
+
+    	if(newQuestion.getTypeQuestion() == TypeQuestion.CHOIXMULTIPLES) {
+    		Set<Proposition> props = newQuestion.getPropositions();
+    		questionDto.getPropositions().forEach(p -> props.add(new Proposition(p)));
+    	}
+
+    	return questionRepo.save(newQuestion);
     }
 }
