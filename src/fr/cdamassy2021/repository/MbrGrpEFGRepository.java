@@ -13,9 +13,9 @@ import fr.cdamassy2021.entity.Personne;
 @Repository
 public interface MbrGrpEFGRepository extends CrudRepository<MbrGrpEFG, Long> {
 	
-//	@Query(value="select m from MbrGrpEFG m where m.personne.idPersonne=3 ")
-//	List<MbrGrpEFG> fonctionRepo();
 	@Query(value="select m from MbrGrpEFG m where m.personne.idPersonne=3 ")
-	fonctionRepo();
+	List<MbrGrpEFG> fonctionRepo();
+//	@Query(value="select m from MbrGrpEFG m where m.personne.idPersonne=3 ")
+//	fonctionRepo();
 
 }
