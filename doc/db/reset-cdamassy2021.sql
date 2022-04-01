@@ -16,7 +16,7 @@ BEGIN
       RESIGNAL;
     END;  
     -- Demarrer une transaction : si une erreur se produit,
-    -- tout sera annul√©
+    -- tout sera annulÈe
     START TRANSACTION;
     -- 1er groupe : tableaux ne d√©pendant d'aucun autre
     INSERT INTO canal(id_canal, nom) VALUES
@@ -32,7 +32,7 @@ BEGIN
 			(2, 'Bianca', 'Castafiore', 'formateur2@gmail.com', 'azerty', '0611121314', 1,
 				0, 0, 'formateur2@gmail.com.jpg', date_effet - INTERVAL 3 MONTH),
 			-- 5 etudiants
-			(3, 'Manuel', 'Rivi√®re', 'etudiant1@gmail.com', 'azerty', '0621222324', 0,
+			(3, 'Manuel', 'RiviËre', 'etudiant1@gmail.com', 'azerty', '0621222324', 0,
 				0, 0, 'etudiant1@gmail.com.jpg', date_effet - INTERVAL 2 MONTH),
 			(4, 'Marguerite', 'Moulin', 'etudiant2@gmail.com', 'azerty', '0631323334', 0,
 				0, 0, 'etudiant2@gmail.com.jpg', date_effet - INTERVAL 2 MONTH),
