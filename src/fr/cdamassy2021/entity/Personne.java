@@ -52,7 +52,7 @@ public class Personne {
 	
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "personne")
-	private List<MbrGrpEFG> mbrGrpEFG;
+	private List<MbrGrpEFG> mbrGrpEFGs;
 	
 
 	/**

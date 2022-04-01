@@ -1,4 +1,4 @@
-package fr.cdamassy2021.service;
+package fr.cdamassy2021.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

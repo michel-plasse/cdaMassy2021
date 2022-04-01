@@ -1,6 +1,5 @@
 package fr.cdamassy2021.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,7 +30,14 @@ public class MbrGrpEFG {
 	@JoinColumn(name = "id_personne", referencedColumnName = "id_personne", insertable = false, updatable = false)
 	@JsonIgnore
 	Personne personne;
-	
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_efg", referencedColumnName = "id_efg", insertable = false, updatable = false)
+	@JsonIgnore
+	EFG efg;
+
+
+
 	
 	public MbrGrpEFG() { }
 	
@@ -59,7 +65,6 @@ public class MbrGrpEFG {
 		public void setIdEfg(int idEfg) {
 		this.idEfg = idEfg;
 	}
-	
 	
 
 }

@@ -1,11 +1,13 @@
 package fr.cdamassy2021.entity;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,6 +24,7 @@ public class EFG {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_efg")
 	private int idEfg;
 
 	// Une fois que l'id Cr�ateur de canal est ajout� � la BDD, on peut ajouter la gestoin de la cl�
@@ -37,6 +40,9 @@ public class EFG {
 	private String intitule;
 	@Column
 	private String groupes;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "efg")
+	private List<MbrGrpEFG> mbrGrpEFGs;
 
 	public EFG() {
 		this.createur= new MembreCanal();
