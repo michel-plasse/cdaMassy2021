@@ -82,7 +82,7 @@ public class QuestionRestController {
 			QuestionDto response = questionService.creerQuestion(questionDto);
 			return ResponseEntity.ok(response);
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e);
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}
 	}
 }
