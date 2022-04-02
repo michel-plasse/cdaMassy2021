@@ -66,7 +66,7 @@ public class PersonneRestController {
 	/**
 	 * GET /api/canal/{idCanal}/membre/{idMembre} -> supprimer un membre d'un canal 
 	 */
-	@RequestMapping(value="/{idCanal}/membre/{idMembre}", method = RequestMethod.GET)
+	@RequestMapping(value="/{idCanal}/membre/{idMembre}", method = RequestMethod.DELETE )
 	public ResponseEntity<Boolean> deleteMembre(
 			@PathVariable int idCanal,
 			@PathVariable int idMembre){

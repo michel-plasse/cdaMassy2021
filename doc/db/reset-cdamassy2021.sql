@@ -16,7 +16,7 @@ BEGIN
       RESIGNAL;
     END;  
     -- Demarrer une transaction : si une erreur se produit,
-    -- tout sera annulÃ©
+    -- tout sera annulée
     START TRANSACTION;
     -- 1er groupe : tableaux ne dÃ©pendant d'aucun autre
     INSERT INTO canal(id_canal, nom) VALUES
@@ -32,7 +32,7 @@ BEGIN
 			(2, 'Bianca', 'Castafiore', 'formateur2@gmail.com', 'azerty', '0611121314', 1,
 				0, 0, 'formateur2@gmail.com.jpg', date_effet - INTERVAL 3 MONTH),
 			-- 5 etudiants
-			(3, 'Manuel', 'RiviÃ¨re', 'etudiant1@gmail.com', 'azerty', '0621222324', 0,
+			(3, 'Manuel', 'Rivière', 'etudiant1@gmail.com', 'azerty', '0621222324', 0,
 				0, 0, 'etudiant1@gmail.com.jpg', date_effet - INTERVAL 2 MONTH),
 			(4, 'Marguerite', 'Moulin', 'etudiant2@gmail.com', 'azerty', '0631323334', 0,
 				0, 0, 'etudiant2@gmail.com.jpg', date_effet - INTERVAL 2 MONTH),
@@ -44,27 +44,27 @@ BEGIN
 				0, 0, 'etudiant5@gmail.com.jpg', date_effet - INTERVAL 1 MONTH - INTERVAL 15 DAY);
 		INSERT INTO type_question(id_type_question, libelle) VALUES
 		(1, 'oui/non'),
-		(2, 'rÃ©ponse libre'),
+		(2, 'réponse libre'),
 		(3, 'options multiples');
       
 		-- Tableaux ne dÃ©pendant que du 1er groupe
 		INSERT INTO	efg(id_efg, intitule, date_creation, id_createur, id_canal, groupes) VALUES
     -- 2 dans le canal 1 + 1 dans le canal 2, tous du formateur 1
-			(1, 'TP dÃ©finir objectif', date_effet - INTERVAL 1 MONTH, 1, 1,'3,2'),
+			(1, 'TP définir objectif', date_effet - INTERVAL 1 MONTH, 1, 1,'3,2'),
 			(2, 'TP cadrage', date_effet - INTERVAL 1 MONTH, 1, 1, '2,2'),
 			(3, "TP tests d'acceptation", date_effet - INTERVAL 1 MONTH, 1, 2, '3,2,2');
 		
 		INSERT INTO question(id_question, libelle, id_canal, id_createur, 
     id_type_question, id_questionnaire) VALUES
 			-- 1 de chaque type
-			(1, 'Avez-vous finiï¿½?', 3, 1, 1,null), -- oui/non
-			(2, 'Combien de temps voulez-vous pour ce TPï¿½?', 3, 1, 3,null), -- plusieurs choix 
+			(1, 'Avez-vous fini?', 3, 1, 1,null), -- oui/non
+			(2, 'Combien de temps voulez-vous pour ce TP?', 3, 1, 3,null), -- plusieurs choix 
 			(3, 'Donnez un exemple de classe abstraite', 1, 1, 2,null), -- libre
 			(4, "Chassez l'intrus",1,2,3,1), -- portÃ©e
 			(5, 'Que vaut s, avec String s = "0" + 1 ?', 1, 1, 3,1), -- plusieurs choix 
-			(6, "Quel fruit est un fruit d'hiverï¿½?", 2, 1, 3,2), -- plusieurs choix 
-			(7, "Quel lÃ©gume est le plus riche en vitamine Cï¿½?", 2, 1, 3,2); -- plusieurs choix 
-		
+			(6, "Quel fruit est un fruit d'hiver?", 2, 1, 3,2), -- plusieurs choix 
+			(7, 'Quel légume est le plus riche en vitamine C?', 2, 1, 3,2), -- plusieurs choix 
+		    (8, "Comment créer un nouvel objet de type 'MaClasse'?", 1, 3, 2, null); -- libre
         INSERT INTO membre_canal(id_canal, id_personne, ajoute_a) VALUES
 			-- les 2 formateurs dans canal 1
 			(1, 1, date_effet - INTERVAL 2 MONTH),
@@ -82,7 +82,7 @@ BEGIN
 			(2, 5, date_effet - INTERVAL 1 MONTH);
 		INSERT INTO questionnaire(id_questionnaire, id_createur,id_canal, libelle) VALUES
 			(1, 1, 1, 'Bases de Java'),
-			(2, 1, 1, 'Fruits et lÃ©gumes');
+			(2, 1, 1, 'Fruits et légumes');
 
 
 		INSERT INTO groupe_efg(id_efg, id_createur) VALUES

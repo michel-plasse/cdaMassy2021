@@ -26,7 +26,7 @@ public class QuestionDto {
 
 	private Set<PropositionDto> propositions = new LinkedHashSet<PropositionDto>();
 
-	private List<ReponseDto> reponses = new ArrayList<ReponseDto>();
+	private Set<ReponseDto> reponses = new LinkedHashSet<ReponseDto>();
 
 	private String typeQuestion;
 	
@@ -104,11 +104,11 @@ public class QuestionDto {
 		this.propositions = propositions;
 	}
 
-	public List<ReponseDto> getReponses() {
+	public Set<ReponseDto> getReponses() {
 		return reponses;
 	}
 
-	public void setReponses(List<ReponseDto> reponses) {
+	public void setReponses(Set<ReponseDto> reponses) {
 		this.reponses = reponses;
 	}
 

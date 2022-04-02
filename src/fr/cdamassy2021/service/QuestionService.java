@@ -160,9 +160,9 @@ public class QuestionService {
     }
     
     @Transactional
-    public Question creerQuestion(QuestionDto questionDto) throws Exception {
+    public QuestionDto creerQuestion(QuestionDto questionDto) throws Exception {
     	
-        if(isBetween0And255Chars(questionDto.getLibelle())) 
+        if(!isBetween0And255Chars(questionDto.getLibelle())) 
         	throw new Exception("Libelle Question Libelle doit faire entre 1 et 255 caracteres");
         
     	for (PropositionDto propos : questionDto.getPropositions()) {
@@ -171,7 +171,7 @@ public class QuestionService {
     		if (propos.getEstCorrecte()>2 || propos.getEstCorrecte()<0)
     			throw new Exception("La valeur d'exactitude d'une proposition de réponse doit valoir 0, 1 ou 2 "
     				+ "0:incorrecte, 1:correct, 2:indéfinie");
-    		}
+    	}
     	
     	TypeQuestion type = (questionDto.getPropositions().isEmpty()) 
     			? TypeQuestion.LIBRE
@@ -186,8 +186,9 @@ public class QuestionService {
     	if(newQuestion.getTypeQuestion() == TypeQuestion.CHOIXMULTIPLES) {
     		Set<Proposition> props = newQuestion.getPropositions();
     		questionDto.getPropositions().forEach(p -> props.add(new Proposition(p)));
+    		props.forEach(p -> p.setQuestion(newQuestion));
     	}
-
-    	return questionRepo.save(newQuestion);
+    	questionRepo.save(newQuestion);
+    	return new QuestionDto(newQuestion);
     }
 }
