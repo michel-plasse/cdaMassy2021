@@ -33,6 +33,7 @@ public class AuthService {
 		if(!passwordCorrect) throw new UserNotFoundException();
 		
 		UserDTO userDTO = new UserDTO();
+		userDTO.setId(personne.getIdPersonne());
 		userDTO.setNom(personne.getNom());
 		userDTO.setPrenom(personne.getPrenom());
 		userDTO.setUsername(personne.getEmail());

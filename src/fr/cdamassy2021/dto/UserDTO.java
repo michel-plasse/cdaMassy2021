@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDTO { //Data Transfer Object
+	private long id;
 	private String username;
 	private String nom;
 	private String prenom;
@@ -14,6 +15,14 @@ public class UserDTO { //Data Transfer Object
 		this.roles = new ArrayList<String>();
 	}
 	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public String getUsername() {
 		return username;
 	}
