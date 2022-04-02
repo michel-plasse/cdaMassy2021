@@ -64,7 +64,7 @@ BEGIN
 			(5, 'Que vaut s, avec String s = "0" + 1 ?', 1, 1, 3,1), -- plusieurs choix 
 			(6, "Quel fruit est un fruit d'hiver?", 2, 1, 3,2), -- plusieurs choix 
 			(7, 'Quel légume est le plus riche en vitamine C?', 2, 1, 3,2), -- plusieurs choix 
-		    (8, "Comment créer un nouvel objet de type 'MonObjet'?", 1, 3, 2, null); -- libre
+		    (8, "Comment créer un nouvel objet de type 'MaClasse'?", 1, 3, 2, null); -- libre
         INSERT INTO membre_canal(id_canal, id_personne, ajoute_a) VALUES
 			-- les 2 formateurs dans canal 1
 			(1, 1, date_effet - INTERVAL 2 MONTH),
