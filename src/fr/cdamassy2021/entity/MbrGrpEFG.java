@@ -11,8 +11,10 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import fr.cdamassy2021.pkclasses.MbrGrpEFGPK3;
+
 @Entity
-@IdClass(MbrGrpEFGId.class)
+@IdClass(MbrGrpEFGPK3.class)
 @Table(name = "membre_groupe_efg")
 public class MbrGrpEFG {
 	
@@ -36,9 +38,6 @@ public class MbrGrpEFG {
 	@JsonIgnore
 	EFG efg;
 
-
-
-	
 	public MbrGrpEFG() { }
 	
 	public MbrGrpEFG(int idPersonne, int idCreateur, int idEfg) {

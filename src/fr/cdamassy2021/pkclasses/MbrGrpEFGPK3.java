@@ -1,4 +1,4 @@
-package fr.cdamassy2021.entity;
+package fr.cdamassy2021.pkclasses;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -6,15 +6,15 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-public class MbrGrpEFGId implements Serializable {
+public class MbrGrpEFGPK3 implements Serializable {
 	
 	private int idPersonne;
 	private int idCreateur;
 	private int idEfg;
 	
-	public MbrGrpEFGId() {};
+	public MbrGrpEFGPK3() {};
 
-	public MbrGrpEFGId(int idPersonne, int idCreateur, int idEfg) {
+	public MbrGrpEFGPK3(int idPersonne, int idCreateur, int idEfg) {
 		this.idPersonne = idPersonne;
 		this.idCreateur = idCreateur;
 		this.idEfg = idEfg;
@@ -33,9 +33,10 @@ public class MbrGrpEFGId implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MbrGrpEFGId other = (MbrGrpEFGId) obj;
+		MbrGrpEFGPK3 other = (MbrGrpEFGPK3) obj;
 		return idCreateur == other.idCreateur && idEfg == other.idEfg && idPersonne == other.idPersonne;
 	}
+
 	
 
 }

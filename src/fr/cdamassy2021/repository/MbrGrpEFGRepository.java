@@ -26,7 +26,10 @@ public interface MbrGrpEFGRepository extends CrudRepository<MbrGrpEFG, Long> {
 	 * @return List<MbrGrpEFGDto>
 	 */
 	
-	@Query(value = "SELECT NEW fr.cdamassy2021.dto.MbrGrpEFGDto(m.idPersonne, m.idCreateur, m.idEfg, m.personne.nom, m.personne.prenom )"
+	@Query(value = "SELECT NEW fr.cdamassy2021.dto.MbrGrpEFGDto("
+		+	" m.idPersonne, m.idCreateur, m.idEfg,"
+		+ 	" m.personne.nom, m.personne.prenom,"
+		+   " m.efg.intitule, m.efg.idCanal, m.efg.idCreateur, m.efg.groupes)"
 				+  " FROM MbrGrpEFG m"
 				+  " WHERE m.idEfg in :idEfg" )
 	List<Object> queryEfgById(@Param("idEfg") int idEfg);

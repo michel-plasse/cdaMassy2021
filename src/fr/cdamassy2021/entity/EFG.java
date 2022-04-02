@@ -8,6 +8,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,13 +34,24 @@ public class EFG {
 	//�trang�re (@Many-to-one ). Il faut que le cr�ateur de l'EFG soit le cr�ateur du canal.
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumns({
-		@JoinColumn(name="id_createur",referencedColumnName = "id_personne"),
-		@JoinColumn(name="id_canal",referencedColumnName = "id_canal")
+		@JoinColumn(name="id_createur",referencedColumnName = "id_personne", insertable = false, updatable = false),
+		@JoinColumn(name="id_canal",referencedColumnName = "id_canal", insertable = false, updatable = false)
 	})
+	@JsonIgnore
 	private MembreCanal createur;
+	
+	/**
+	 * idCreateur = eleve qui s'est inscrit en premier
+	 * 
+	 */
+	@Column(name="id_createur")
+	private int idCreateur;	
+	@Column(name="id_canal")
+	private int idCanal;
 
 	@Column
 	private String intitule;
+	
 	@Column
 	private String groupes;
 	
@@ -94,6 +108,14 @@ public class EFG {
 
 	public void setIntitule(String intitule) {
 		this.intitule = intitule;
+	}
+
+	public List<MbrGrpEFG> getMbrGrpEFGs() {
+		return mbrGrpEFGs;
+	}
+
+	public void setMbrGrpEFGs(List<MbrGrpEFG> mbrGrpEFGs) {
+		this.mbrGrpEFGs = mbrGrpEFGs;
 	}
 
 	public String getGroupes() {
