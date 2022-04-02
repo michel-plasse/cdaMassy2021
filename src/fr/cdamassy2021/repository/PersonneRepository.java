@@ -39,5 +39,7 @@ public interface PersonneRepository extends CrudRepository<Personne, Long> {
 			, nativeQuery = true)
 	public void AjouterMembreAuCanal(int idMembre,int idCanal);
 
+	@Query(value = "SELECT p FROM Personne p WHERE p.email = ?1 ")
+	public Personne findByEmail(String email);
 }
 

@@ -23,10 +23,10 @@ public class Role implements Serializable {
 	private String libelle;
 	
 	@ManyToMany(mappedBy = "roles")
-	private Set<User> users;
+	private Set<Personne> personnes;
 	
 	public Role() {
-		users = new HashSet<User>();
+		personnes = new HashSet<Personne>();
 	}
 
 	public int getId() {
@@ -45,16 +45,16 @@ public class Role implements Serializable {
 		this.libelle = libelle;
 	}
 
-	public Set<User> getUsers() {
-		return users;
+	public Set<Personne> getUsers() {
+		return personnes;
 	}
 
-	public void setUsers(Set<User> users) {
-		this.users = users;
+	public void setUsers(Set<Personne> personnes) {
+		this.personnes = personnes;
 	}
 	
-	public void addUser(User user) {
-		this.users.add(user);
+	public void addPersonne(Personne personne) {
+		this.personnes.add(personne);
 	}
 	
 }

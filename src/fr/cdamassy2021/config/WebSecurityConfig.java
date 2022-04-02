@@ -55,8 +55,7 @@ public class WebSecurityConfig {
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 
-			System.out.println(bcryptPasswordEncoder.encode("User1000@"));
-			System.out.println(bcryptPasswordEncoder.encode("Employe1000@"));
+			System.out.println("pwd:"+bcryptPasswordEncoder.encode("azerty"));
 			http
 			.mvcMatcher("/api/**");
 			// On désactive la protection contre les CSRF.
@@ -76,12 +75,12 @@ public class WebSecurityConfig {
 			// régles d'accès proprement dites
 			// vu leur tête, on pourrait aussi les placer au niveau des méthodes, comme annotations.
 			http.authorizeRequests()
-				.mvcMatchers(HttpMethod.GET, "/api/public/**").permitAll()
+				.mvcMatchers(HttpMethod.GET,  "/api/public/**").permitAll()
 				.mvcMatchers(HttpMethod.POST, "/api/auth/login").permitAll()		
 				.mvcMatchers(HttpMethod.POST, "/api/auth/register").permitAll()		
 //				.mvcMatchers(HttpMethod.POST, "/api/product/**").access("hasRole('ROLE_EMPLOYE')")
-				.mvcMatchers("/api/product/**").access("hasRole('ROLE_EMPLOYE')")
-				.mvcMatchers(HttpMethod.GET, "/api/employe/**").access("hasRole('ROLE_EMPLOYE')")
+				//.mvcMatchers("/api/product/**").access("hasRole('ROLE_EMPLOYE')")
+				//.mvcMatchers(HttpMethod.GET, "/api/employe/**").access("hasRole('ROLE_EMPLOYE')")
 				.mvcMatchers("/api/**").authenticated();
 		}
 		

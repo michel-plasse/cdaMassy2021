@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.cdamassy2021.dto.UserDTO;
+import fr.cdamassy2021.entity.Personne;
 import fr.cdamassy2021.entity.User;
 import fr.cdamassy2021.exception.UserNotFoundException;
+import fr.cdamassy2021.repository.PersonneRepository;
 import fr.cdamassy2021.repository.UserRepository;
 
 
@@ -18,23 +20,23 @@ import fr.cdamassy2021.repository.UserRepository;
 @Transactional
 public class AuthService {
 	@Autowired
-	UserRepository userRepo;
+	PersonneRepository personneRepo;
 
 	@Transactional(readOnly = true)
 	public UserDTO login(String username, String password) throws UserNotFoundException {
 		System.out.println("username : "+ username);
 		System.out.println("password : "+ password);
-		User user = userRepo.findByUsername(username);
-		if(null == user) throw new UserNotFoundException();
+		Personne personne = personneRepo.findByEmail(username);
+		if(null == personne) throw new UserNotFoundException();
 		
-		boolean passwordCorrect = BCrypt.checkpw(password, user.getPassword());
+		boolean passwordCorrect = BCrypt.checkpw(password, personne.getPwd());
 		if(!passwordCorrect) throw new UserNotFoundException();
 		
 		UserDTO userDTO = new UserDTO();
-		userDTO.setNom(user.getNom());
-		userDTO.setPrenom(user.getPrenom());
-		userDTO.setUsername(user.getUsername());
-		List<String> roles = user.getRoles().stream().map(r ->{
+		userDTO.setNom(personne.getNom());
+		userDTO.setPrenom(personne.getPrenom());
+		userDTO.setUsername(personne.getEmail());
+		List<String> roles = personne.getRoles().stream().map(r ->{
 			return r.getLibelle();
 		}).collect(Collectors.toList());
 		userDTO.setRoles(roles);
