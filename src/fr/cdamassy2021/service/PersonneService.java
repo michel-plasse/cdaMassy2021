@@ -35,8 +35,8 @@ public class PersonneService {
 		return repo.findMembreByCanal(idCanal);
 	}
 
-	public void enleverMembreDuCanal(int idMembreAEffacer,int idCanal) {
-		repo.SupprimerMembrDuCanal(idMembreAEffacer, idCanal);
+	public void enleverMembreDuCanal(int idCanal, int idMembre) {
+		repo.SupprimerMembrDuCanal(idCanal, idMembre);
 	}
 	
 	public void ajouterMembreDuCanal(int idMembre,int idCanal) {

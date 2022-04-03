@@ -30,9 +30,9 @@ public interface PersonneRepository extends CrudRepository<Personne, Long> {
 	//pour l'erreur "Cannot issue data manipulation statements with executeQuery()", 
 	//on peut ajouter une annotation @Modifying
 	@Modifying
-	@Query(value = "DELETE FROM membre_canal WHERE id_personne=? AND id_canal=?"
+	@Query(value = "DELETE FROM membre_canal WHERE id_canal=? AND id_personne=?"
 			, nativeQuery = true)
-	public void SupprimerMembrDuCanal(int idMembreAEffacer,int idCanal);
+	public void SupprimerMembrDuCanal(int idCanal, int idMembre);
 	
 	@Modifying
 	@Query(value = "INSERT INTO membre_canal (id_personne,id_canal,ajoute_a) VALUES (?,?,now())"

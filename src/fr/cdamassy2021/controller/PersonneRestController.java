@@ -64,14 +64,14 @@ public class PersonneRestController {
 	}
 
 	/**
-	 * GET /api/canal/{idCanal}/membre/{idMembre} -> supprimer un membre d'un canal 
+	 * DELETE /api/canal/{idCanal}/membre/{idMembre} -> supprimer un membre d'un canal 
 	 */
 	@RequestMapping(value="/{idCanal}/membre/{idMembre}", method = RequestMethod.DELETE )
 	public ResponseEntity<Boolean> deleteMembre(
 			@PathVariable int idCanal,
 			@PathVariable int idMembre){
 		try {
-			personneService.enleverMembreDuCanal(idMembre, idCanal);
+			personneService.enleverMembreDuCanal(idCanal, idMembre);
 			return ResponseEntity.ok(true);
 		}
 		catch (Exception e) {
