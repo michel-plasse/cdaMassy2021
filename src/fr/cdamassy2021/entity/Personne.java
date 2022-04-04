@@ -1,8 +1,10 @@
 package fr.cdamassy2021.entity;
 
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,6 +39,12 @@ public class Personne {
 	private int est_gestionnaire;
 	@Column
 	private int est_administrateur;
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@JoinTable(name = "personne_role", 
+	joinColumns = { @JoinColumn(name = "personnes_id") },
+	inverseJoinColumns = { @JoinColumn(name = "roles_id") })
+	private Set<Role> roles;
 
 
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -161,6 +169,14 @@ public class Personne {
 		this.est_administrateur = est_administrateur;
 	}
 
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
 	@Override
 	public int hashCode() {
 		int hash = 7;
@@ -205,5 +221,5 @@ public class Personne {
 		}
 		return true;
 	}
-
+	
 }
