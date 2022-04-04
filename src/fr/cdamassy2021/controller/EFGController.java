@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import fr.cdamassy2021.entity.EFG;
 import fr.cdamassy2021.entity.Personne;
+import fr.cdamassy2021.entity.PersonneJson;
 import fr.cdamassy2021.service.EFGService;
 
 @CrossOrigin(origins = "*",allowedHeaders = "*")
@@ -112,13 +113,18 @@ public class EFGController {
 
 
 	@RequestMapping("api/{idCanal}/EFGs/{idEFG}/createur")
-	public ResponseEntity<Personne> getCreator(@PathVariable(value = "idEFG") int idEFG){
+	public ResponseEntity<PersonneJson> getCreator(@PathVariable(value = "idEFG") int idEFG){
 		Optional<Personne> optPersonne = efgService.getCreateur(idEFG);
 		if(optPersonne.isPresent()) {
 			Personne perso = optPersonne.get();
 			perso.setAllCanauxMembre(null);
-			return ResponseEntity.ok(perso);
+			PersonneJson response = new PersonneJson();
+			response.setIdPersonne(perso.getIdPersonne());
+			response.setNom(perso.getNom());
+			response.setPrenom(perso.getPrenom());
+			return ResponseEntity.ok(response);
 		}else {
+			System.out.println("pas marché");
 			return ResponseEntity.notFound().build();
 		}
 	}
