@@ -32,14 +32,15 @@ public class PersonneController {
 	@Autowired
 	CanalService canalService;
 
-	@RequestMapping("/personne")
-	public ModelAndView personne() {
-		List<Personne> listPersonne = personneService.listAll();
-		ModelAndView mv = new ModelAndView("personne");
-		mv.addObject("listPersonne", listPersonne);
-		return mv;
-	}
+//	@RequestMapping("/personne")
+//	public ModelAndView personne() {
+//		List<Personne> listPersonne = personneService.listAll();
+//		ModelAndView mv = new ModelAndView("personne");
+//		mv.addObject("listPersonne", listPersonne);
+//		return mv;
+//	}
 
+	// lister les membres du canal
 	@RequestMapping("/canaux/{idCanal}")
 	public ModelAndView listMembre(@PathVariable("idCanal") int IdCanal) {
 		Collection<Personne> collectionPersonnes = personneService.listMembreByCanal(IdCanal);
@@ -49,50 +50,49 @@ public class PersonneController {
 
 		return mv;
 	}
+
+	// page erreur
 	@RequestMapping("/erreur/{message}")
-	public ModelAndView erreur(@PathVariable("message") String message ) {
+	public ModelAndView erreur(@PathVariable("message") String message) {
 		ModelAndView mv = new ModelAndView("erreur");
-
-		mv.addObject("message",message );
-
+		mv.addObject("message", message);
 		return mv;
 	}
 
+	// supprimer un membre du canal
 	@PostMapping("/canaux/enleve")
 	public String deleteMembre(HttpServletRequest request, HttpServletResponse response, Model model) {
-		// verifier droit de l'utilisateur
-		// verifier idCanal et idPersonne
+
 		int idMembreAEffacer = Integer.parseInt(request.getParameter("idMembreAEffacer"));
 		int idCanal = Integer.parseInt(request.getParameter("idCanal"));
 
-		System.out.println("==============" + idMembreAEffacer + "++++++++" + idCanal);
+		System.out.println("idMembreAEffacer : " + idMembreAEffacer + "| idCanal :" + idCanal);
 
 		Personne personne_en_session = (Personne) request.getSession().getAttribute("currentUser");
 
-		if(personne_en_session.getEst_gestionnaire()== 1) {
-			personneService.enleverMembreDuCanal(idMembreAEffacer, idCanal);
+		// verifier le droit de l'utilisateur
+		if (personne_en_session.getEst_gestionnaire() == 1) {
+			personneService.enleverMembreDuCanal(idCanal, idMembreAEffacer);
 			model.addAttribute("idCanal", idCanal);
 			return "redirect:/canaux/{idCanal}";
-
-		}else {
+		} else {
 			model.addAttribute("message", "Vous n'avez pas ces droits");
 			return "redirect:/erreur/{message}";
 		}
-
 	}
+
+	// ajouter un membre au canal
 	@RequestMapping("/canaux/addMembre")
 	public String addMembreToCanal(HttpServletRequest request, HttpServletResponse response, Model model) {
 		int idPersonneAAjouter = Integer.parseInt(request.getParameter("idPersonneAjouter"));
 		int idCanal = Integer.parseInt(request.getParameter("idCanalAjouter"));
-
 		Personne personne_en_session = (Personne) request.getSession().getAttribute("currentUser");
 
-		if(personne_en_session.getEst_gestionnaire() ==1) {
+		if (personne_en_session.getEst_gestionnaire() == 1) {
 			personneService.ajouterMembreDuCanal(idPersonneAAjouter, idCanal);
 			model.addAttribute("idCanal", idCanal);
 			return "redirect:/canaux/{idCanal}";
-
-		}else {
+		} else {
 			model.addAttribute("message", "Vous n'avez pas ces droits");
 			return "redirect:/erreur/{message}";
 		}
